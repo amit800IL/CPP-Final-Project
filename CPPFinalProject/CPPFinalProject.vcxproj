@@ -128,6 +128,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CPPFinalProject.cpp" />
+    <ClCompile Include="Customer.cpp" />
+    <ClCompile Include="CustomerQueue.cpp" />
+    <ClCompile Include="MailActions.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Customer.h" />
+    <ClInclude Include="CustomerQueue.h" />
+    <ClInclude Include="MailActions.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
