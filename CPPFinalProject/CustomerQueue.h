@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Customer.h"
-#include <memory>
 #include <iostream>
+#include <memory>
 
 #ifndef CUSTOMERQUEUE_H
 #define CUSTOMERQUEUE_H
@@ -29,7 +29,6 @@ public:
 	void Enqueue(Customer customer);
 
 	void Dequeue();
-
 };
 
 

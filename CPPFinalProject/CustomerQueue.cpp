@@ -27,16 +27,16 @@ void CustomerQueue::Dequeue()
 {
 	if (IsEmpty())
 	{
-	   return;
+		return;
 	}
 
-	auto temp = std::move(head);
+	std::unique_ptr<Node> tempPointer = std::move(head);
 
-	head = std::move(temp->next);
+	head = std::move(tempPointer->next);
 
 	if (!head)
 	{
-	   tail = nullptr;
+		tail = nullptr;
 	}
 
 	std::cout << "Customer" << " dequeued from the queue.\n";
