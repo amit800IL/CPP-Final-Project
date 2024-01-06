@@ -26,7 +26,7 @@ private:
 
 public:
 
-	Customer(bool isRegularCustomer, DateOfBirth dateOfBirth);
+	Customer(bool isRegularCustomer, DateOfBirth&& dateOfBirth);
 
 	Customer(Customer&& customer) noexcept;
 
