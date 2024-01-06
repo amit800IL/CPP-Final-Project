@@ -131,11 +131,13 @@
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="CustomerQueue.cpp" />
     <ClCompile Include="MailActions.cpp" />
+    <ClCompile Include="MailOfficial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h" />
     <ClInclude Include="CustomerQueue.h" />
     <ClInclude Include="MailActions.h" />
+    <ClInclude Include="MailOfficial.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

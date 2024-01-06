@@ -5,7 +5,7 @@ bool CustomerQueue::IsEmpty() const
 	return (head == nullptr);
 }
 
-void CustomerQueue::Enqueue(Customer customer)
+void CustomerQueue::Enqueue(Customer&& customer)
 {
 	std::unique_ptr<Node> newNode = std::make_unique<Node>(customer);
 
@@ -20,7 +20,7 @@ void CustomerQueue::Enqueue(Customer customer)
 		tail = tail->next.get();
 	}
 
-	std::cout << "customer" << " enqueued to the queue.\n";
+	std::cout << customer << " enqueued to the queue." << std::endl;
 }
 
 void CustomerQueue::Dequeue()
@@ -39,5 +39,5 @@ void CustomerQueue::Dequeue()
 		tail = nullptr;
 	}
 
-	std::cout << "Customer" << " dequeued from the queue.\n";
+	std::cout << "Customer number: " << tempPointer->customer.GetCustomerNumber() << " dequeued from the queue.\n";
 }

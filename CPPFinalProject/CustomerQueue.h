@@ -26,7 +26,7 @@ public:
 
 	bool IsEmpty() const;
 
-	void Enqueue(Customer customer);
+	void Enqueue(Customer&& customer);
 
 	void Dequeue();
 };
