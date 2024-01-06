@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <memory>
+#include <chrono>
 
 struct DateOfBirth
 {
@@ -17,6 +18,8 @@ struct DateOfBirth
 	DateOfBirth(DateOfBirth&& dateOfBirth) noexcept : day(std::move(dateOfBirth.day)), month(std::move(dateOfBirth.month)), year(std::move(dateOfBirth.year)) {}
 
 	friend std::ostream& operator<<(std::ostream& os, const DateOfBirth& date);
+
+	int CalcualteAge() const;
 };
 
 class Customer
@@ -37,6 +40,8 @@ public:
 	Customer(Customer&& customer) noexcept;
 
 	int GetCustomerNumber();
+
+	bool GetCustomerType() const;
 
 	~Customer();
 };

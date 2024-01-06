@@ -6,19 +6,32 @@ Customer::Customer(bool isRegularCustomer, DateOfBirth&& dateOfBirth)
 {
 	this->isRegularCustomer = std::make_unique<bool>(isRegularCustomer);
 	this->dateOfBirth = std::make_unique<DateOfBirth>(std::move(dateOfBirth));
-	
-	customerNumber = ++lastAssignedCustomerNumber;
 
-	std::cout << customerNumber << std::endl;
+	customerNumber = ++lastAssignedCustomerNumber;
 }
 
+
 Customer::Customer(Customer&& customer) noexcept :
-isRegularCustomer{std::move(customer.isRegularCustomer)}, 
-dateOfBirth{std::move(customer.dateOfBirth)} {}
+	isRegularCustomer{ std::move(customer.isRegularCustomer) },
+	dateOfBirth{ std::move(customer.dateOfBirth) } {}
 
 int Customer::GetCustomerNumber()
 {
 	return customerNumber;
+}
+
+bool Customer::GetCustomerType() const
+{
+	int age = dateOfBirth->CalcualteAge();
+
+	if (age < 65)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 Customer::~Customer() {}
@@ -32,8 +45,11 @@ std::ostream& operator<<(std::ostream& os, const DateOfBirth& date)
 std::ostream& operator<<(std::ostream& os, const Customer& customer)
 {
 	os << "Customer Details:" << std::endl;
-	os << "Customer date of birth: " << *customer.dateOfBirth << std::endl;
-	if (*customer.isRegularCustomer)
+	os << *customer.dateOfBirth << " , Age is: ";
+
+	std::cout << customer.dateOfBirth->CalcualteAge() << std::endl;
+
+	if (customer.GetCustomerType())
 	{
 		os << "Customer Type: " << "RegualrCustomer" << std::endl;
 	}
@@ -42,7 +58,24 @@ std::ostream& operator<<(std::ostream& os, const Customer& customer)
 		os << "Customer Type: " << "Elderly Customer" << std::endl;
 	}
 
+
 	os << "Customer Number: " << customer.customerNumber;
 
 	return os;
 }
+
+int DateOfBirth::CalcualteAge() const
+{
+	int yearClacultion = (*year - 1970) * 365 * 24;
+	int monthCalcultion = (*month - 1) * 30 * 24;
+	int dayCalculation = (*day - 1) * 24;
+
+	auto now = std::chrono::system_clock::now();
+
+	auto birth = std::chrono::system_clock::from_time_t(0) + std::chrono::hours(yearClacultion + monthCalcultion + dayCalculation);
+
+	auto ageInSeconds = std::chrono::duration_cast<std::chrono::seconds>(now - birth).count();
+
+	return static_cast<int>(ageInSeconds / (24 * 60 * 60 * 365.25));
+}
+
