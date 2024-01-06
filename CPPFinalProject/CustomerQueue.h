@@ -9,10 +9,10 @@
 
 struct Node
 {
-	Customer customer;
+	Customer& customer;
 	std::unique_ptr<Node> next;
 
-	Node(Customer customer) : customer(customer), next(nullptr) {}
+	Node(Customer& customer) : customer(customer), next(nullptr) {}
 };
 
 class CustomerQueue

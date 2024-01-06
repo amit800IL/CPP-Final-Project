@@ -10,13 +10,16 @@ int main()
 {
 	std::unique_ptr<CustomerQueue> customerQueue = std::make_unique<CustomerQueue>();
 
-	std::unique_ptr<Customer> customer = std::make_unique<Customer>();
+	std::unique_ptr<DateOfBirth> birthDate = std::make_unique<DateOfBirth>(5,11,1998);
+	std::unique_ptr<DateOfBirth> birthDate2 = std::make_unique<DateOfBirth>(5, 11, 1998);
 
-	std::unique_ptr<Customer> customer2 = std::make_unique<Customer>();
+	std::unique_ptr<Customer> customer = std::make_unique<Customer>(true, std::move(*birthDate));
 
-	customerQueue->Enqueue(*customer);
+	std::unique_ptr<Customer> customer2 = std::make_unique<Customer>(true, std::move(*birthDate2));
 
-	customerQueue->Enqueue(*customer2);
+	customerQueue->Enqueue(std::move(*customer));
+
+	customerQueue->Enqueue(std::move(*customer2));
 
 	customerQueue->Dequeue();
 
