@@ -1,10 +1,17 @@
-#include "MailActions.h"
+#include "ServiceCustomerCommunication.h"
 
-//MailActionsManager::MailActionsManager() {}
-//
-//MailActionsManager::MailActionsManager(MailActionsManager&& mailActions) noexcept {}
+void ServiceCustomerCommunication::CallCustomer(Customer& customer)
+{
+	int customerNumber = customer.GetCustomerNumber();
 
-void MailActionsManager::MakingAction()
+	if (customerNumber)
+	{
+		std::cout << " Customer " << customerNumber << " has been called " << std::endl;
+		MakingAction();
+	}
+}
+
+void ServiceCustomerCommunication::MakingAction()
 {
 	char input = '0';
 
@@ -48,6 +55,4 @@ void MailActionsManager::MakingAction()
 		}
 
 	} while ((input != 'q' && input != 'Q'));
-
 }
-MailActionsManager::~MailActionsManager() {}

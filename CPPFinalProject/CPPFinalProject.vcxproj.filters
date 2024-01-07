@@ -30,6 +30,12 @@
     <ClCompile Include="MailOfficial.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IMailCustomerMediator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ServiceCustomerCommunication.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MailActions.h">
@@ -42,6 +48,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MailOfficial.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IServiceCustomerMediator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ServiceCustomerCommunication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
