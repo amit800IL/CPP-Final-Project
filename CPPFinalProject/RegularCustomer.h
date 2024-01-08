@@ -5,7 +5,10 @@
 
 class RegularCustomer: public Customer
 {
+public:
+	RegularCustomer(const DateOfBirth& dateOfBirth);
 
+	RegularCustomer(RegularCustomer&& customer) noexcept;
 
 };
 

@@ -3,11 +3,11 @@
 
 #include "Customer.h";
 #include "CustomerQueue.h"
-#include "MailActions.h"
-#include <iostream>
-#include "MailOfficial.h"
 #include "IServiceCustomerMediator.h"
+#include "MailActions.h"
+#include "MailOfficial.h"
 #include "ServiceCustomerCommunication.h"
+#include <iostream>
 
 int main()
 {
@@ -15,26 +15,27 @@ int main()
 
 	std::unique_ptr<MailOfficial> mailOfficial = std::make_unique<MailOfficial>();
 
-	std::unique_ptr<CustomerQueue> customerQueue = std::make_unique<CustomerQueue>();
+	std::shared_ptr<CustomerQueue> customerQueue = std::make_shared<CustomerQueue>();
 
-	std::unique_ptr<DateOfBirth> birthDate = std::make_unique<DateOfBirth>(11,12,1998);
-	std::unique_ptr<DateOfBirth> birthDate2 = std::make_unique<DateOfBirth>(17,3,1955);
+	std::unique_ptr<DateOfBirth> birthDate = std::make_unique<DateOfBirth>(11, 12, 1998);
+	std::unique_ptr<DateOfBirth> birthDate2 = std::make_unique<DateOfBirth>(17, 3, 1955);
+	std::unique_ptr<DateOfBirth> birthDate3 = std::make_unique<DateOfBirth>(3, 1, 2000);
+	std::unique_ptr<DateOfBirth> birthDate4 = std::make_unique<DateOfBirth>(17, 3, 1940);
 
-	std::unique_ptr<Customer> customer = std::make_unique<Customer>(std::move(*birthDate));
+	std::unique_ptr<Customer> customer = std::make_unique<RegularCustomer>(*birthDate);
 
-	std::unique_ptr<Customer> customer2 = std::make_unique<Customer>(std::move(*birthDate2));
+	std::unique_ptr<Customer> customer2 = std::make_unique<ElderlyCustomer>(*birthDate2);
+
+	std::unique_ptr<Customer> customer3 = std::make_unique<RegularCustomer>(*birthDate3);
+
+	std::unique_ptr<Customer> customer4 = std::make_unique<ElderlyCustomer>(*birthDate4);
 
 	customerQueue->Enqueue(std::move(*customer));
+	customerQueue->Enqueue(std::move(*customer2));
+	customerQueue->Enqueue(std::move(*customer3));
+	customerQueue->Enqueue(std::move(*customer4));
 
 	mailActionsManager->CallCustomer(*customer, &IServiceCustomerMediator::MakingAction);
-
-	customerQueue->Dequeue();
-
-	customerQueue->Enqueue(std::move(*customer2));
-
-	mailActionsManager->CallCustomer(*customer2, &IServiceCustomerMediator::MakingAction);
-
-	customerQueue->Dequeue();
 
 	return 0;
 }

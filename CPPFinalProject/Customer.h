@@ -3,9 +3,10 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
+#include <chrono>
 #include <iostream>
 #include <memory>
-#include <chrono>
+
 
 struct DateOfBirth
 {
@@ -15,7 +16,11 @@ struct DateOfBirth
 
 	DateOfBirth(int day, int month, int year) : day(std::make_unique<int>(day)), month(std::make_unique<int>(month)), year(std::make_unique<int>(year)) {}
 
-	DateOfBirth(DateOfBirth&& dateOfBirth) noexcept : day(std::move(dateOfBirth.day)), month(std::move(dateOfBirth.month)), year(std::move(dateOfBirth.year)) {}
+	DateOfBirth(const DateOfBirth& other) 
+		:day(std::make_unique<int>(*other.day)),
+		month(std::make_unique<int>(*other.month)),
+		year(std::make_unique<int>(*other.year))
+	{};
 
 	friend std::ostream& operator<<(std::ostream& os, const DateOfBirth& date);
 
@@ -26,21 +31,21 @@ class Customer
 {
 	friend std::ostream& operator<<(std::ostream& os, const Customer& customer);
 
-private:
+protected:
 	std::unique_ptr<DateOfBirth> dateOfBirth;
-	int customerNumber; 
+	int customerNumber;
 
 	static int lastAssignedCustomerNumber;
 
 public:
 
-	Customer(DateOfBirth&& dateOfBirth);
+	Customer(const DateOfBirth& dateOfBirth);
 
 	Customer(Customer&& customer) noexcept;
 
 	int GetCustomerNumber();
 
-	bool GetCustomerType() const;
+	bool IsElderlyCustomer() const;
 
 	~Customer();
 };

@@ -1,11 +1,16 @@
 #pragma once
 
-#include "Customer.h"
 #include <iostream>
+#include <iterator>
 #include <memory>
+
 
 #ifndef CUSTOMERQUEUE_H
 #define CUSTOMERQUEUE_H
+
+#include "Customer.h"
+#include "ElderlyCustomer.h"
+#include "RegularCustomer.h"
 
 struct Node
 {
@@ -19,6 +24,7 @@ class CustomerQueue
 {
 private:
 	std::unique_ptr<Node> head;
+	std::unique_ptr<Customer> lastServedCustomer;
 	Node* tail;
 
 public:
@@ -29,6 +35,9 @@ public:
 	void Enqueue(Customer&& customer);
 
 	void Dequeue();
+
+	void EnqueueElderly(std::unique_ptr<Node> newNode);
+	void EnqueueClostInLine(std::unique_ptr<Node> newNode);
 };
 
 

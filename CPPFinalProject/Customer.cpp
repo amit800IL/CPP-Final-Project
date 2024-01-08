@@ -2,29 +2,28 @@
 
 int Customer::lastAssignedCustomerNumber = 0;
 
-Customer::Customer(DateOfBirth&& dateOfBirth)
+Customer::Customer(const DateOfBirth& dateOfBirth)
 {
-	this->dateOfBirth = std::make_unique<DateOfBirth>(std::move(dateOfBirth));
+	this->dateOfBirth = std::make_unique<DateOfBirth>(dateOfBirth);
 
 	customerNumber = ++lastAssignedCustomerNumber;
 
-	GetCustomerType();
+	IsElderlyCustomer();
 }
 
+Customer::Customer(Customer&& customer) noexcept : dateOfBirth(std::move(customer.dateOfBirth)) {}
 
-Customer::Customer(Customer&& customer) noexcept :
-	dateOfBirth{ std::move(customer.dateOfBirth) } {}
 
 int Customer::GetCustomerNumber()
 {
 	return customerNumber;
 }
 
-bool Customer::GetCustomerType() const
+bool Customer::IsElderlyCustomer() const
 {
 	int age = dateOfBirth->CalcualteAge();
 
-	if (age < 65)
+	if (age >= 65)
 	{
 		return true;
 	}
@@ -49,13 +48,13 @@ std::ostream& operator<<(std::ostream& os, const Customer& customer)
 
 	std::cout << customer.dateOfBirth->CalcualteAge() << std::endl;
 
-	if (customer.GetCustomerType())
+	if (customer.IsElderlyCustomer())
 	{
-		os << "Customer Type: " << "RegualrCustomer" << std::endl;
+		os << "Customer Type: " << "Elderly Customer" << std::endl;
 	}
 	else
 	{
-		os << "Customer Type: " << "Elderly Customer" << std::endl;
+		os << "Customer Type: " << "Regular Customer" << std::endl;
 	}
 
 

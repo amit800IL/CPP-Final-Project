@@ -7,7 +7,10 @@
 
 class ElderlyCustomer: public Customer
 {
+public:
+	ElderlyCustomer(const DateOfBirth& dateOfBirth);
 
+	ElderlyCustomer(ElderlyCustomer&& customer) noexcept;
 };
 
 #endif

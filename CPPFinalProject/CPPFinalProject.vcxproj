@@ -130,16 +130,20 @@
     <ClCompile Include="CPPFinalProject.cpp" />
     <ClCompile Include="Customer.cpp" />
     <ClCompile Include="CustomerQueue.cpp" />
+    <ClCompile Include="ElderlyCustomer.cpp" />
     <ClCompile Include="IMailCustomerMediator.cpp" />
     <ClCompile Include="MailActions.cpp" />
+    <ClCompile Include="RegularCustomer.cpp" />
     <ClCompile Include="ServiceCustomerCommunication.cpp" />
     <ClCompile Include="MailOfficial.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h" />
     <ClInclude Include="CustomerQueue.h" />
+    <ClInclude Include="ElderlyCustomer.h" />
     <ClInclude Include="IServiceCustomerMediator.h" />
     <ClInclude Include="MailActions.h" />
+    <ClInclude Include="RegularCustomer.h" />
     <ClInclude Include="ServiceCustomerCommunication.h" />
     <ClInclude Include="MailOfficial.h" />
   </ItemGroup>
