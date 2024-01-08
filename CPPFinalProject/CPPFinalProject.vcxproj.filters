@@ -33,7 +33,7 @@
     <ClCompile Include="IMailCustomerMediator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ServiceCustomerCommunication.cpp">
+    <ClCompile Include="MailCustomerCommunication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="RegularCustomer.cpp">
@@ -59,7 +59,7 @@
     <ClInclude Include="IServiceCustomerMediator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ServiceCustomerCommunication.h">
+    <ClInclude Include="MailCustomerCommunication.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RegularCustomer.h">

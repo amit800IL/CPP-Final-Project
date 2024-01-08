@@ -1,6 +1,6 @@
-#include "ServiceCustomerCommunication.h"
+#include "MailCustomerCommunication.h"
 
-void ServiceCustomerCommunication::CallCustomer(Customer& customer, void (IServiceCustomerMediator::* MakingAction)())
+void MailCustomerCommunication::CallCustomer(Customer& customer, void (IServiceCustomerMediator::* MakingAction)())
 {
 	int customerNumber = customer.GetCustomerNumber();
 
@@ -11,7 +11,7 @@ void ServiceCustomerCommunication::CallCustomer(Customer& customer, void (IServi
 	}
 }
 
-void ServiceCustomerCommunication::MakingAction()
+void MailCustomerCommunication::MakingAction()
 {
 	char input = '0';
 

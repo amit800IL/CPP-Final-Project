@@ -1,10 +1,10 @@
 
-#ifndef PROVIDERCUSTOMERCOMMUNICATION_H
-#define PROVIDERCUSTOMERCOMMUNICATION_H
+#ifndef MAILCUSTOMERCOMMUNICATION_H
+#define MAILCUSTOMERCOMMUNICATION_H
 
 #include "IServiceCustomerMediator.h"
 
-class ServiceCustomerCommunication : public IServiceCustomerMediator
+class MailCustomerCommunication : public IServiceCustomerMediator
 {
 public:
 	void CallCustomer(Customer& customer, void (IServiceCustomerMediator::* MakingAction)()) override;

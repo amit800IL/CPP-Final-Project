@@ -3,15 +3,14 @@
 
 #include "Customer.h";
 #include "CustomerQueue.h"
-#include "IServiceCustomerMediator.h"
 #include "MailActions.h"
 #include "MailOfficial.h"
-#include "ServiceCustomerCommunication.h"
+#include "MailCustomerCommunication.h"
 #include <iostream>
 
 int main()
 {
-	std::shared_ptr<IServiceCustomerMediator> mailActionsManager = std::make_shared<ServiceCustomerCommunication>();
+	std::shared_ptr<IServiceCustomerMediator> mailActionsManager = std::make_shared<MailCustomerCommunication>();
 
 	std::unique_ptr<MailOfficial> mailOfficial = std::make_unique<MailOfficial>();
 
@@ -36,6 +35,9 @@ int main()
 	customerQueue->Enqueue(std::move(*customer4));
 
 	mailActionsManager->CallCustomer(*customer, &IServiceCustomerMediator::MakingAction);
+	mailActionsManager->CallCustomer(*customer2, &IServiceCustomerMediator::MakingAction);
+	mailActionsManager->CallCustomer(*customer3, &IServiceCustomerMediator::MakingAction);
+	mailActionsManager->CallCustomer(*customer4, &IServiceCustomerMediator::MakingAction);
 
 	return 0;
 }

@@ -134,7 +134,7 @@
     <ClCompile Include="IMailCustomerMediator.cpp" />
     <ClCompile Include="MailActions.cpp" />
     <ClCompile Include="RegularCustomer.cpp" />
-    <ClCompile Include="ServiceCustomerCommunication.cpp" />
+    <ClCompile Include="MailCustomerCommunication.cpp" />
     <ClCompile Include="MailOfficial.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +144,7 @@
     <ClInclude Include="IServiceCustomerMediator.h" />
     <ClInclude Include="MailActions.h" />
     <ClInclude Include="RegularCustomer.h" />
-    <ClInclude Include="ServiceCustomerCommunication.h" />
+    <ClInclude Include="MailCustomerCommunication.h" />
     <ClInclude Include="MailOfficial.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
