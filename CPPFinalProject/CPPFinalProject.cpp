@@ -13,7 +13,7 @@ int main()
 {
 	std::shared_ptr<IServiceCustomerMediator> mailActionsManager = std::make_shared<ServiceCustomerCommunication>();
 
-	std::unique_ptr<MailOfficial> mailOfficial = std::make_unique<MailOfficial>(mailActionsManager);
+	std::unique_ptr<MailOfficial> mailOfficial = std::make_unique<MailOfficial>();
 
 	std::unique_ptr<CustomerQueue> customerQueue = std::make_unique<CustomerQueue>();
 

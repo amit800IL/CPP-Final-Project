@@ -8,10 +8,8 @@
 
 class MailOfficial
 {
-private:
-	std::shared_ptr<IServiceCustomerMediator> mediator;
 public:
-	MailOfficial(std::shared_ptr<IServiceCustomerMediator> mediator);
+	MailOfficial();
 	MailOfficial(MailOfficial&& mailOfficial) noexcept;
 };
 
