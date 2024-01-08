@@ -1,13 +1,13 @@
 #include "ServiceCustomerCommunication.h"
 
-void ServiceCustomerCommunication::CallCustomer(Customer& customer)
+void ServiceCustomerCommunication::CallCustomer(Customer& customer, void (IServiceCustomerMediator::* MakingAction)())
 {
 	int customerNumber = customer.GetCustomerNumber();
 
 	if (customerNumber)
 	{
 		std::cout << " Customer " << customerNumber << " has been called " << std::endl;
-		MakingAction();
+		this->MakingAction();
 	}
 }
 

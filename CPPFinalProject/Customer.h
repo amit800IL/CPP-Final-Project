@@ -27,7 +27,6 @@ class Customer
 	friend std::ostream& operator<<(std::ostream& os, const Customer& customer);
 
 private:
-	std::unique_ptr<bool> isRegularCustomer;
 	std::unique_ptr<DateOfBirth> dateOfBirth;
 	int customerNumber; 
 
@@ -35,7 +34,7 @@ private:
 
 public:
 
-	Customer(bool isRegularCustomer, DateOfBirth&& dateOfBirth);
+	Customer(DateOfBirth&& dateOfBirth);
 
 	Customer(Customer&& customer) noexcept;
 

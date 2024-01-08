@@ -7,7 +7,7 @@
 class ServiceCustomerCommunication : public IServiceCustomerMediator
 {
 public:
-	void CallCustomer(Customer& customer) override;
+	void CallCustomer(Customer& customer, void (IServiceCustomerMediator::* MakingAction)()) override;
 	void MakingAction() override;
 };
 

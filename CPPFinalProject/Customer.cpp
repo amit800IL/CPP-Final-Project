@@ -2,17 +2,17 @@
 
 int Customer::lastAssignedCustomerNumber = 0;
 
-Customer::Customer(bool isRegularCustomer, DateOfBirth&& dateOfBirth)
+Customer::Customer(DateOfBirth&& dateOfBirth)
 {
-	this->isRegularCustomer = std::make_unique<bool>(isRegularCustomer);
 	this->dateOfBirth = std::make_unique<DateOfBirth>(std::move(dateOfBirth));
 
 	customerNumber = ++lastAssignedCustomerNumber;
+
+	GetCustomerType();
 }
 
 
 Customer::Customer(Customer&& customer) noexcept :
-	isRegularCustomer{ std::move(customer.isRegularCustomer) },
 	dateOfBirth{ std::move(customer.dateOfBirth) } {}
 
 int Customer::GetCustomerNumber()
