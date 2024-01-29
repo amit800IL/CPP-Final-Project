@@ -3,14 +3,14 @@
 #include <iostream>
 #include <iterator>
 #include <memory>
+#include "Customer.h"
+#include "ElderlyCustomer.h"
+#include "RegularCustomer.h"
 
 
 #ifndef CUSTOMERQUEUE_H
 #define CUSTOMERQUEUE_H
 
-#include "Customer.h"
-#include "ElderlyCustomer.h"
-#include "RegularCustomer.h"
 
 struct Node
 {
@@ -34,10 +34,9 @@ public:
 
 	void Enqueue(Customer&& customer);
 
-	void Dequeue();
+	const Node& GetHead() const;
 
-	void EnqueueElderly(std::unique_ptr<Node> newNode);
-	void EnqueueClostInLine(std::unique_ptr<Node> newNode);
+	void Dequeue();
 };
 
 

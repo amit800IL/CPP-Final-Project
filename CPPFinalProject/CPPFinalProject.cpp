@@ -4,8 +4,8 @@
 #include "Customer.h";
 #include "CustomerQueue.h"
 #include "MailActions.h"
-#include "MailOfficial.h"
 #include "MailCustomerCommunication.h"
+#include "MailOfficial.h"
 #include <iostream>
 
 int main()
@@ -34,12 +34,14 @@ int main()
 	customerQueue->Enqueue(std::move(*customer3));
 	customerQueue->Enqueue(std::move(*customer4));
 
-	mailActionsManager->CallCustomer(*customer, &IServiceCustomerMediator::MakingAction);
-	mailActionsManager->CallCustomer(*customer2, &IServiceCustomerMediator::MakingAction);
-	mailActionsManager->CallCustomer(*customer3, &IServiceCustomerMediator::MakingAction);
-	mailActionsManager->CallCustomer(*customer4, &IServiceCustomerMediator::MakingAction);
+
+	//for (const Customer& customer : *customerQueue)
+	//{
+	//	// Your logic here
+	//	mailActionsManager->CallCustomer(customer, &IServiceCustomerMediator::MakingAction);
+	//}
+
 
 	return 0;
 }
-
 
