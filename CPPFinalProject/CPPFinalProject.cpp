@@ -35,32 +35,13 @@ int main()
 	customerQueue->Enqueue(std::move(*customer4));
 
 
-	for (auto it = customerQueue->begin(); it != customerQueue->end(); ++it)
-	{
-		Customer& customer = *it;
+	//for (const Customer& customer : *customerQueue)
+	//{
+	//	// Your logic here
+	//	mailActionsManager->CallCustomer(customer, &IServiceCustomerMediator::MakingAction);
+	//}
 
-		// Store information about which customer to serve
-		bool serveElderly = customer.IsElderlyCustomer() && !customerQueue->LastCustomerRegular();
 
-		mailActionsManager->CallCustomer(customer, &IServiceCustomerMediator::MakingAction);
-
-		// Output the serving message based on the stored information
-		if (serveElderly)
-		{
-			std::cout << "Serving elderly customer: " << customer << std::endl;
-		}
-		else
-		{
-			std::cout << "Serving regular customer: " << customer << std::endl;
-
-		}
-	}
-
-			if (!customerQueue->IsEmpty())
-			{
-				customerQueue->Dequeue();
-			}
-	// Dequeue the appropriate customer after the iteration
 	return 0;
 }
 
