@@ -16,25 +16,25 @@ struct DateOfBirth
 	std::unique_ptr<int> month;
 	std::unique_ptr<int> year;
 
-	DateOfBirth(int day, int month, int year) : day(std::make_unique<int>(day)), month(std::make_unique<int>(month)), year(std::make_unique<int>(year)) {}
+	DateOfBirth(int day, int month, int year) : day(make_unique<int>(day)), month(make_unique<int>(month)), year(make_unique<int>(year)) {}
 
 	DateOfBirth(const DateOfBirth& other) 
-		:day(std::make_unique<int>(*other.day)),
-		month(std::make_unique<int>(*other.month)),
-		year(std::make_unique<int>(*other.year))
+		:day(make_unique<int>(*other.day)),
+		month(make_unique<int>(*other.month)),
+		year(make_unique<int>(*other.year))
 	{};
 
-	friend std::ostream& operator<<(std::ostream& os, const DateOfBirth& date);
+	friend std::ostream& operator<<(ostream& os, const DateOfBirth& date);
 
 	int CalcualteAge() const;
 };
 
 class Customer
 {
-	friend std::ostream& operator<<(std::ostream& os, const Customer& customer);
+	friend ostream& operator<<(ostream& os, const Customer& customer);
 
 protected:
-	std::unique_ptr<DateOfBirth> dateOfBirth;
+	unique_ptr<DateOfBirth> dateOfBirth;
 	int customerNumber;
 
 	static int lastAssignedCustomerNumber;

@@ -35,26 +35,26 @@ bool Customer::IsElderlyCustomer() const
 
 Customer::~Customer() {}
 
-std::ostream& operator<<(std::ostream& os, const DateOfBirth& date)
+ostream& operator<<(ostream& os, const DateOfBirth& date)
 {
 	os << "Date of Birth: " << *date.day << '/' << *date.month << '/' << *date.year;
 	return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const Customer& customer)
+ostream& operator<<(ostream& os, const Customer& customer)
 {
-	os << "Customer Details:" << std::endl;
+	os << "Customer Details:" << endl;
 	os << *customer.dateOfBirth << " , Age is: ";
 
-	std::cout << customer.dateOfBirth->CalcualteAge() << std::endl;
+	cout << customer.dateOfBirth->CalcualteAge() << endl;
 
 	if (customer.IsElderlyCustomer())
 	{
-		os << "Customer Type: " << "Elderly Customer" << std::endl;
+		os << "Customer Type: " << "Elderly Customer" << endl;
 	}
 	else
 	{
-		os << "Customer Type: " << "Regular Customer" << std::endl;
+		os << "Customer Type: " << "Regular Customer" << endl;
 	}
 
 
