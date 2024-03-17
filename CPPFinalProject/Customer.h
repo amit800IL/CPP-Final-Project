@@ -7,6 +7,8 @@
 #include <iostream>
 #include <memory>
 
+using namespace std;
+
 
 struct DateOfBirth
 {

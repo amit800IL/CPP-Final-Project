@@ -11,11 +11,13 @@
 #ifndef CUSTOMERQUEUE_H
 #define CUSTOMERQUEUE_H
 
+using namespace std;
+
 
 struct Node
 {
 	Customer& customer;
-	std::unique_ptr<Node> next;
+	unique_ptr<Node> next;
 
 	Node(Customer& customer) : customer(customer), next(nullptr) {}
 };
@@ -23,8 +25,8 @@ struct Node
 class CustomerQueue
 {
 private:
-	std::unique_ptr<Node> head;
-	std::unique_ptr<Customer> lastServedCustomer;
+	unique_ptr<Node> head;
+	unique_ptr<Customer> lastServedCustomer;
 	Node* tail;
 
 public:

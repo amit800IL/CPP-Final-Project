@@ -4,6 +4,8 @@
 
 #include "IServiceCustomerMediator.h"
 
+using namespace std;
+
 class MailCustomerCommunication : public IServiceCustomerMediator
 {
 public:

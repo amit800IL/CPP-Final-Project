@@ -10,32 +10,32 @@ void MailActionsManager::MakingAction()
 
 	bool hasCustomerBeenServed = false;
 
-	std::cout << "Choose which action you want to do " << std::endl;
-	std::cout << "1. i want to receive a package " << std::endl;
-	std::cout << "2. i want to deliever a package " << std::endl;
-	std::cout << "3. i want to make a payment" << std::endl;
-	std::cout << "4. i want to purchase a product " << std::endl;
+	cout << "Choose which action you want to do " << endl;
+	cout << "1. i want to receive a package " << endl;
+	cout << "2. i want to deliever a package " << endl;
+	cout << "3. i want to make a payment" << endl;
+	cout << "4. i want to purchase a product " << endl;
 
 	do
 	{
-		std::cin >> input;
+		cin >> input;
 
 		switch (input)
 		{
 		case '1':
-			std::cout << "Here is your pachage" << std::endl;
+			cout << "Here is your pachage" << endl;
 			hasCustomerBeenServed = true;
 			break;
 		case '2':
-			std::cout << "Your package has been sent" << std::endl;
+			cout << "Your package has been sent" << endl;
 			hasCustomerBeenServed = true;
 			break;
 		case '3':
-			std::cout << "Your payment has been made" << std::endl;
+			cout << "Your payment has been made" << endl;
 			hasCustomerBeenServed = true;
 			break;
 		case '4':
-			std::cout << "here is your product" << std::endl;
+			cout << "here is your product" << endl;
 			hasCustomerBeenServed = true;
 			break;
 		default:

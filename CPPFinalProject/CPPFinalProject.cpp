@@ -8,31 +8,33 @@
 #include "MailOfficial.h"
 #include <iostream>
 
+using namespace std;
+
 int main()
 {
-	std::shared_ptr<IServiceCustomerMediator> mailActionsManager = std::make_shared<MailCustomerCommunication>();
+	shared_ptr<IServiceCustomerMediator> mailActionsManager = make_shared<MailCustomerCommunication>();
 
-	std::unique_ptr<MailOfficial> mailOfficial = std::make_unique<MailOfficial>();
+	unique_ptr<MailOfficial> mailOfficial = make_unique<MailOfficial>();
 
-	std::shared_ptr<CustomerQueue> customerQueue = std::make_shared<CustomerQueue>();
+	shared_ptr<CustomerQueue> customerQueue = make_shared<CustomerQueue>();
 
-	std::unique_ptr<DateOfBirth> birthDate = std::make_unique<DateOfBirth>(11, 12, 1998);
-	std::unique_ptr<DateOfBirth> birthDate2 = std::make_unique<DateOfBirth>(17, 3, 1955);
-	std::unique_ptr<DateOfBirth> birthDate3 = std::make_unique<DateOfBirth>(3, 1, 2000);
-	std::unique_ptr<DateOfBirth> birthDate4 = std::make_unique<DateOfBirth>(17, 3, 1940);
+	unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(11, 12, 1998);
+	unique_ptr<DateOfBirth> birthDate2 = make_unique<DateOfBirth>(17, 3, 1955);
+	unique_ptr<DateOfBirth> birthDate3 = make_unique<DateOfBirth>(3, 1, 2000);
+	unique_ptr<DateOfBirth> birthDate4 = make_unique<DateOfBirth>(17, 3, 1940);
 
-	std::unique_ptr<Customer> customer = std::make_unique<RegularCustomer>(*birthDate);
+	unique_ptr<Customer> customer = make_unique<RegularCustomer>(*birthDate);
 
-	std::unique_ptr<Customer> customer2 = std::make_unique<ElderlyCustomer>(*birthDate2);
+	unique_ptr<Customer> customer2 = make_unique<ElderlyCustomer>(*birthDate2);
 
-	std::unique_ptr<Customer> customer3 = std::make_unique<RegularCustomer>(*birthDate3);
+	unique_ptr<Customer> customer3 = make_unique<RegularCustomer>(*birthDate3);
 
-	std::unique_ptr<Customer> customer4 = std::make_unique<ElderlyCustomer>(*birthDate4);
+	unique_ptr<Customer> customer4 = make_unique<ElderlyCustomer>(*birthDate4);
 
-	customerQueue->Enqueue(std::move(*customer));
-	customerQueue->Enqueue(std::move(*customer2));
-	customerQueue->Enqueue(std::move(*customer3));
-	customerQueue->Enqueue(std::move(*customer4));
+	customerQueue->Enqueue(move(*customer));
+	customerQueue->Enqueue(move(*customer2));
+	customerQueue->Enqueue(move(*customer3));
+	customerQueue->Enqueue(move(*customer4));
 
 	mailActionsManager->CallCustomer(*customer, &IServiceCustomerMediator::MakingAction);
 

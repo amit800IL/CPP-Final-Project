@@ -4,14 +4,14 @@ int Customer::lastAssignedCustomerNumber = 0;
 
 Customer::Customer(const DateOfBirth& dateOfBirth)
 {
-	this->dateOfBirth = std::make_unique<DateOfBirth>(dateOfBirth);
+	this->dateOfBirth = make_unique<DateOfBirth>(dateOfBirth);
 
 	customerNumber = ++lastAssignedCustomerNumber;
 
 	IsElderlyCustomer();
 }
 
-Customer::Customer(Customer&& customer) noexcept : dateOfBirth(std::move(customer.dateOfBirth)) {}
+Customer::Customer(Customer&& customer) noexcept : dateOfBirth(move(customer.dateOfBirth)) {}
 
 
 int Customer::GetCustomerNumber()
@@ -69,11 +69,11 @@ int DateOfBirth::CalcualteAge() const
 	int monthCalcultion = (*month - 1) * 30 * 24;
 	int dayCalculation = (*day - 1) * 24;
 
-	auto now = std::chrono::system_clock::now();
+	auto now = chrono::system_clock::now();
 
-	auto birth = std::chrono::system_clock::from_time_t(0) + std::chrono::hours(yearClacultion + monthCalcultion + dayCalculation);
+	auto birth = chrono::system_clock::from_time_t(0) + chrono::hours(yearClacultion + monthCalcultion + dayCalculation);
 
-	auto ageInSeconds = std::chrono::duration_cast<std::chrono::seconds>(now - birth).count();
+	auto ageInSeconds = chrono::duration_cast<chrono::seconds>(now - birth).count();
 
 	return static_cast<int>(ageInSeconds / (24 * 60 * 60 * 365.25));
 }
