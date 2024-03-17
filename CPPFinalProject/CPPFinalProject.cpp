@@ -34,13 +34,7 @@ int main()
 	customerQueue->Enqueue(std::move(*customer3));
 	customerQueue->Enqueue(std::move(*customer4));
 
-
-	//for (const Customer& customer : *customerQueue)
-	//{
-	//	// Your logic here
-	//	mailActionsManager->CallCustomer(customer, &IServiceCustomerMediator::MakingAction);
-	//}
-
+	mailActionsManager->CallCustomer(*customer, &IServiceCustomerMediator::MakingAction);
 
 	return 0;
 }
