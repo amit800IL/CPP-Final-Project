@@ -11,13 +11,13 @@ void CustomerQueue::Enqueue(Customer&& customer)
 
 	if (IsEmpty() || newNode->customer.IsElderlyCustomer())
 	{
-		head = move(newNode);
+		tail = move(head);
 
-		tail = head.get();
+		head = move(newNode);
 	}
 	else if (IsEmpty())
 	{
-		unique_ptr<Node> current = move(head);
+		unique_ptr<Node> current = move(tail);
 
 		while (current->next != nullptr && !newNode->customer.IsElderlyCustomer())
 		{
@@ -31,23 +31,20 @@ void CustomerQueue::Enqueue(Customer&& customer)
 	cout << customer << " enqueued to the queue." << endl;
 }
 
-void CustomerQueue::Dequeue()
+unique_ptr<Node> CustomerQueue::Dequeue()
 {
-	if (IsEmpty())
-	{
-		return;
-	}
+	unique_ptr<Node> tempPointer = move(tail);
 
-	unique_ptr<Node> tempPointer = move(head);
+	tail = move(tempPointer->next);
 
-	head = move(tempPointer->next);
+	//if (!head)
+	//{
+	//	tail = nullptr;
+	//}
 
-	if (!head)
-	{
-		tail = nullptr;
-	}
+	cout << "Customer number: " << tempPointer->customer.GetCustomerNumber() << " dequeued from the queue." << endl;
 
-	cout << "Customer number: " << tempPointer->customer.GetCustomerNumber() << " dequeued from the queue.\n";
+	return tempPointer;
 }
 
 const Node& CustomerQueue::GetHead() const

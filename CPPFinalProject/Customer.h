@@ -12,9 +12,9 @@ using namespace std;
 
 struct DateOfBirth
 {
-	std::unique_ptr<int> day;
-	std::unique_ptr<int> month;
-	std::unique_ptr<int> year;
+	unique_ptr<int> day;
+	unique_ptr<int> month;
+	unique_ptr<int> year;
 
 	DateOfBirth(int day, int month, int year) : day(make_unique<int>(day)), month(make_unique<int>(month)), year(make_unique<int>(year)) {}
 

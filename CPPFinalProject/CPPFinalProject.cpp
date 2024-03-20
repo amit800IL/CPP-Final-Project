@@ -19,7 +19,7 @@ int main()
 	shared_ptr<CustomerQueue> customerQueue = make_shared<CustomerQueue>();
 
 	unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(11, 12, 1998);
-	unique_ptr<DateOfBirth> birthDate2 = make_unique<DateOfBirth>(17, 3, 1955);
+	unique_ptr<DateOfBirth> birthDate2 = make_unique<DateOfBirth>(17, 3, 1950);
 	unique_ptr<DateOfBirth> birthDate3 = make_unique<DateOfBirth>(3, 1, 2000);
 	unique_ptr<DateOfBirth> birthDate4 = make_unique<DateOfBirth>(17, 3, 1940);
 
@@ -36,7 +36,11 @@ int main()
 	customerQueue->Enqueue(move(*customer3));
 	customerQueue->Enqueue(move(*customer4));
 
-	mailActionsManager->CallCustomer(*customer, &IServiceCustomerMediator::MakingAction);
+	unique_ptr<Node> customerToServeNode = customerQueue->Dequeue();
+
+	Customer& customerToServe = customerToServeNode->customer;
+
+	mailActionsManager->CallCustomer(customerToServe, &IServiceCustomerMediator::MakingAction);
 
 	return 0;
 }

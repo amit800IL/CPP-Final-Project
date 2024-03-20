@@ -27,7 +27,7 @@ class CustomerQueue
 private:
 	unique_ptr<Node> head;
 	unique_ptr<Customer> lastServedCustomer;
-	Node* tail;
+	unique_ptr<Node> tail;
 
 public:
 	CustomerQueue() : head(nullptr), tail(nullptr) {}
@@ -38,7 +38,7 @@ public:
 
 	const Node& GetHead() const;
 
-	void Dequeue();
+	unique_ptr<Node> Dequeue();
 };
 
 
