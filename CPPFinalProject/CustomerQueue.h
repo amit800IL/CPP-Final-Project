@@ -6,6 +6,7 @@
 #include "Customer.h"
 #include "ElderlyCustomer.h"
 #include "RegularCustomer.h"
+#include "CustomerQueueIterator.h"
 
 
 #ifndef CUSTOMERQUEUE_H
