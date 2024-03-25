@@ -11,10 +11,12 @@ CustomerQueueIterator& CustomerQueueIterator::operator++()
 	return *this;
 }
 
-bool CustomerQueueIterator::operator!=(const CustomerQueueIterator& other) const {
+bool CustomerQueueIterator::operator!=(const CustomerQueueIterator& other) const
+{
 	return current != other.current;
 }
 
-Customer& CustomerQueueIterator::operator*() const {
+Customer& CustomerQueueIterator::operator*() const
+{
 	return current->customer;
 }
