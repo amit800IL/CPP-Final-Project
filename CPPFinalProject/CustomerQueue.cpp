@@ -5,57 +5,51 @@ bool CustomerQueue::IsEmpty() const
 	return (head == nullptr);
 }
 
-void CustomerQueue::Enqueue(Customer&& customer)
-{
-	unique_ptr<Node> newNode = make_unique<Node>(customer);
+void CustomerQueue::Enqueue(Customer&& customer) {
+    unique_ptr<Node> newNode = make_unique<Node>(customer);
 
-	if (IsEmpty() || newNode->customer.IsElderlyCustomer())
-	{
-		tail = move(head);
+    if (IsEmpty()) {
+        head = move(newNode);
+        tail = head.get();
+    }
+    else {
+        tail->next = move(newNode);
+        tail = tail->next.get();
+    }
 
-		head = move(newNode);
-	}
-	else if (IsEmpty())
-	{
-		unique_ptr<Node> current = move(tail);
-
-		while (current->next != nullptr && !newNode->customer.IsElderlyCustomer())
-		{
-			current = move(current->next);
-		} 
-
-		newNode->next = move(current->next);
-		current->next = move(newNode);
-	}
-
-	cout << customer << " enqueued to the queue." << endl;
+    cout << customer << " enqueued to the queue." << endl;
 }
 
-unique_ptr<Node> CustomerQueue::Dequeue()
-{
-	unique_ptr<Node> tempPointer = move(tail);
+unique_ptr<Node> CustomerQueue::Dequeue() {
+    if (IsEmpty()) {
+        throw out_of_range("Queue is empty");
+    }
 
-	tail = move(tempPointer->next);
+    unique_ptr<Node> tempPointer = move(head);
+    head = move(tempPointer->next);
 
-	//if (!head)
-	//{
-	//	tail = nullptr;
-	//}
+    if (!head) {
+        tail = nullptr;
+    }
 
-	cout << "Customer number: " << tempPointer->customer.GetCustomerNumber() << " dequeued from the queue." << endl;
+    cout << "Customer number: " << tempPointer->customer.GetCustomerNumber() << " dequeued from the queue." << endl;
 
-	return tempPointer;
+    return tempPointer;
 }
 
-const Node& CustomerQueue::GetHead() const
-{
-	if (head)
-	{
-		return *head.get();
-	}
-	else
-	{
-		throw out_of_range("Queue is empty");
-	}
+const Node& CustomerQueue::GetHead() const {
+    if (IsEmpty()) {
+        throw out_of_range("Queue is empty");
+    }
+    else {
+        return *head.get();
+    }
 }
 
+CustomerQueueIterator CustomerQueue::begin() const {
+    return CustomerQueueIterator(head.get());
+}
+
+CustomerQueueIterator CustomerQueue::end() const {
+    return CustomerQueueIterator(nullptr);
+}

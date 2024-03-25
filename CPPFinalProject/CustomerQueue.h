@@ -14,6 +14,7 @@
 
 using namespace std;
 
+class CustomerQueueIterator;
 
 struct Node
 {
@@ -28,7 +29,7 @@ class CustomerQueue
 private:
 	unique_ptr<Node> head;
 	unique_ptr<Customer> lastServedCustomer;
-	unique_ptr<Node> tail;
+	Node* tail;
 
 public:
 	CustomerQueue() : head(nullptr), tail(nullptr) {}
@@ -40,6 +41,9 @@ public:
 	const Node& GetHead() const;
 
 	unique_ptr<Node> Dequeue();
+
+	CustomerQueueIterator begin() const;
+	CustomerQueueIterator end() const;
 };
 
 

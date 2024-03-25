@@ -1,8 +1,7 @@
-// CPPFinalProject.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include "Customer.h";
 #include "CustomerQueue.h"
+#include "CustomerQueueIterator.h"
 #include "MailActions.h"
 #include "MailCustomerCommunication.h"
 #include "MailOfficial.h"
@@ -36,11 +35,11 @@ int main()
 	customerQueue->Enqueue(move(*customer3));
 	customerQueue->Enqueue(move(*customer4));
 
-	unique_ptr<Node> customerToServeNode = customerQueue->Dequeue();
-
-	Customer& customerToServe = customerToServeNode->customer;
-
-	mailActionsManager->CallCustomer(customerToServe, &IServiceCustomerMediator::MakingAction);
+	for (CustomerQueueIterator it = customerQueue->begin(); it != customerQueue->end(); ++it) 
+	{
+		Customer& customer = *it;
+		mailActionsManager->CallCustomer(customer, &IServiceCustomerMediator::MakingAction);
+	}
 
 	return 0;
 }
