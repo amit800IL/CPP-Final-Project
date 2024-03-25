@@ -32,26 +32,14 @@ int main()
 	customerQueue->Enqueue(move(*customer4));
 	customerQueue->Enqueue(move(*customer2));
 
-    bool servedElderlyLast = false; 
 
-    while (!customerQueue->IsEmpty())
-    {
-        CustomerQueueIterator it = customerQueue->begin();
-        Customer& customer = *it;
-
-        if (!servedElderlyLast && !customer.IsElderlyCustomer())
-        {
-            mailActionsManager->CallCustomer(customer, &IServiceCustomerMediator::MakingAction);
-            servedElderlyLast = false;
-        }
-        else if (customer.IsElderlyCustomer())
-        {
-            mailActionsManager->CallCustomer(customer, &IServiceCustomerMediator::MakingAction);
-            servedElderlyLast = true;
-        }
-
-        customerQueue->Dequeue();
-    }
+	while (!customerQueue->IsEmpty())
+	{
+		CustomerQueueIterator it = customerQueue->begin();
+		Customer& customer = *it;
+		mailActionsManager->CallCustomer(customer, &IServiceCustomerMediator::MakingAction);
+		customerQueue->Dequeue();
+	}
 
 	return 0;
 }
