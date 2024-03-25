@@ -38,8 +38,6 @@ public:
 
 	void Enqueue(Customer&& customer);
 
-	const Node& GetHead() const;
-
 	unique_ptr<Node> Dequeue();
 
 	CustomerQueueIterator begin() const;

@@ -2,7 +2,8 @@
 
 CustomerQueueIterator::CustomerQueueIterator(Node* node) : current(node) {}
 
-CustomerQueueIterator& CustomerQueueIterator::operator++() {
+CustomerQueueIterator& CustomerQueueIterator::operator++()
+{
 	if (current)
 	{
 		current = current->next.get();
