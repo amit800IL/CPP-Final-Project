@@ -5,10 +5,12 @@ bool CustomerQueue::IsEmpty() const
 	return (head == nullptr);
 }
 
-void CustomerQueue::Enqueue(Customer&& customer) {
+void CustomerQueue::Enqueue(Customer&& customer)
+{
     unique_ptr<Node> newNode = make_unique<Node>(customer);
 
-    if (IsEmpty()) {
+    if (IsEmpty())
+    {
         head = move(newNode);
         tail = head.get();
     }
@@ -41,19 +43,24 @@ unique_ptr<Node> CustomerQueue::Dequeue()
     return tempPointer;
 }
 
-const Node& CustomerQueue::GetHead() const {
-    if (IsEmpty()) {
+const Node& CustomerQueue::GetHead() const
+{
+    if (IsEmpty())
+    {
         throw out_of_range("Queue is empty");
     }
-    else {
+    else
+    {
         return *head.get();
     }
 }
 
-CustomerQueueIterator CustomerQueue::begin() const {
+CustomerQueueIterator CustomerQueue::begin() const
+{
     return CustomerQueueIterator(head.get());
 }
 
-CustomerQueueIterator CustomerQueue::end() const {
+CustomerQueueIterator CustomerQueue::end() const
+{
     return CustomerQueueIterator(nullptr);
 }
