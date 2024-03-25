@@ -12,7 +12,8 @@ void CustomerQueue::Enqueue(Customer&& customer) {
         head = move(newNode);
         tail = head.get();
     }
-    else {
+    else
+    {
         tail->next = move(newNode);
         tail = tail->next.get();
     }
@@ -20,15 +21,18 @@ void CustomerQueue::Enqueue(Customer&& customer) {
     cout << customer << " enqueued to the queue." << endl;
 }
 
-unique_ptr<Node> CustomerQueue::Dequeue() {
-    if (IsEmpty()) {
+unique_ptr<Node> CustomerQueue::Dequeue()
+{
+    if (IsEmpty())
+    {
         throw out_of_range("Queue is empty");
     }
 
     unique_ptr<Node> tempPointer = move(head);
     head = move(tempPointer->next);
 
-    if (!head) {
+    if (!head)
+    {
         tail = nullptr;
     }
 

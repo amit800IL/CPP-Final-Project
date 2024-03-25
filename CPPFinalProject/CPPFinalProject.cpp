@@ -23,23 +23,35 @@ int main()
 	unique_ptr<DateOfBirth> birthDate4 = make_unique<DateOfBirth>(17, 3, 1940);
 
 	unique_ptr<Customer> customer = make_unique<RegularCustomer>(*birthDate);
-
 	unique_ptr<Customer> customer2 = make_unique<ElderlyCustomer>(*birthDate2);
-
 	unique_ptr<Customer> customer3 = make_unique<RegularCustomer>(*birthDate3);
-
 	unique_ptr<Customer> customer4 = make_unique<ElderlyCustomer>(*birthDate4);
 
 	customerQueue->Enqueue(move(*customer));
-	customerQueue->Enqueue(move(*customer2));
 	customerQueue->Enqueue(move(*customer3));
 	customerQueue->Enqueue(move(*customer4));
+	customerQueue->Enqueue(move(*customer2));
 
-	for (CustomerQueueIterator it = customerQueue->begin(); it != customerQueue->end(); ++it) 
-	{
-		Customer& customer = *it;
-		mailActionsManager->CallCustomer(customer, &IServiceCustomerMediator::MakingAction);
-	}
+    bool servedElderlyLast = false; 
+
+    while (!customerQueue->IsEmpty())
+    {
+        CustomerQueueIterator it = customerQueue->begin();
+        Customer& customer = *it;
+
+        if (!servedElderlyLast && !customer.IsElderlyCustomer())
+        {
+            mailActionsManager->CallCustomer(customer, &IServiceCustomerMediator::MakingAction);
+            servedElderlyLast = false;
+        }
+        else if (customer.IsElderlyCustomer())
+        {
+            mailActionsManager->CallCustomer(customer, &IServiceCustomerMediator::MakingAction);
+            servedElderlyLast = true;
+        }
+
+        customerQueue->Dequeue();
+    }
 
 	return 0;
 }
