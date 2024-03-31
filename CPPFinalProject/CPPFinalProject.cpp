@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void ChooseSystem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManager);
+void PickAndUseSystem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManager);
 void UseSytem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManager);
 
 int main()
@@ -23,12 +23,12 @@ int main()
 
 	char input = ' ';
 
-	ChooseSystem(input, mailActionsManager);
+	PickAndUseSystem(input, mailActionsManager);
 
 	return 0;
 }
 
-void ChooseSystem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManager)
+void PickAndUseSystem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManager)
 {
 	cout << "Hello, welcome to your line managment system, please choose the system you want to use: " << endl;
 
