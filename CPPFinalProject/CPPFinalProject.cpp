@@ -7,6 +7,8 @@
 #include "MailOfficial.h"
 #include "STLCustomerQueue.h"
 #include <iostream>
+#include <iterator>
+#include <cstdlib>
 
 using namespace std;
 
@@ -73,6 +75,19 @@ void UseSytem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManage
 		stlCustomerQueue->Enqueue(move(customer2));
 		stlCustomerQueue->Enqueue(move(customer3));
 		stlCustomerQueue->Enqueue(move(customer4));
+
+		while (!stlCustomerQueue->IsEmpty())
+		{
+			const unique_ptr<Customer>& topCustomer = stlCustomerQueue->customerPriorityQueue.front();
+
+			unique_ptr<Customer> customer = move(const_cast<unique_ptr<Customer>&>(topCustomer));
+
+			cout << "Called Customer number : " << customer->GetCustomerNumber() << endl;
+
+			mailActionsManager->CallCustomer(*customer);
+
+			stlCustomerQueue->customerPriorityQueue.pop();
+		}
 	}
 
 	else if (input == '2')

@@ -1,24 +1,25 @@
 #include "STLCustomerQueue.h"
 
-void STLCustomerQueue::Enqueue(std::unique_ptr<Customer> customer)
+void STLCustomerQueue::Enqueue(unique_ptr<Customer> customer)
 {
-    customerPriorityQueue.push(std::move(customer));
-    std::cout << "Customer enqueued to the priority queue." << std::endl;
+	customerPriorityQueue.push(move(customer));
 }
 
 void STLCustomerQueue::Dequeue()
 {
-    if (!customerPriorityQueue.empty()) {
-        std::cout << "Customer dequeued from the priority queue." << std::endl;
-        customerPriorityQueue.pop();
-    }
-    else
-    {
-        std::cout << "Priority queue is empty." << std::endl;
-    }
+	if (!customerPriorityQueue.empty())
+	{
+		cout << "Customer dequeued from the priority queue." << std::endl;
+		customerPriorityQueue.pop();
+	}
+	else
+	{
+		cout << "Priority queue is empty." << std::endl;
+	}
 }
 
+// Method to check if the priority queue is empty
 bool STLCustomerQueue::IsEmpty() const
 {
-    return customerPriorityQueue.empty();
+	return customerPriorityQueue.empty();
 }
