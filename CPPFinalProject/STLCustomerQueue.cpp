@@ -18,7 +18,6 @@ void STLCustomerQueue::Dequeue()
 	}
 }
 
-// Method to check if the priority queue is empty
 bool STLCustomerQueue::IsEmpty() const
 {
 	return customerPriorityQueue.empty();
