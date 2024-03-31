@@ -12,13 +12,13 @@ void MailOfficial::PerformAction(MailActions action)
 		cout << "Here is your Package" << endl;
 		break;
 	case MailActions::DeliverPackage:
-		cout << "Here is your Package" << endl;
+		cout << "Package has been delivered" << endl;
 		break;
 	case MailActions::MakePayment:
-		cout << "Here is your Package" << endl;
+		cout << "Payment made succesfully" << endl;
 		break;
 	case MailActions::PurchaseProduct:
-		cout << "Here is your Package" << endl;
+		cout << "Product has been purchased" << endl;
 		break;
 	default:
 		std::cout << "Invalid action" << std::endl;

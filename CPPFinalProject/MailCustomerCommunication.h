@@ -13,6 +13,9 @@ using namespace std;
 
 class MailCustomerCommunication : public IServiceCustomerMediator
 {
+
+private:
+	unique_ptr<MailOfficial> mailOfficial;
 public:
 	void CallCustomer(Customer& customer) override;
 	MailActions MakingAction() override;

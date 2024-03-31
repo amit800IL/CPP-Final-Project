@@ -7,7 +7,12 @@ void MailCustomerCommunication::CallCustomer(Customer& customer)
 	if (customerNumber)
 	{
 		std::cout << " Customer " << customerNumber << " has been called " << std::endl;
-		MakingAction();
+
+		MailActions action = MakingAction();
+
+		MailOfficial mailOfficial;
+
+		mailOfficial.PerformAction(action);
 	}
 }
 
