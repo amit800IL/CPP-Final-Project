@@ -137,6 +137,7 @@
     <ClCompile Include="RegularCustomer.cpp" />
     <ClCompile Include="MailCustomerCommunication.cpp" />
     <ClCompile Include="MailOfficial.cpp" />
+    <ClCompile Include="STLCustomerQueue.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h" />
@@ -148,6 +149,7 @@
     <ClInclude Include="RegularCustomer.h" />
     <ClInclude Include="MailCustomerCommunication.h" />
     <ClInclude Include="MailOfficial.h" />
+    <ClInclude Include="STLCustomerQueue.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

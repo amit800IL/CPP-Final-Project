@@ -45,6 +45,9 @@
     <ClCompile Include="CustomerQueueIterator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="STLCustomerQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MailActions.h">
@@ -72,6 +75,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CustomerQueueIterator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="STLCustomerQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
