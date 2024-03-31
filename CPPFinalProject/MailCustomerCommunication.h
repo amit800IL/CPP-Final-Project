@@ -2,15 +2,20 @@
 #ifndef MAILCUSTOMERCOMMUNICATION_H
 #define MAILCUSTOMERCOMMUNICATION_H
 
+#include <iostream>
+#include <memory>
+#include "MailActions.h"
+#include "Customer.h"
 #include "IServiceCustomerMediator.h"
+#include "MailOfficial.h"
 
 using namespace std;
 
 class MailCustomerCommunication : public IServiceCustomerMediator
 {
 public:
-	void CallCustomer(Customer& customer, void (IServiceCustomerMediator::* MakingAction)()) override;
-	void MakingAction() override;
+	void CallCustomer(Customer& customer) override;
+	MailActions MakingAction() override;
 };
 
 

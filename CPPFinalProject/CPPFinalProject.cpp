@@ -32,12 +32,11 @@ int main()
 	customerQueue->Enqueue(move(*customer4));
 	customerQueue->Enqueue(move(*customer2));
 
-
 	while (!customerQueue->IsEmpty())
 	{
-		CustomerQueueIterator it = customerQueue->begin();
-		Customer& customer = *it;
-		mailActionsManager->CallCustomer(customer, &IServiceCustomerMediator::MakingAction);
+		CustomerQueueIterator customerIterator = customerQueue->begin();
+		Customer& customer = *customerIterator;
+		mailActionsManager->CallCustomer(customer);
 		customerQueue->Dequeue();
 	}
 

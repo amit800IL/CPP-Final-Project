@@ -1,17 +1,17 @@
 #include "MailCustomerCommunication.h"
 
-void MailCustomerCommunication::CallCustomer(Customer& customer, void (IServiceCustomerMediator::* MakingAction)())
+void MailCustomerCommunication::CallCustomer(Customer& customer)
 {
 	int customerNumber = customer.GetCustomerNumber();
 
 	if (customerNumber)
 	{
 		std::cout << " Customer " << customerNumber << " has been called " << std::endl;
-		this->MakingAction();
+		MakingAction();
 	}
 }
 
-void MailCustomerCommunication::MakingAction()
+MailActions MailCustomerCommunication::MakingAction()
 {
 	char input = '0';
 
@@ -25,28 +25,14 @@ void MailCustomerCommunication::MakingAction()
 
 	do
 	{
-		std::cin >> input;
+		cin >> input;
 
 		switch (input)
 		{
-		case '1':
-			cout << "Here is your pachage" << endl;
-			hasCustomerBeenServed = true;
-			break;
-		case '2':
-			cout << "Your package has been sent" << endl;
-			hasCustomerBeenServed = true;
-			break;
-		case '3':
-			cout << "Your payment has been made" << endl;
-			hasCustomerBeenServed = true;
-			break;
-		case '4':
-			cout << "here is your product" << endl;
-			hasCustomerBeenServed = true;
-			break;
-		default:
-			break;
+		case '1': return MailActions::RecivePackage;
+		case '2': return MailActions::DeliverPackage;
+		case '3': return MailActions::MakePayment;
+		case '4': return MailActions::PurchaseProduct;
 		}
 
 		if (hasCustomerBeenServed)
