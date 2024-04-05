@@ -47,7 +47,7 @@ public:
 
 	int GetCustomerNumber();
 
-	bool IsElderlyCustomer() const;
+	int CustomerAge() const;
 
 	~Customer();
 };

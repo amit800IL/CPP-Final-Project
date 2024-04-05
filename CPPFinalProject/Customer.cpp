@@ -8,7 +8,7 @@ Customer::Customer(const DateOfBirth& dateOfBirth)
 
 	customerNumber = ++lastAssignedCustomerNumber;
 
-	IsElderlyCustomer();
+	CustomerAge();
 }
 
 Customer::Customer(Customer&& customer) noexcept : dateOfBirth(move(customer.dateOfBirth)) {}
@@ -19,18 +19,9 @@ int Customer::GetCustomerNumber()
 	return customerNumber;
 }
 
-bool Customer::IsElderlyCustomer() const
+int Customer::CustomerAge() const
 {
-	int age = dateOfBirth->CalcualteAge();
-
-	if (age >= 65)
-	{
-		return true;
-	}
-	else
-	{
-		return false;
-	}
+	return dateOfBirth->CalcualteAge();
 }
 
 Customer::~Customer() {}
@@ -48,7 +39,7 @@ ostream& operator<<(ostream& os, const Customer& customer)
 
 	cout << customer.dateOfBirth->CalcualteAge() << endl;
 
-	if (customer.IsElderlyCustomer())
+	if (customer.CustomerAge())
 	{
 		os << "Customer Type: " << "Elderly Customer" << endl;
 	}

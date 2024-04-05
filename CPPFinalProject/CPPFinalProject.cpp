@@ -6,9 +6,9 @@
 #include "MailCustomerCommunication.h"
 #include "MailOfficial.h"
 #include "STLCustomerQueue.h"
+#include <cstdlib>
 #include <iostream>
 #include <iterator>
-#include <cstdlib>
 #include <queue>
 
 using namespace std;
@@ -79,29 +79,18 @@ void BaseSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager)
 	unique_ptr<DateOfBirth> birthDate2 = make_unique<DateOfBirth>(17, 3, 1950);
 	unique_ptr<DateOfBirth> birthDate3 = make_unique<DateOfBirth>(3, 1, 2000);
 	unique_ptr<DateOfBirth> birthDate4 = make_unique<DateOfBirth>(17, 3, 1940);
-
+	
 	unique_ptr<Customer> customer = make_unique<RegularCustomer>(*birthDate);
 	unique_ptr<Customer> customer2 = make_unique<ElderlyCustomer>(*birthDate2);
 	unique_ptr<Customer> customer3 = make_unique<RegularCustomer>(*birthDate3);
 	unique_ptr<Customer> customer4 = make_unique<ElderlyCustomer>(*birthDate4);
 
-	stlCustomerQueue->Enqueue(move(customer));
-	stlCustomerQueue->Enqueue(move(customer2));
-	stlCustomerQueue->Enqueue(move(customer3));
-	stlCustomerQueue->Enqueue(move(customer4));
+	stlCustomerQueue->PlaceCustomerInQueue(move(customer));
+	stlCustomerQueue->PlaceCustomerInQueue(move(customer2));
+	stlCustomerQueue->PlaceCustomerInQueue(move(customer3));
+	stlCustomerQueue->PlaceCustomerInQueue(move(customer4));
 
-	while (!stlCustomerQueue->IsEmpty())
-	{
-		const unique_ptr<Customer>& topCustomer = stlCustomerQueue->GetPriorityQueue().top();
-
-		unique_ptr<Customer> customer = move(const_cast<unique_ptr<Customer>&>(topCustomer));
-
-		cout << "Called Customer number : " << customer->GetCustomerNumber() << endl;
-
-		mailActionsManager->CallCustomer(*customer);
-
-		stlCustomerQueue->GetPriorityQueue().pop();
-	}
+	stlCustomerQueue->GetCustomersFromQueue(mailActionsManager);
 }
 
 void CustomSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager)
@@ -119,9 +108,9 @@ void CustomSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager)
 	unique_ptr<Customer> customer4 = make_unique<ElderlyCustomer>(*birthDate4);
 
 	customerQueue->Enqueue(move(*customer));
+	customerQueue->Enqueue(move(*customer2));
 	customerQueue->Enqueue(move(*customer3));
 	customerQueue->Enqueue(move(*customer4));
-	customerQueue->Enqueue(move(*customer2));
 
 	while (!customerQueue->IsEmpty())
 	{

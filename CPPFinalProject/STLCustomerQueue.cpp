@@ -1,20 +1,24 @@
 #include "STLCustomerQueue.h"
 
-void STLCustomerQueue::Enqueue(unique_ptr<Customer> customer)
+void STLCustomerQueue::PlaceCustomerInQueue(unique_ptr<Customer> customer)
 {
 	customerPriorityQueue.push(move(customer));
 }
 
-void STLCustomerQueue::Dequeue()
+void STLCustomerQueue::GetCustomersFromQueue(shared_ptr<IServiceCustomerMediator> mailActionsManager)
 {
-	if (!customerPriorityQueue.empty())
+	while (!IsEmpty())
 	{
-		cout << "Customer dequeued from the priority queue." << std::endl;
+
+		const unique_ptr<Customer>& topCustomer = customerPriorityQueue.top();
+
+		unique_ptr<Customer> customer = move(const_cast<unique_ptr<Customer>&>(topCustomer));
+
+		cout << "Called Customer number : " << customer->GetCustomerNumber() << endl;
+
+		mailActionsManager->CallCustomer(*customer);
+
 		customerPriorityQueue.pop();
-	}
-	else
-	{
-		cout << "Priority queue is empty." << std::endl;
 	}
 }
 
@@ -23,8 +27,4 @@ bool STLCustomerQueue::IsEmpty() const
 	return customerPriorityQueue.empty();
 }
 
-priority_queue<unique_ptr<Customer>>& STLCustomerQueue::GetPriorityQueue()
-{
-	return customerPriorityQueue;
-}
 
