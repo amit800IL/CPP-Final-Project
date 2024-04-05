@@ -7,20 +7,36 @@ void STLCustomerQueue::PlaceCustomerInQueue(unique_ptr<Customer> customer)
 
 void STLCustomerQueue::GetCustomersFromQueue(shared_ptr<IServiceCustomerMediator> mailActionsManager)
 {
-	while (!IsEmpty())
-	{
+    bool serveElderlyNext = false;
 
-		const unique_ptr<Customer>& topCustomer = customerPriorityQueue.top();
+    while (!customerPriorityQueue.empty())
+    {
+        const unique_ptr<Customer>& nextCustomer = customerPriorityQueue.top();
 
-		unique_ptr<Customer> customer = move(const_cast<unique_ptr<Customer>&>(topCustomer));
-
-		cout << "Called Customer number : " << customer->GetCustomerNumber() << endl;
-
-		mailActionsManager->CallCustomer(*customer);
-
-		customerPriorityQueue.pop();
-	}
+        if (nextCustomer->CustomerAge() > 65 && serveElderlyNext)
+        {
+            cout << "Calling Elderly Customer number: " << nextCustomer->GetCustomerNumber() << endl;
+            mailActionsManager->CallCustomer(*nextCustomer);
+            customerPriorityQueue.pop();
+            serveElderlyNext = false; 
+        }
+        else if (nextCustomer->CustomerAge() <= 65 && !serveElderlyNext)
+        {
+            // Serve regular customer
+            cout << "Calling Regular Customer number: " << nextCustomer->GetCustomerNumber() << endl;
+            mailActionsManager->CallCustomer(*nextCustomer);
+            customerPriorityQueue.pop();
+            serveElderlyNext = true; 
+        }
+        else
+        {
+            customerPriorityQueue.pop(); 
+        }
+    }
 }
+
+
+
 
 bool STLCustomerQueue::IsEmpty() const
 {
