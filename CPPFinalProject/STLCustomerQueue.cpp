@@ -22,3 +22,9 @@ bool STLCustomerQueue::IsEmpty() const
 {
 	return customerPriorityQueue.empty();
 }
+
+priority_queue<unique_ptr<Customer>>& STLCustomerQueue::GetPriorityQueue()
+{
+	return customerPriorityQueue;
+}
+

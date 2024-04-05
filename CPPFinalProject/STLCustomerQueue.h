@@ -2,8 +2,8 @@
 #define STLCUSTOMERQUEUE_H
 
 #include "Customer.h"
-#include <queue>
 #include <algorithm>
+#include <queue>
 
 using namespace std;
 
@@ -11,11 +11,13 @@ using namespace std;
 class STLCustomerQueue
 {
 private:
+	priority_queue<unique_ptr<Customer>> customerPriorityQueue;
 public:
-	queue<unique_ptr<Customer>> customerPriorityQueue;
 	void Enqueue(std::unique_ptr<Customer> customer);
 	void Dequeue();
 	bool IsEmpty() const;
+	priority_queue<unique_ptr<Customer>>& GetPriorityQueue();
+
 };
 
 #endif

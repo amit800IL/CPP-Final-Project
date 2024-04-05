@@ -9,12 +9,13 @@
 #include <iostream>
 #include <iterator>
 #include <cstdlib>
+#include <queue>
 
 using namespace std;
 
 void PickAndUseSystem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManager);
 void UseSytem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManager);
-void baseSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager);
+void BaseSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager);
 void CustomSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager);
 
 int main()
@@ -61,7 +62,7 @@ void UseSytem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManage
 {
 	if (input == '1')
 	{
-		baseSTL(mailActionsManager);
+		BaseSTL(mailActionsManager);
 	}
 
 	else if (input == '2')
@@ -70,7 +71,7 @@ void UseSytem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManage
 	}
 }
 
-void baseSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager)
+void BaseSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager)
 {
 	unique_ptr<STLCustomerQueue> stlCustomerQueue = make_unique<STLCustomerQueue>();
 
@@ -91,7 +92,7 @@ void baseSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager)
 
 	while (!stlCustomerQueue->IsEmpty())
 	{
-		const unique_ptr<Customer>& topCustomer = stlCustomerQueue->customerPriorityQueue.front();
+		const unique_ptr<Customer>& topCustomer = stlCustomerQueue->GetPriorityQueue().top();
 
 		unique_ptr<Customer> customer = move(const_cast<unique_ptr<Customer>&>(topCustomer));
 
@@ -99,7 +100,7 @@ void baseSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager)
 
 		mailActionsManager->CallCustomer(*customer);
 
-		stlCustomerQueue->customerPriorityQueue.pop();
+		stlCustomerQueue->GetPriorityQueue().pop();
 	}
 }
 
