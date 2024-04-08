@@ -13,13 +13,6 @@
 #include <queue>
 
 using namespace std;
-//struct CustomerComperator {
-//	bool operator()(const std::unique_ptr<Customer>& a, const std::unique_ptr<Customer>& b) const {
-//
-//		return (a->CustomerAge() > b->CustomerAge());
-//
-//	}
-//};
 #pragma once
 class STLCustomerQueue
 {
