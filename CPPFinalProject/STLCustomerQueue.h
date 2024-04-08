@@ -2,32 +2,23 @@
 #define STLCUSTOMERQUEUE_H
 
 #include "Customer.h"
-#include <algorithm>
+#include "CustomerComperator.h"
+#include "ElderlyCustomer.h"
 #include "IServiceCustomerMediator.h"
 #include "MailCustomerCommunication.h"
-#include <queue>
-#include "ElderlyCustomer.h"
 #include "RegularCustomer.h"
+#include <algorithm>
 #include <functional>
 #include <memory>
-#include "CustomerComperator.h"
+#include <queue>
 
 using namespace std;
+//struct CustomerComperator {
+//	bool operator()(const std::unique_ptr<Customer>& a, const std::unique_ptr<Customer>& b) const {
 //
-//struct CustomerAgeComparator {
-//    bool operator()(const std::unique_ptr<Customer>& a, const std::unique_ptr<Customer>& b) const {
-//        // Determine priority based on customer type and age
-//        bool aIsElderly = (a->CustomerAge() > 65);
-//        bool bIsElderly = (b->CustomerAge() > 65);
+//		return (a->CustomerAge() > b->CustomerAge());
 //
-//        if (aIsElderly && !bIsElderly) {
-//            return true; // a (elderly) has higher priority than b (regular)
-//        }
-//        else {
-//            // Same customer type, compare by age
-//            return a->CustomerAge() >= b->CustomerAge(); // Older customers have higher priority
-//        }
-//    }
+//	}
 //};
 #pragma once
 class STLCustomerQueue

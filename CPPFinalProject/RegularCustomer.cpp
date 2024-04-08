@@ -1,10 +1,7 @@
 #include "RegularCustomer.h"
 
 RegularCustomer::RegularCustomer(const DateOfBirth& dateOfBirth)
-	: Customer(dateOfBirth) 
-{
-	cout << "Regular Customer, age: " << this->CustomerAge() << endl;
-}
+	: Customer(dateOfBirth) {}
 
 RegularCustomer::RegularCustomer(RegularCustomer&& customer) noexcept : Customer(move(customer)) {}
 
