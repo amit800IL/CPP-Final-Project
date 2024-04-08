@@ -19,7 +19,6 @@ struct CustomerComparator
 {
 	bool operator()(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
 	{
-
 		bool aIsElderly = dynamic_cast<RegularCustomer*>(a.get()) != nullptr;
 		bool bIsElderly = dynamic_cast<ElderlyCustomer*>(b.get()) != nullptr;
 
@@ -37,6 +36,7 @@ public:
 	void GetCustomersFromQueue(shared_ptr<IServiceCustomerMediator> mailActionsManager);
 	bool IsEmpty() const;
 };
+
 
 #endif
 
