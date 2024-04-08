@@ -1,12 +1,14 @@
 #include "ElderlyCustomer.h"
 
 ElderlyCustomer::ElderlyCustomer(const DateOfBirth& dateOfBirth) 
-	: Customer(dateOfBirth) {}
+	: Customer(dateOfBirth)
+{
+	cout << "Eldelry Customer, age: " << this->CustomerAge() << endl;
+}
 
 ElderlyCustomer::ElderlyCustomer(ElderlyCustomer&& customer) noexcept : Customer(move(customer)) {}
 
 int ElderlyCustomer::CustomerAge() const
 {
-	Customer::CustomerAge();
-	return 0;
+	return Customer::CustomerAge();
 }
