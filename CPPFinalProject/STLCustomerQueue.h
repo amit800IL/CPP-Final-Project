@@ -37,6 +37,6 @@ public:
 	void GetCustomersFromQueue(shared_ptr<IServiceCustomerMediator> mailActionsManager);
 	bool IsEmpty() const;
 };
-1
+
 #endif
 
