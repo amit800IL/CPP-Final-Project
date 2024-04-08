@@ -18,7 +18,7 @@ struct DateOfBirth
 
 	DateOfBirth(int day, int month, int year) : day(make_unique<int>(day)), month(make_unique<int>(month)), year(make_unique<int>(year)) {}
 
-	DateOfBirth(const DateOfBirth& other) 
+	DateOfBirth(const DateOfBirth& other)
 		:day(make_unique<int>(*other.day)),
 		month(make_unique<int>(*other.month)),
 		year(make_unique<int>(*other.year))
@@ -47,9 +47,9 @@ public:
 
 	int GetCustomerNumber();
 
-	int CustomerAge() const;
+	virtual int CustomerAge() const;
 
-	~Customer();
+	virtual ~Customer() = default;
 };
 #endif
 

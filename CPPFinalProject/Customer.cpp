@@ -24,8 +24,6 @@ int Customer::CustomerAge() const
 	return dateOfBirth->CalcualteAge();
 }
 
-Customer::~Customer() {}
-
 ostream& operator<<(ostream& os, const DateOfBirth& date)
 {
 	os << "Date of Birth: " << *date.day << '/' << *date.month << '/' << *date.year;
