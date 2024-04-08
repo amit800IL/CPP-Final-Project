@@ -7,15 +7,16 @@ void STLCustomerQueue::PlaceCustomerInQueue(unique_ptr<Customer> customer)
 
 void STLCustomerQueue::GetCustomersFromQueue(shared_ptr<IServiceCustomerMediator> mailActionsManager)
 {
-    while (!customerPriorityQueue.empty()) {
+    while (!customerPriorityQueue.empty())
+    {
         const std::unique_ptr<Customer>& nextCustomer = customerPriorityQueue.top();
 
         std::cout << "Calling Customer number: " << nextCustomer->GetCustomerNumber() << std::endl;
 
-        if (Customer* regularCustomer = dynamic_cast<RegularCustomer*>(nextCustomer.get())) {
+        if (Customer* regularCustomer = static_cast<RegularCustomer*>(nextCustomer.get())) {
             mailActionsManager->CallCustomer(*regularCustomer);
         }
-        else if (Customer* elderlyCustomer = dynamic_cast<ElderlyCustomer*>(nextCustomer.get())) {
+        else if (Customer* elderlyCustomer = static_cast<ElderlyCustomer*>(nextCustomer.get())) {
             mailActionsManager->CallCustomer(*elderlyCustomer);
         }
 
