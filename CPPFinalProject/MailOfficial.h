@@ -5,22 +5,30 @@
 #include "MailActions.h"
 #include <iostream>
 #include <memory>
+#include <unordered_set>
 
 using namespace std;
 
-enum class MailActions {
+enum class MailActions 
+{
+	None,
 	RecivePackage,
 	DeliverPackage,
 	MakePayment,
 	PurchaseProduct,
 };
 
-class MailOfficial
+class MailClerk
 {
-
+private:
+	int clerkID;
+	std::unordered_set<MailActions> availableActions;
 public:
-	MailOfficial();
-	MailOfficial(MailOfficial&& mailOfficial) noexcept;
+	MailClerk(int id, const unordered_set<MailActions>& actions);
+
+	MailClerk(MailClerk&& mailOfficial) noexcept;
+
+	bool canHandleAction(MailActions action) const;
 
 	void PerformAction(MailActions action);
 };

@@ -20,7 +20,10 @@ void CustomSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager);
 
 int main()
 {
-	shared_ptr<IServiceCustomerMediator> mailActionsManager = make_shared<MailCustomerCommunication>();
+	std::vector<std::shared_ptr<MailClerk>> clerks;
+	std::unordered_set<MailActions> clerk1Actions = { MailActions::RecivePackage, MailActions::MakePayment };
+	clerks.push_back(std::make_shared<MailClerk>(1, clerk1Actions));
+	shared_ptr<IServiceCustomerMediator> mailActionsManager = make_shared<MailCustomerCommunication>(clerks);
 
 	unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(11, 12, 1998);
 	unique_ptr<DateOfBirth> birthDate2 = make_unique<DateOfBirth>(17, 3, 1950);

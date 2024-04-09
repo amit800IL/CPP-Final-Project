@@ -1,10 +1,18 @@
 #include "MailOfficial.h"
 
-MailOfficial::MailOfficial() {}
+MailClerk::MailClerk(int id, const unordered_set<MailActions>& actions) : clerkID{ id }, availableActions{ actions }
+{
+	cout << "Clerk id: " << id << "At your service" << endl;
+}
 
-MailOfficial::MailOfficial(MailOfficial&& mailOfficial) noexcept {}
+MailClerk::MailClerk(MailClerk&& mailOfficial) noexcept {}
 
-void MailOfficial::PerformAction(MailActions action)
+bool MailClerk::canHandleAction(MailActions action) const
+{
+	return availableActions.count(action) > 0;
+}
+
+void MailClerk::PerformAction(MailActions action)
 {
 	switch (action)
 	{
