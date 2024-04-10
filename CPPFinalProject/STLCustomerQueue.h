@@ -4,7 +4,6 @@
 #include "Customer.h"
 #include "CustomerComperator.h"
 #include "ElderlyCustomer.h"
-#include "IServiceCustomerMediator.h"
 #include "MailCustomerCommunication.h"
 #include "RegularCustomer.h"
 #include <algorithm>
@@ -34,9 +33,9 @@ private:
 	priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator> elderlyQueue;
 public:
 	void PlaceCustomerInQueue(unique_ptr<Customer> customer);
-	void GetCustomersFromQueue(shared_ptr<IServiceCustomerMediator> mailActionsManager);
+	void GetCustomersFromQueue(shared_ptr<MailCustomerCommunication> mailActionsManager);
 	bool IsEmpty() const;
-	void ServeNextCustomer(priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator>& queue, shared_ptr<IServiceCustomerMediator> mailActionsManager);
+	void ServeNextCustomer(priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator>& queue, shared_ptr<MailCustomerCommunication> mailActionsManager);
 };
 
 

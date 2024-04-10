@@ -12,10 +12,10 @@
 
 using namespace std;
 
-void PickAndUseSystem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManager);
-void UseSytem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManager);
-void BaseSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager);
-void CustomSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager);
+void PickAndUseSystem(char input, shared_ptr<MailCustomerCommunication> mailActionsManager);
+void UseSytem(char input, shared_ptr<MailCustomerCommunication> mailActionsManager);
+void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager);
+void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager);
 
 int main()
 {
@@ -24,7 +24,7 @@ int main()
 	std::unordered_set<MailActions> clerk2Actions = { MailActions::RecivePackage, MailActions::MakePayment , MailActions::PurchaseProduct};
 	clerks.push_back(std::make_shared<MailClerk>(1, clerk1Actions));
 	clerks.push_back(std::make_shared<MailClerk>(2, clerk2Actions));
-	shared_ptr<IServiceCustomerMediator> mailActionsManager = make_shared<MailCustomerCommunication>(clerks);
+	shared_ptr<MailCustomerCommunication> mailActionsManager = make_shared<MailCustomerCommunication>(clerks);
 
 	unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(11, 12, 1998);
 	unique_ptr<DateOfBirth> birthDate2 = make_unique<DateOfBirth>(17, 3, 1950);
@@ -38,7 +38,7 @@ int main()
 	return 0;
 }
 
-void PickAndUseSystem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManager)
+void PickAndUseSystem(char input, shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	cout << "Hello, welcome to your line managment system, please choose the system you want to use: " << endl;
 
@@ -62,7 +62,7 @@ void PickAndUseSystem(char input, shared_ptr<IServiceCustomerMediator> mailActio
 	UseSytem(input, mailActionsManager);
 }
 
-void UseSytem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManager)
+void UseSytem(char input, shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	if (input == '1')
 	{
@@ -75,7 +75,7 @@ void UseSytem(char input, shared_ptr<IServiceCustomerMediator> mailActionsManage
 	}
 }
 
-void BaseSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager)
+void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	unique_ptr<STLCustomerQueue> stlCustomerQueue = make_unique<STLCustomerQueue>();
 
@@ -109,7 +109,7 @@ void BaseSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager)
 	stlCustomerQueue->GetCustomersFromQueue(mailActionsManager);
 }
 
-void CustomSTL(shared_ptr<IServiceCustomerMediator> mailActionsManager)
+void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	shared_ptr<CustomerQueue> customerQueue = make_shared<CustomerQueue>();
 

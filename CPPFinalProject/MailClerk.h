@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Customer.h"
-#include "IServiceCustomerMediator.h"
+#include "MailCustomerCommunication.h"
 #include <iostream>
 #include <memory>
 #include <unordered_set>

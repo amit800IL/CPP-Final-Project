@@ -5,22 +5,30 @@
 #include <iostream>
 #include <memory>
 #include "Customer.h"
-#include "IServiceCustomerMediator.h"
 #include "MailClerk.h"
+#include <unordered_map>
 
 using namespace std;
 
-class MailCustomerCommunication : public IServiceCustomerMediator
+enum class MailActions;
+class MailClerk;
+
+class MailCustomerCommunication
 {
 
 private:
 	std::vector<std::shared_ptr<MailClerk>> clerks;
+	//std::unordered_map<std::shared_ptr<MailClerk>, std::shared_ptr<Customer>> clerkCustomerMap;
 public:
 	MailCustomerCommunication(const std::vector<std::shared_ptr<MailClerk>>& clerks);
 	MailActions GetAvailableAction(const MailClerk& clerk) const;
-	void CallCustomer(Customer& customer) override;
+	void CallCustomer(Customer& customer);
 	MailActions MakingAction(const MailClerk& clerk) const;
-	MailActions MakingAction() override;
+	MailActions MakingAction();
+	//void AssignCustomerToClerk(std::shared_ptr<Customer> customer);
+	//void ResetClerkAvailability(std::shared_ptr<MailClerk> clerk);
+	//bool IsClerkAvailable(std::shared_ptr<MailClerk> clerk);
+	//void HandleCustomerCalls(MailActions& actions);
 };
 
 

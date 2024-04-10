@@ -27,9 +27,6 @@
     <ClCompile Include="MailClerk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IMailCustomerMediator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="MailCustomerCommunication.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -45,6 +42,9 @@
     <ClCompile Include="STLCustomerQueue.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ICustomerQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CustomerQueue.h">
@@ -54,9 +54,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MailClerk.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IServiceCustomerMediator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MailCustomerCommunication.h">
@@ -72,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="STLCustomerQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ICustomerQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

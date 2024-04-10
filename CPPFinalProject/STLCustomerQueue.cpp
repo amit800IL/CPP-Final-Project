@@ -10,7 +10,7 @@ void STLCustomerQueue::PlaceCustomerInQueue(std::unique_ptr<Customer> customer) 
 	}
 }
 
-void STLCustomerQueue::GetCustomersFromQueue(shared_ptr<IServiceCustomerMediator> mailActionsManager) {
+void STLCustomerQueue::GetCustomersFromQueue(shared_ptr<MailCustomerCommunication> mailActionsManager) {
 	while (!regularQueue.empty() || !elderlyQueue.empty())
 	{
 		if (!regularQueue.empty()) {
@@ -29,7 +29,7 @@ bool STLCustomerQueue::IsEmpty() const
 }
 
 
-void STLCustomerQueue::ServeNextCustomer(std::priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator>& queue, shared_ptr<IServiceCustomerMediator> mailActionsManager)
+void STLCustomerQueue::ServeNextCustomer(std::priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator>& queue, shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	const std::unique_ptr<Customer>& nextCustomer = queue.top();
 	std::cout << "Calling Customer number: " << nextCustomer->GetCustomerNumber() << std::endl;
