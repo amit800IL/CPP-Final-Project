@@ -133,7 +133,6 @@
     <ClCompile Include="CustomerQueueIterator.cpp" />
     <ClCompile Include="ElderlyCustomer.cpp" />
     <ClCompile Include="IMailCustomerMediator.cpp" />
-    <ClCompile Include="MailActions.cpp" />
     <ClCompile Include="RegularCustomer.cpp" />
     <ClCompile Include="MailCustomerCommunication.cpp" />
     <ClCompile Include="MailClerk.cpp" />
@@ -145,7 +144,6 @@
     <ClInclude Include="CustomerQueueIterator.h" />
     <ClInclude Include="ElderlyCustomer.h" />
     <ClInclude Include="IServiceCustomerMediator.h" />
-    <ClInclude Include="MailActions.h" />
     <ClInclude Include="RegularCustomer.h" />
     <ClInclude Include="MailCustomerCommunication.h" />
     <ClInclude Include="MailClerk.h" />

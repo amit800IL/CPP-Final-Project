@@ -2,7 +2,6 @@
 #include "Customer.h";
 #include "CustomerQueue.h"
 #include "CustomerQueueIterator.h"
-#include "MailActions.h"
 #include "MailCustomerCommunication.h"
 #include "MailClerk.h"
 #include "STLCustomerQueue.h"
