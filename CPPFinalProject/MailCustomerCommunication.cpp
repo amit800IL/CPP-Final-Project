@@ -77,10 +77,6 @@ MailActions MailCustomerCommunication::MakingAction(const MailClerk& clerk) cons
 
 }
 
-MailActions MailCustomerCommunication::MakingAction()
-{
-	return MailActions();
-}
 
 MailActions MailCustomerCommunication::GetAvailableAction(const MailClerk& clerk) const
 {

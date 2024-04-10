@@ -37,7 +37,7 @@ ostream& operator<<(ostream& os, const Customer& customer)
 
 	cout << customer.dateOfBirth->CalcualteAge() << endl;
 
-	if (customer.CustomerAge())
+	if (customer.CustomerAge() >= 65)
 	{
 		os << "Customer Type: " << "Elderly Customer" << endl;
 	}

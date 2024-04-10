@@ -24,11 +24,6 @@ public:
 	MailActions GetAvailableAction(const MailClerk& clerk) const;
 	void CallCustomer(Customer& customer);
 	MailActions MakingAction(const MailClerk& clerk) const;
-	MailActions MakingAction();
-	//void AssignCustomerToClerk(std::shared_ptr<Customer> customer);
-	//void ResetClerkAvailability(std::shared_ptr<MailClerk> clerk);
-	//bool IsClerkAvailable(std::shared_ptr<MailClerk> clerk);
-	//void HandleCustomerCalls(MailActions& actions);
 };
 
 
