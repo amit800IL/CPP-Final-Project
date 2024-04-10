@@ -18,7 +18,6 @@ class MailCustomerCommunication
 
 private:
 	std::vector<std::shared_ptr<MailClerk>> clerks;
-	//std::unordered_map<std::shared_ptr<MailClerk>, std::shared_ptr<Customer>> clerkCustomerMap;
 public:
 	MailCustomerCommunication(const std::vector<std::shared_ptr<MailClerk>>& clerks);
 	MailActions GetAvailableAction(const MailClerk& clerk) const;
