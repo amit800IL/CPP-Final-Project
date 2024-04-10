@@ -6,6 +6,7 @@ MailCustomerCommunication::MailCustomerCommunication(const std::vector<std::shar
 void MailCustomerCommunication::CallCustomer(Customer& customer)
 {
 	bool isCustomerServed = false;
+	bool isAnyClerkAvailable = false;
 
 	for (shared_ptr<MailClerk>& clerk : clerks)
 	{
@@ -23,6 +24,7 @@ void MailCustomerCommunication::CallCustomer(Customer& customer)
 					{
 						clerk->PerformAction(chosenAction);
 						isCustomerServed = true;
+						isAnyClerkAvailable = true;
 						clerk->SetBusy();
 						break;
 					}
@@ -33,8 +35,11 @@ void MailCustomerCommunication::CallCustomer(Customer& customer)
 				}
 			}
 		}
+	}
 
-		if (!clerk->IsAvailable())
+	if (!isAnyClerkAvailable)
+	{
+		for (const auto& clerk : clerks)
 		{
 			clerk->SetAvailable();
 		}

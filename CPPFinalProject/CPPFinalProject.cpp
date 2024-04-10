@@ -2,8 +2,8 @@
 #include "Customer.h";
 #include "CustomerQueue.h"
 #include "CustomerQueueIterator.h"
-#include "MailCustomerCommunication.h"
 #include "MailClerk.h"
+#include "MailCustomerCommunication.h"
 #include "STLCustomerQueue.h"
 #include <cstdlib>
 #include <iostream>
@@ -21,9 +21,13 @@ int main()
 {
 	std::vector<std::shared_ptr<MailClerk>> clerks;
 	std::unordered_set<MailActions> clerk1Actions = { MailActions::RecivePackage, MailActions::MakePayment };
-	std::unordered_set<MailActions> clerk2Actions = { MailActions::RecivePackage, MailActions::MakePayment , MailActions::PurchaseProduct};
+	std::unordered_set<MailActions> clerk2Actions = { MailActions::RecivePackage, MailActions::MakePayment , MailActions::PurchaseProduct };
+	std::unordered_set<MailActions> clerk3Actions = { MailActions::RecivePackage, MailActions::MakePayment , MailActions::PurchaseProduct, MailActions::DeliverPackage };
+	std::unordered_set<MailActions> clerk4Actions = { MailActions::RecivePackage };
 	clerks.push_back(std::make_shared<MailClerk>(1, clerk1Actions));
 	clerks.push_back(std::make_shared<MailClerk>(2, clerk2Actions));
+	clerks.push_back(std::make_shared<MailClerk>(3, clerk3Actions));
+	clerks.push_back(std::make_shared<MailClerk>(4, clerk4Actions));
 	shared_ptr<MailCustomerCommunication> mailActionsManager = make_shared<MailCustomerCommunication>(clerks);
 
 	unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(11, 12, 1998);
@@ -87,13 +91,13 @@ void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 	unique_ptr<DateOfBirth> birthDate6 = make_unique<DateOfBirth>(17, 3, 1950);
 	unique_ptr<DateOfBirth> birthDate7 = make_unique<DateOfBirth>(17, 3, 1940);
 	unique_ptr<DateOfBirth> birthDate8 = make_unique<DateOfBirth>(17, 3, 2010);
-	
+
 	unique_ptr<Customer> customer1 = make_unique<RegularCustomer>(*birthDate1);
 	unique_ptr<Customer> customer2 = make_unique<RegularCustomer>(*birthDate2);
-	unique_ptr<Customer> customer4 = make_unique<RegularCustomer>(*birthDate3);
-	unique_ptr<Customer> customer6 = make_unique<RegularCustomer>(*birthDate4);
-	unique_ptr<Customer> customer3 = make_unique<ElderlyCustomer>(*birthDate5);
-	unique_ptr<Customer> customer5 = make_unique<ElderlyCustomer>(*birthDate6) ;
+	unique_ptr<Customer> customer3 = make_unique<RegularCustomer>(*birthDate3);
+	unique_ptr<Customer> customer4 = make_unique<RegularCustomer>(*birthDate4);
+	unique_ptr<Customer> customer5 = make_unique<ElderlyCustomer>(*birthDate5);
+	unique_ptr<Customer> customer6 = make_unique<ElderlyCustomer>(*birthDate6);
 	unique_ptr<Customer> customer7 = make_unique<ElderlyCustomer>(*birthDate7);
 	unique_ptr<Customer> customer8 = make_unique<ElderlyCustomer>(*birthDate8);
 
