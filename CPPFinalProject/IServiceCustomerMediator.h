@@ -2,7 +2,7 @@
 #define ISERVICECUSTOMERMEDIATOR_H
 
 #include "Customer.h"
-#include "MailOfficial.h"
+#include "MailClerk.h"
 
 enum class MailActions;
 

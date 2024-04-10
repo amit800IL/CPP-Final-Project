@@ -5,31 +5,38 @@ MailCustomerCommunication::MailCustomerCommunication(const std::vector<std::shar
 
 void MailCustomerCommunication::CallCustomer(Customer& customer)
 {
-	bool customerServed = false;
+	bool isCustomerServed = false;
 
 	for (shared_ptr<MailClerk>& clerk : clerks)
 	{
-		MailActions action = GetAvailableAction(*clerk);
-
-		if (action != MailActions::None)
+		if (clerk->IsAvailable())
 		{
-			while (!customerServed)
+			while (!isCustomerServed)
 			{
-				MailActions chosenAction = MakingAction(*clerk);
+				MailActions action = GetAvailableAction(*clerk);
 
-				if (clerk->canHandleAction(chosenAction))
+				if (action != MailActions::None)
 				{
-					clerk->PerformAction(chosenAction);
-					customerServed = true;
-					break;
-				}
-				else
-				{
-					cout << "Invalid action for this clerk. Please choose again." << endl;
+					MailActions chosenAction = MakingAction(*clerk);
+
+					if (clerk->CanHandleAction(chosenAction))
+					{
+						clerk->PerformAction(chosenAction);
+						isCustomerServed = true;
+						clerk->SetBusy();
+						break;
+					}
+					else
+					{
+						cout << "Invalid action for this clerk. Please choose again." << endl;
+					}
 				}
 			}
+		}
 
-			customerServed = false;
+		if (!clerk->IsAvailable())
+		{
+			clerk->SetAvailable();
 		}
 	}
 }
@@ -40,17 +47,19 @@ MailActions MailCustomerCommunication::MakingAction(const MailClerk& clerk) cons
 
 	cout << "Choose an action:" << endl;
 
-	if (clerk.canHandleAction(MailActions::RecivePackage))
+	if (clerk.CanHandleAction(MailActions::RecivePackage))
 		cout << "1. Receive a package" << endl;
 
-	if (clerk.canHandleAction(MailActions::DeliverPackage))
+	if (clerk.CanHandleAction(MailActions::DeliverPackage))
 		cout << "2. Deliver a package" << endl;
 
-	if (clerk.canHandleAction(MailActions::MakePayment))
+	if (clerk.CanHandleAction(MailActions::MakePayment))
 		cout << "3. Make a payment" << endl;
 
-	if (clerk.canHandleAction(MailActions::PurchaseProduct))
+	if (clerk.CanHandleAction(MailActions::PurchaseProduct))
 		cout << "4. Purchase a product" << endl;
+
+	cout << "cancael your turn by pressing 5" << endl;
 
 	cin >> input;
 
@@ -78,7 +87,7 @@ MailActions MailCustomerCommunication::GetAvailableAction(const MailClerk& clerk
 	for (MailActions action : {MailActions::RecivePackage, MailActions::DeliverPackage,
 		MailActions::MakePayment, MailActions::PurchaseProduct})
 	{
-		if (clerk.canHandleAction(action))
+		if (clerk.CanHandleAction(action))
 		{
 			return action;
 		}

@@ -7,7 +7,7 @@
 #include "MailActions.h"
 #include "Customer.h"
 #include "IServiceCustomerMediator.h"
-#include "MailOfficial.h"
+#include "MailClerk.h"
 
 using namespace std;
 

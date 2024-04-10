@@ -4,7 +4,7 @@
 #include "CustomerQueueIterator.h"
 #include "MailActions.h"
 #include "MailCustomerCommunication.h"
-#include "MailOfficial.h"
+#include "MailClerk.h"
 #include "STLCustomerQueue.h"
 #include <cstdlib>
 #include <iostream>
@@ -22,7 +22,9 @@ int main()
 {
 	std::vector<std::shared_ptr<MailClerk>> clerks;
 	std::unordered_set<MailActions> clerk1Actions = { MailActions::RecivePackage, MailActions::MakePayment };
+	std::unordered_set<MailActions> clerk2Actions = { MailActions::RecivePackage, MailActions::MakePayment , MailActions::PurchaseProduct};
 	clerks.push_back(std::make_shared<MailClerk>(1, clerk1Actions));
+	clerks.push_back(std::make_shared<MailClerk>(2, clerk2Actions));
 	shared_ptr<IServiceCustomerMediator> mailActionsManager = make_shared<MailCustomerCommunication>(clerks);
 
 	unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(11, 12, 1998);

@@ -1,4 +1,5 @@
-#include "MailOfficial.h"
+
+#include "MailClerk.h"
 
 MailClerk::MailClerk(int id, const unordered_set<MailActions>& actions) : clerkID{ id }, availableActions{ actions }
 {
@@ -7,7 +8,7 @@ MailClerk::MailClerk(int id, const unordered_set<MailActions>& actions) : clerkI
 
 MailClerk::MailClerk(MailClerk&& mailOfficial) noexcept {}
 
-bool MailClerk::canHandleAction(MailActions action) const
+bool MailClerk::CanHandleAction(MailActions action) const
 {
 	return availableActions.count(action) > 0;
 }
@@ -15,7 +16,7 @@ bool MailClerk::canHandleAction(MailActions action) const
 void MailClerk::PerformAction(MailActions action)
 {
 	switch (action)
-	{
+	{ 
 	case MailActions::RecivePackage:
 		cout << "Here is your Package" << endl;
 		break;
@@ -32,4 +33,26 @@ void MailClerk::PerformAction(MailActions action)
 		std::cout << "Invalid action" << std::endl;
 		break;
 	}
+}
+
+bool MailClerk::IsAvailable()
+{
+	if (!isClerkBusy) 
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+void MailClerk::SetAvailable()
+{
+	isClerkBusy = false;
+}
+
+void MailClerk::SetBusy()
+{
+	isClerkBusy = true;
 }

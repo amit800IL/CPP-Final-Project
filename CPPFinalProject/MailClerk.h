@@ -9,7 +9,7 @@
 
 using namespace std;
 
-enum class MailActions 
+enum class MailActions
 {
 	None,
 	RecivePackage,
@@ -23,13 +23,19 @@ class MailClerk
 private:
 	int clerkID;
 	std::unordered_set<MailActions> availableActions;
+	bool isClerkBusy = false;
 public:
 	MailClerk(int id, const unordered_set<MailActions>& actions);
 
 	MailClerk(MailClerk&& mailOfficial) noexcept;
 
-	bool canHandleAction(MailActions action) const;
+	bool CanHandleAction(MailActions action) const;
 
 	void PerformAction(MailActions action);
+
+	bool IsAvailable();
+
+	void SetAvailable();
+	void SetBusy();
 };
 

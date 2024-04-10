@@ -27,7 +27,7 @@
     <ClCompile Include="Customer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MailOfficial.cpp">
+    <ClCompile Include="MailClerk.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IMailCustomerMediator.cpp">
@@ -59,7 +59,7 @@
     <ClInclude Include="Customer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MailOfficial.h">
+    <ClInclude Include="MailClerk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="IServiceCustomerMediator.h">
