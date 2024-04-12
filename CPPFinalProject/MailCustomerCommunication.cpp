@@ -8,63 +8,52 @@ void MailCustomerCommunication::CallCustomer(Customer& customer)
 	bool isCustomerServed = false;
 	bool isAnyClerkAvailable = false;
 
-	for (shared_ptr<MailClerk>& clerk : clerks)
+	while (!isCustomerServed)
 	{
-		if (clerk->IsAvailable())
+		MailActions chosenAction = MakingAction();
+
+		shared_ptr<MailClerk> clerk = FindAvailableClerk(chosenAction);
+
+		if (clerk != nullptr)
 		{
-			while (!isCustomerServed)
+			MailActions action = GetAvailableAction(*clerk);
+
+			if (action != MailActions::None)
 			{
-				MailActions action = GetAvailableAction(*clerk);
-
-				if (action != MailActions::None)
-				{
-					MailActions chosenAction = MakingAction(*clerk);
-
-					if (clerk->CanHandleAction(chosenAction))
-					{
-						clerk->PerformAction(chosenAction);
-						isCustomerServed = true;
-						isAnyClerkAvailable = true;
-						clerk->SetBusy();
-						break;
-					}
-					else
-					{
-						cout << "Invalid action for this clerk. Please choose again." << endl;
-					}
-				}
+				clerk->PerformAction(chosenAction);
+				clerk->SetBusy();
+				isCustomerServed = true;
+				isAnyClerkAvailable = true;
+				break;
 			}
-		}
-	}
 
-	if (!isAnyClerkAvailable)
-	{
-		for (const auto& clerk : clerks)
+			else
+			{
+				cout << "Invalid action for this clerk. Please choose again." << endl;
+			}
+
+		}
+
+		if (!isAnyClerkAvailable)
 		{
-			clerk->SetAvailable();
+			for (const shared_ptr<MailClerk>& clerk : clerks)
+			{
+				clerk->SetAvailable();
+			}
 		}
 	}
 }
 
-MailActions MailCustomerCommunication::MakingAction(const MailClerk& clerk) const
+MailActions MailCustomerCommunication::MakingAction() const
 {
 	char input = '0';
 
 	cout << "Choose an action:" << endl;
 
-	if (clerk.CanHandleAction(MailActions::RecivePackage))
-		cout << "1. Receive a package" << endl;
-
-	if (clerk.CanHandleAction(MailActions::DeliverPackage))
-		cout << "2. Deliver a package" << endl;
-
-	if (clerk.CanHandleAction(MailActions::MakePayment))
-		cout << "3. Make a payment" << endl;
-
-	if (clerk.CanHandleAction(MailActions::PurchaseProduct))
-		cout << "4. Purchase a product" << endl;
-
-	cout << "cancael your turn by pressing 5" << endl;
+	cout << "1. Receive a package" << endl;
+	cout << "2. Deliver a package" << endl;
+	cout << "3. Make a payment" << endl;
+	cout << "4. Purchase a product" << endl;
 
 	cin >> input;
 
@@ -94,4 +83,19 @@ MailActions MailCustomerCommunication::GetAvailableAction(const MailClerk& clerk
 		}
 	}
 	return MailActions::None;
+}
+
+shared_ptr<MailClerk> MailCustomerCommunication::FindAvailableClerk(MailActions& action) const
+{
+	for (const shared_ptr<MailClerk>& clerk : clerks)
+	{
+		if (clerk->IsAvailable() && clerk->CanHandleAction(action))
+		{
+			cout << *clerk << endl;
+			return clerk;
+		}
+	}
+
+	cout << "Not available clerk found for that action" << endl;
+	return nullptr;
 }

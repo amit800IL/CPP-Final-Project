@@ -21,8 +21,9 @@ private:
 public:
 	MailCustomerCommunication(const std::vector<std::shared_ptr<MailClerk>>& clerks);
 	MailActions GetAvailableAction(const MailClerk& clerk) const;
+	std::shared_ptr<MailClerk> FindAvailableClerk(MailActions& action) const;
 	void CallCustomer(Customer& customer);
-	MailActions MakingAction(const MailClerk& clerk) const;
+	MailActions MakingAction() const;
 };
 
 

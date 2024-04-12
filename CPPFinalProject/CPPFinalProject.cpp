@@ -19,15 +19,23 @@ void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager);
 
 int main()
 {
-	std::vector<std::shared_ptr<MailClerk>> clerks;
-	std::unordered_set<MailActions> clerk1Actions = { MailActions::RecivePackage, MailActions::MakePayment };
-	std::unordered_set<MailActions> clerk2Actions = { MailActions::RecivePackage, MailActions::MakePayment , MailActions::PurchaseProduct };
-	std::unordered_set<MailActions> clerk3Actions = { MailActions::RecivePackage, MailActions::MakePayment , MailActions::PurchaseProduct, MailActions::DeliverPackage };
-	std::unordered_set<MailActions> clerk4Actions = { MailActions::RecivePackage };
-	clerks.push_back(std::make_shared<MailClerk>(1, clerk1Actions));
-	clerks.push_back(std::make_shared<MailClerk>(2, clerk2Actions));
-	clerks.push_back(std::make_shared<MailClerk>(3, clerk3Actions));
-	clerks.push_back(std::make_shared<MailClerk>(4, clerk4Actions));
+	vector<shared_ptr<MailClerk>> clerks;
+
+	unordered_set<MailActions> clerk1Actions = { MailActions::RecivePackage, MailActions::MakePayment,  MailActions::DeliverPackage, MailActions::PurchaseProduct };
+	unordered_set<MailActions> clerk2Actions = { MailActions::RecivePackage, MailActions::MakePayment , MailActions::PurchaseProduct };
+	unordered_set<MailActions> clerk3Actions = { MailActions::PurchaseProduct, MailActions::MakePayment};
+	unordered_set<MailActions> clerk4Actions = { MailActions::RecivePackage, MailActions::DeliverPackage };
+
+	shared_ptr<MailClerk> mailClerk1 = make_shared<MailClerk>(1, clerk1Actions);
+	shared_ptr<MailClerk> mailClerk2 = make_shared<MailClerk>(2, clerk2Actions);
+	shared_ptr<MailClerk> mailClerk3 = make_shared<MailClerk>(3, clerk3Actions);
+	shared_ptr<MailClerk> mailClerk4 = make_shared<MailClerk>(4, clerk4Actions);
+
+	clerks.push_back(mailClerk1);
+	clerks.push_back(mailClerk2);
+	clerks.push_back(mailClerk3);
+	clerks.push_back(mailClerk4);
+
 	shared_ptr<MailCustomerCommunication> mailActionsManager = make_shared<MailCustomerCommunication>(clerks);
 
 	unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(11, 12, 1998);

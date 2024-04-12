@@ -19,6 +19,8 @@ enum class MailActions
 
 class MailClerk
 {
+	friend std::ostream& operator<<(ostream& os, const MailClerk& date);
+
 private:
 	int clerkID;
 	std::unordered_set<MailActions> availableActions;

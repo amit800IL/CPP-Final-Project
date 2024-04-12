@@ -1,10 +1,7 @@
 
 #include "MailClerk.h"
 
-MailClerk::MailClerk(int id, const unordered_set<MailActions>& actions) : clerkID{ id }, availableActions{ actions }
-{
-	cout << "Clerk id: " << id << "At your service" << endl;
-}
+MailClerk::MailClerk(int id, const unordered_set<MailActions>& actions) : clerkID{ id }, availableActions{ actions } {}
 
 MailClerk::MailClerk(MailClerk&& mailOfficial) noexcept {}
 
@@ -55,4 +52,11 @@ void MailClerk::SetAvailable()
 void MailClerk::SetBusy()
 {
 	isClerkBusy = true;
+}
+
+std::ostream& operator<<(ostream& os, const MailClerk& date)
+{
+	cout << "Clerk number " << date.clerkID << " Is at your service " << endl;
+
+	return os;
 }
