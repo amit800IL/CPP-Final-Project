@@ -24,6 +24,8 @@ public:
 	shared_ptr<MailClerk> FindAvailableClerk(MailActions& action) const;
 	void CallCustomer(Customer& customer);
 	MailActions MakingAction() const;
+
+	~MailCustomerCommunication() = default;
 };
 
 
