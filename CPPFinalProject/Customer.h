@@ -6,6 +6,8 @@
 #include <chrono>
 #include <iostream>
 #include <memory>
+#include <sstream>
+#include <fstream>
 
 using namespace std;
 
@@ -61,6 +63,12 @@ public:
 	int GetCustomerNumber() const;
 
 	virtual int CustomerAge() const;
+
+	string SerializeCustomer(const unique_ptr<Customer>& customer) const;
+
+	std::string SerializeCustomer() const;
+
+	Customer DeserializeCustomer(const std::string& data);
 
 	virtual ~Customer() = default;
 };

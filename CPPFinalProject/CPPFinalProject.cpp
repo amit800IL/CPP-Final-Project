@@ -121,10 +121,10 @@ void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 
 	stlCustomerQueue->GetCustomersFromQueue(mailActionsManager);
 
-	//std::string serializedData = SerializeQueueData(mailActionsManager, *stlCustomerQueue);
-
-	//std::string filename = "customer_queue_data.txt";
-	//SaveQueueToFile(filename, serializedData);
+	string serializedData = stlCustomerQueue->SerializeQueueData(mailActionsManager);
+	cout << "Serialized Data: " << serializedData << endl; // Debug output
+	string filename = "customer_queue_data.txt";
+	stlCustomerQueue->SaveQueueToFile(filename, serializedData);
 }
 
 void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
@@ -154,50 +154,5 @@ void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 		customerQueue->Dequeue();
 	}
 }
-//}
-//std::string SerializeQueueData(shared_ptr<MailCustomerCommunication> mailActionsManager, const STLCustomerQueue& queue)
-//{
-//	std::stringstream ss;
-//	STLCustomerQueue queueCopy(std::move(queue)); // Create a copy to iterate over
-//	while (!queueCopy.IsEmpty())
-//	{
-//		//const Customer& customer = queueCopy.GetNextCustomer();
-//		//std::string serializedCustomer = SerializeCustomer(move(customer));
-//		//ss << serializedCustomer << '\n';
-//		queueCopy.GetCustomersFromQueue(mailActionsManager); // Move to the next customer in the queue
-//	}
-//	return ss.str();
-//}
 
-// Save serialized queue data to a text file
-//void SaveQueueToFile(const std::string& filename, const std::string& serializedData)
-//{
-//	std::ofstream outputFile(filename);
-//	if (outputFile.is_open())
-//	{
-//		outputFile << serializedData;
-//		outputFile.close();
-//		std::cout << "Queue data saved to file: " << filename << std::endl;
-//	}
-//	else
-//	{
-//		std::cerr << "Unable to open file for writing: " << filename << std::endl;
-//	}
-//}
 
-//std::string SerializeCustomer(const Customer& customer) {
-//	std::stringstream ss;
-//	ss << customer.GetCustomerNumber() << ','
-//		<< customer << ',';
-//	return ss.str();
-//}
-
-// Deserialize Customer data from a string
-//Customer DeserializeCustomer(const std::string& data) {
-//	std::stringstream ss(data);
-//	int customerNumber, day, month, year;
-//	char comma;
-//	ss >> customerNumber >> comma >> day >> comma >> month >> comma >> year;
-//	DateOfBirth dob(day, month, year);
-//	return Customer(dob); // Assuming Customer constructor takes DateOfBirth
-//}

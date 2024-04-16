@@ -3,7 +3,7 @@
 MailCustomerCommunication::MailCustomerCommunication(const std::vector<std::shared_ptr<MailClerk>>& clerks)
 	: clerks(clerks) {}
 
-void MailCustomerCommunication::CallCustomer(Customer& customer)
+void MailCustomerCommunication::CallCustomer(const Customer& customer)
 {
 	bool isCustomerServed = false;
 	bool isAnyClerkAvailable = false;
