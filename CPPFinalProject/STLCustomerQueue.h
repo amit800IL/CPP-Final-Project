@@ -14,9 +14,9 @@
 using namespace std;
 #pragma once
 
-struct CustomerComparator 
+struct CustomerComparator
 {
-	bool operator()(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const 
+	bool operator()(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
 	{
 		bool aIsElderly = dynamic_cast<ElderlyCustomer*>(a.get()) != nullptr;
 		bool bIsElderly = dynamic_cast<ElderlyCustomer*>(b.get()) != nullptr;
@@ -36,6 +36,7 @@ public:
 	void GetCustomersFromQueue(shared_ptr<MailCustomerCommunication> mailActionsManager);
 	bool IsEmpty() const;
 	void ServeNextCustomer(priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator>& queue, shared_ptr<MailCustomerCommunication> mailActionsManager);
+	const Customer& GetNextCustomer() const;
 };
 
 

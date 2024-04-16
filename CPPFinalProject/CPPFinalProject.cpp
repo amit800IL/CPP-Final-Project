@@ -9,7 +9,8 @@
 #include <iostream>
 #include <iterator>
 #include <queue>
-
+#include <sstream>
+#include <fstream>
 using namespace std;
 
 void PickAndUseSystem(char input, shared_ptr<MailCustomerCommunication> mailActionsManager);
@@ -17,13 +18,18 @@ void UseSytem(char input, shared_ptr<MailCustomerCommunication> mailActionsManag
 void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager);
 void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager);
 
+//std::string SerializeQueueData(shared_ptr<MailCustomerCommunication> mailActionsManager, const STLCustomerQueue& queue);
+//void SaveQueueToFile(const std::string& filename, const std::string& serializedData);
+////std::string SerializeCustomer(const Customer& customer);
+//Customer DeserializeCustomer(const std::string& data);
+
 int main()
 {
 	vector<shared_ptr<MailClerk>> clerks;
 
 	unordered_set<MailActions> clerk1Actions = { MailActions::RecivePackage, MailActions::MakePayment,  MailActions::DeliverPackage, MailActions::PurchaseProduct };
 	unordered_set<MailActions> clerk2Actions = { MailActions::RecivePackage, MailActions::MakePayment , MailActions::PurchaseProduct };
-	unordered_set<MailActions> clerk3Actions = { MailActions::PurchaseProduct, MailActions::MakePayment};
+	unordered_set<MailActions> clerk3Actions = { MailActions::PurchaseProduct, MailActions::MakePayment };
 	unordered_set<MailActions> clerk4Actions = { MailActions::RecivePackage, MailActions::DeliverPackage };
 
 	shared_ptr<MailClerk> mailClerk1 = make_shared<MailClerk>(1, clerk1Actions);
@@ -114,6 +120,11 @@ void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 	stlCustomerQueue->PlaceCustomerInQueue(move(customer8));
 
 	stlCustomerQueue->GetCustomersFromQueue(mailActionsManager);
+
+	//std::string serializedData = SerializeQueueData(mailActionsManager, *stlCustomerQueue);
+
+	//std::string filename = "customer_queue_data.txt";
+	//SaveQueueToFile(filename, serializedData);
 }
 
 void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
@@ -143,3 +154,50 @@ void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 		customerQueue->Dequeue();
 	}
 }
+//}
+//std::string SerializeQueueData(shared_ptr<MailCustomerCommunication> mailActionsManager, const STLCustomerQueue& queue)
+//{
+//	std::stringstream ss;
+//	STLCustomerQueue queueCopy(std::move(queue)); // Create a copy to iterate over
+//	while (!queueCopy.IsEmpty())
+//	{
+//		//const Customer& customer = queueCopy.GetNextCustomer();
+//		//std::string serializedCustomer = SerializeCustomer(move(customer));
+//		//ss << serializedCustomer << '\n';
+//		queueCopy.GetCustomersFromQueue(mailActionsManager); // Move to the next customer in the queue
+//	}
+//	return ss.str();
+//}
+
+// Save serialized queue data to a text file
+//void SaveQueueToFile(const std::string& filename, const std::string& serializedData)
+//{
+//	std::ofstream outputFile(filename);
+//	if (outputFile.is_open())
+//	{
+//		outputFile << serializedData;
+//		outputFile.close();
+//		std::cout << "Queue data saved to file: " << filename << std::endl;
+//	}
+//	else
+//	{
+//		std::cerr << "Unable to open file for writing: " << filename << std::endl;
+//	}
+//}
+
+//std::string SerializeCustomer(const Customer& customer) {
+//	std::stringstream ss;
+//	ss << customer.GetCustomerNumber() << ','
+//		<< customer << ',';
+//	return ss.str();
+//}
+
+// Deserialize Customer data from a string
+//Customer DeserializeCustomer(const std::string& data) {
+//	std::stringstream ss(data);
+//	int customerNumber, day, month, year;
+//	char comma;
+//	ss >> customerNumber >> comma >> day >> comma >> month >> comma >> year;
+//	DateOfBirth dob(day, month, year);
+//	return Customer(dob); // Assuming Customer constructor takes DateOfBirth
+//}

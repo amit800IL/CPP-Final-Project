@@ -14,7 +14,7 @@ Customer::Customer(const DateOfBirth& dateOfBirth)
 Customer::Customer(Customer&& customer) noexcept : dateOfBirth(move(customer.dateOfBirth)) {}
 
 
-int Customer::GetCustomerNumber()
+int Customer::GetCustomerNumber() const
 {
 	return customerNumber;
 }

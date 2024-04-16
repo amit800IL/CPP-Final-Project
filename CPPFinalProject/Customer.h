@@ -58,7 +58,7 @@ public:
 
 	Customer(Customer&& customer) noexcept;
 
-	int GetCustomerNumber();
+	int GetCustomerNumber() const;
 
 	virtual int CustomerAge() const;
 

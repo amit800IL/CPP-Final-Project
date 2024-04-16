@@ -37,3 +37,15 @@ void STLCustomerQueue::ServeNextCustomer(std::priority_queue<unique_ptr<Customer
 	mailActionsManager->CallCustomer(*nextCustomer);
 	queue.pop();
 }
+
+const Customer& STLCustomerQueue::GetNextCustomer() const
+{
+	if (!regularQueue.empty())
+	{
+		return *regularQueue.top();
+	}
+	else if (!elderlyQueue.empty()) 
+	{
+		return *elderlyQueue.top(); 
+	}
+}
