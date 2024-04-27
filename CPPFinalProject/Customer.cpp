@@ -7,8 +7,6 @@ Customer::Customer(const DateOfBirth& dateOfBirth)
 	this->dateOfBirth = make_unique<DateOfBirth>(dateOfBirth);
 
 	customerNumber = ++lastAssignedCustomerNumber;
-
-	CustomerAge();
 }
 
 Customer::Customer(Customer&& customer) noexcept : dateOfBirth(move(customer.dateOfBirth)) {}
@@ -32,42 +30,27 @@ ostream& operator<<(ostream& os, const DateOfBirth& date)
 
 ostream& operator<<(ostream& os, const Customer& customer)
 {
-	os << "Customer Details:" << endl;
-	os << *customer.dateOfBirth << " , Age is: ";
-
-	cout << customer.dateOfBirth->CalcualteAge() << endl;
-
-	if (customer.CustomerAge() >= 65)
-	{
-		os << "Customer Type: " << "Elderly Customer" << endl;
-	}
-	else
-	{
-		os << "Customer Type: " << "Regular Customer" << endl;
-	}
-
-
-	os << "Customer Number: " << customer.customerNumber;
+	os << *customer.dateOfBirth << " , Age is: " << customer.CustomerAge() << ", Customer Number : " << customer.customerNumber;
 
 	return os;
 }
 
-std::string Customer::SerializeCustomer() const 
-{
-	std::stringstream ss;
-	ss << *this << ',' << endl;
-	return ss.str();
-}
-
-Customer Customer::DeserializeCustomer(const std::string& data) 
-{
-	std::stringstream ss(data);
-	int customerNumber, day, month, year;
-	char comma;
-	ss >> customerNumber >> comma >> day >> comma >> month >> comma >> year;
-	DateOfBirth dob(day, month, year);
-	return Customer(dob); // Assuming Customer constructor takes DateOfBirth
-}
+//std::string Customer::SerializeCustomer() const 
+//{
+//	std::stringstream ss;
+//	ss << *this << ',' << endl;
+//	return ss.str();
+//}
+//
+//Customer Customer::DeserializeCustomer(const std::string& data) 
+//{
+//	std::stringstream ss(data);
+//	int customerNumber, day, month, year;
+//	char comma;
+//	ss >> customerNumber >> comma >> day >> comma >> month >> comma >> year;
+//	DateOfBirth dob(day, month, year);
+//	return Customer(dob); // Assuming Customer constructor takes DateOfBirth
+//}
 
 
 

@@ -14,6 +14,15 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 
 		shared_ptr<MailClerk> clerk = FindAvailableClerk(chosenAction);
 
+		ofstream customerFile("CustomerData.txt", ios::app);
+
+		if (customerFile.is_open()) 
+		{
+			customerFile << customer << endl;
+
+			customerFile.close();
+		}
+
 		if (clerk != nullptr)
 		{
 			MailActions action = GetAvailableAction(*clerk);

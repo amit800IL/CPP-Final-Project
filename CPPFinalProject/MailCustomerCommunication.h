@@ -3,6 +3,7 @@
 #define MAILCUSTOMERCOMMUNICATION_H
 
 #include <iostream>
+#include <fstream>
 #include <memory>
 #include "Customer.h"
 #include "MailClerk.h"

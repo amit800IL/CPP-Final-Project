@@ -35,7 +35,7 @@ public:
 	void PlaceCustomerInQueue(unique_ptr<Customer> customer);
 	void GetCustomersFromQueue(shared_ptr<MailCustomerCommunication> mailActionsManager);
 	bool IsEmpty() const;
-	void ServeNextCustomer(priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator>& queue, shared_ptr<MailCustomerCommunication> mailActionsManager);
+	const unique_ptr<Customer>& ServeNextCustomer(priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator>& queue, shared_ptr<MailCustomerCommunication> mailActionsManager);
 	const Customer& GetNextCustomer() const;
 	string SerializeQueueData(shared_ptr<MailCustomerCommunication> mailActionsManager) const;
 	void SaveQueueToFile(const std::string& filename, const std::string& serializedData);

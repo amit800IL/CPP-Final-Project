@@ -18,11 +18,6 @@ void UseSytem(char input, shared_ptr<MailCustomerCommunication> mailActionsManag
 void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager);
 void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager);
 
-//std::string SerializeQueueData(shared_ptr<MailCustomerCommunication> mailActionsManager, const STLCustomerQueue& queue);
-//void SaveQueueToFile(const std::string& filename, const std::string& serializedData);
-////std::string SerializeCustomer(const Customer& customer);
-//Customer DeserializeCustomer(const std::string& data);
-
 int main()
 {
 	vector<shared_ptr<MailClerk>> clerks;
@@ -120,11 +115,6 @@ void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 	stlCustomerQueue->PlaceCustomerInQueue(move(customer8));
 
 	stlCustomerQueue->GetCustomersFromQueue(mailActionsManager);
-
-	string serializedData = stlCustomerQueue->SerializeQueueData(mailActionsManager);
-	cout << "Serialized Data: " << serializedData << endl; // Debug output
-	string filename = "customer_queue_data.txt";
-	stlCustomerQueue->SaveQueueToFile(filename, serializedData);
 }
 
 void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
