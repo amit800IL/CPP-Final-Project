@@ -32,6 +32,7 @@ private:
 	unique_ptr<Node> head;
 	unique_ptr<Customer> lastServedCustomer;
 	Node* tail;
+	int customerQueueCount = 0;
 
 public:
 	CustomerQueue() : head(nullptr), tail(nullptr) {}

@@ -63,7 +63,7 @@ void PickAndUseSystem(char input, shared_ptr<MailCustomerCommunication> mailActi
 		}
 		else if (input == '2')
 		{
-			cout << "Good choice, here are the customers that are waiting: " << endl;
+			cout << "Customers inserted" << endl;
 		}
 	}
 

@@ -2,7 +2,7 @@
 
 bool CustomerQueue::IsEmpty() const
 {
-	return (head == nullptr);
+	return customerQueueCount <= 0;
 }
 
 void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
@@ -18,6 +18,7 @@ void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 	}
 	else
 	{
+
 		Node* current = head.get();
 
 		while (current->next != nullptr && priority >= current->next->priority)
@@ -28,7 +29,10 @@ void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 		newNode->next = move(current->next);
 		current->next = move(newNode);
 	}
+
+	customerQueueCount++;
 }
+
 
 unique_ptr<Node> CustomerQueue::Dequeue()
 {
@@ -45,7 +49,9 @@ unique_ptr<Node> CustomerQueue::Dequeue()
 		tail = nullptr;
 	}
 
-	cout << "Customer number: " << tempPointer->customer->GetCustomerNumber() << " dequeued from the queue." << endl;
+	customerQueueCount--;
+
+	cout << "Customer number: " << tempPointer->customer->GetCustomerNumber() << " dequeued from the queue, Current Amount of Customers :" << customerQueueCount << endl;
 
 	return tempPointer;
 }
@@ -56,6 +62,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 	{
 		CustomerQueueIterator customerIterator = begin();
 		Customer& customer = *customerIterator;
+		cout << customer << endl;
 		mailActionsManager->CallCustomer(customer);
 		Dequeue();
 	}
