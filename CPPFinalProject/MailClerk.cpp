@@ -44,6 +44,11 @@ bool MailClerk::IsAvailable()
 	}
 }
 
+void MailClerk::Print(ostream& os) const
+{
+	os << "Clerk number " << clerkID << " Is at your service " << endl;
+}
+
 void MailClerk::SetAvailable()
 {
 	isClerkBusy = false;
@@ -52,11 +57,4 @@ void MailClerk::SetAvailable()
 void MailClerk::SetBusy()
 {
 	isClerkBusy = true;
-}
-
-std::ostream& operator<<(ostream& os, const MailClerk& date)
-{
-	cout << "Clerk number " << date.clerkID << " Is at your service " << endl;
-
-	return os;
 }

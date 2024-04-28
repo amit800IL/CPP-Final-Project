@@ -17,10 +17,8 @@ enum class MailActions
 	PurchaseProduct,
 };
 
-class MailClerk
+class MailClerk : public IPrintable
 {
-	friend std::ostream& operator<<(ostream& os, const MailClerk& date);
-
 private:
 	int clerkID;
 	std::unordered_set<MailActions> availableActions;
@@ -35,6 +33,8 @@ public:
 	void PerformAction(MailActions action);
 
 	bool IsAvailable();
+
+	void Print(ostream& os) const override;
 
 	void SetAvailable();
 	void SetBusy();

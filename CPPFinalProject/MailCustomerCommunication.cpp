@@ -100,7 +100,7 @@ shared_ptr<MailClerk> MailCustomerCommunication::FindAvailableClerk(MailActions&
 	{
 		if (clerk->IsAvailable() && clerk->CanHandleAction(action))
 		{
-			cout << *clerk << endl;
+			clerk->Print(cout);
 			return clerk;
 		}
 	}
