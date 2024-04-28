@@ -37,7 +37,7 @@ const unique_ptr<Customer>& STLCustomerQueue::ServeNextCustomer(std::priority_qu
 	string line;
 
 	const unique_ptr<Customer>& nextCustomer = queue.top();
-	cout << *nextCustomer << endl;
+	nextCustomer->Print(cout);
 	mailActionsManager->CallCustomer(*nextCustomer);
 	queue.pop();
 	return nextCustomer;

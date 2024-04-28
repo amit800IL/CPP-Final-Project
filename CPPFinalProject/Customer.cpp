@@ -22,18 +22,11 @@ int Customer::CustomerAge() const
 	return dateOfBirth->CalcualteAge();
 }
 
-ostream& operator<<(ostream& os, const DateOfBirth& date)
+void Customer::Print(ostream& os) const
 {
-	os << "Date of Birth: " << date.day << '/' << date.month << '/' << date.year;
-	return os;
+   dateOfBirth->Print(os) , os << " , Age is: " << CustomerAge() << ", Customer Number : " << customerNumber << endl;
 }
 
-ostream& operator<<(ostream& os, const Customer& customer)
-{
-	os << *customer.dateOfBirth << " , Age is: " << customer.CustomerAge() << ", Customer Number : " << customer.customerNumber;
-
-	return os;
-}
 
 //std::string Customer::SerializeCustomer() const 
 //{

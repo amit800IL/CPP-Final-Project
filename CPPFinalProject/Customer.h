@@ -4,6 +4,7 @@
 #define CUSTOMER_H
 
 #include <chrono>
+#include "IPrintable.h"
 #include <iostream>
 #include <memory>
 #include <sstream>
@@ -12,7 +13,7 @@
 using namespace std;
 
 
-struct DateOfBirth
+struct DateOfBirth : public IPrintable
 {
 	int day;
 	int month;
@@ -26,7 +27,6 @@ struct DateOfBirth
 		year(other.year)
 	{};
 
-	friend std::ostream& operator<<(ostream& os, const DateOfBirth& date);
 
 	int CalcualteAge() const
 	{
@@ -42,11 +42,15 @@ struct DateOfBirth
 
 		return static_cast<int>(ageInSeconds / (24 * 60 * 60 * 365.25));
 	}
+
+	void Print(ostream& os) const override
+	{
+		os << "Date of Birth: " << day << '/' << month << '/' << year;
+	}
 };
 
-class Customer
+class Customer : public IPrintable
 {
-	friend ostream& operator<<(ostream& os, const Customer& customer);
 
 protected:
 	unique_ptr<DateOfBirth> dateOfBirth;
@@ -64,16 +68,12 @@ public:
 
 	virtual int CustomerAge() const;
 
-	//string SerializeCustomer(const unique_ptr<Customer>& customer) const;
+	void Print(ostream& os) const override;
 
-	//std::string SerializeCustomer() const;
-
-	//Customer DeserializeCustomer(const std::string& data);
-
-	bool operator<(const Customer& other) const {
-		// Define the comparison logic based on customer priority (age)
-		return CustomerAge() < other.CustomerAge();
-	}
+	//bool operator<(const Customer& other) const {
+	//	// Define the comparison logic based on customer priority (age)
+	//	return CustomerAge() < other.CustomerAge();
+	//}
 
 	virtual ~Customer() = default;
 };

@@ -18,7 +18,7 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 
 		if (customerFile.is_open()) 
 		{
-			customerFile << customer << endl;
+			customer.Print(customerFile);
 
 			customerFile.close();
 		}

@@ -62,17 +62,17 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 
 	while (!IsEmpty())
 	{
-		if (servedRegular) 
+		if (servedRegular)
 		{
 			Node* current = head.get();
-			while (current != nullptr) 
+			while (current != nullptr)
 			{
 				if (dynamic_cast<ElderlyCustomer*>(current->customer.get()) != nullptr)
 				{
 					GetCustomerToServe(current, mailActionsManager);
 					servedElderly = true;
 					servedRegular = false;
-					break; 
+					break;
 				}
 				current = current->next.get();
 			}
@@ -81,9 +81,9 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 		if (servedElderly || (!servedRegular && !servedElderly))
 		{
 			Node* current = head.get();
-			while (current != nullptr) 
+			while (current != nullptr)
 			{
-				if (dynamic_cast<RegularCustomer*>(current->customer.get()) != nullptr) 
+				if (dynamic_cast<RegularCustomer*>(current->customer.get()) != nullptr)
 				{
 					GetCustomerToServe(current, mailActionsManager);
 					servedRegular = true;
@@ -99,7 +99,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 
 void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
-	cout << *current->customer << endl;
+	current->customer->Print(cout);
 
 	mailActionsManager->CallCustomer(*current->customer);
 
