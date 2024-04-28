@@ -47,6 +47,7 @@ public:
 
 	CustomerQueueIterator begin() const;
 	CustomerQueueIterator end() const;
+	void GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager);
 };
 
 

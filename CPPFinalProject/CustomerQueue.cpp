@@ -79,21 +79,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 			{
 				if (dynamic_cast<ElderlyCustomer*>(current->customer.get()) != nullptr)
 				{
-					cout << *current->customer << endl;
-					mailActionsManager->CallCustomer(*current->customer);
-
-					if (current == head.get()) {
-						head = move(head->next);
-					}
-					else
-					{
-						Node* prev = head.get();
-						while (prev->next.get() != current)
-						{
-							prev = prev->next.get();
-						}
-						prev->next = move(current->next);
-					}
+					GetCustomerToServe(current, mailActionsManager);
 					servedElderly = true;
 					servedRegular = false;
 					break; 
@@ -107,21 +93,9 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 			Node* current = head.get();
 			while (current != nullptr) 
 			{
-				if (dynamic_cast<RegularCustomer*>(current->customer.get()) != nullptr) {
-					cout << *current->customer << endl;
-					mailActionsManager->CallCustomer(*current->customer);
-
-					if (current == head.get()) {
-						head = move(head->next);
-					}
-					else
-					{
-						Node* prev = head.get();
-						while (prev->next.get() != current) {
-							prev = prev->next.get();
-						}
-						prev->next = move(current->next);
-					}
+				if (dynamic_cast<RegularCustomer*>(current->customer.get()) != nullptr) 
+				{
+					GetCustomerToServe(current, mailActionsManager);
 					servedRegular = true;
 					servedElderly = false;
 					break;
@@ -141,4 +115,27 @@ CustomerQueueIterator CustomerQueue::begin() const
 CustomerQueueIterator CustomerQueue::end() const
 {
 	return CustomerQueueIterator(nullptr);
+}
+
+void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager)
+{
+	cout << *current->customer << endl;
+
+	mailActionsManager->CallCustomer(*current->customer);
+
+	if (current == head.get())
+	{
+		head = move(head->next);
+	}
+	else
+	{
+		Node* prev = head.get();
+
+		while (prev->next.get() != current)
+		{
+			prev = prev->next.get();
+		}
+
+		prev->next = move(current->next);
+	}
 }
