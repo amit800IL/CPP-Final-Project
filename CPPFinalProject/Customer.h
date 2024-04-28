@@ -70,10 +70,10 @@ public:
 
 	void Print(ostream& os) const override;
 
-	//bool operator<(const Customer& other) const {
-	//	// Define the comparison logic based on customer priority (age)
-	//	return CustomerAge() < other.CustomerAge();
-	//}
+	bool operator<(const Customer& other) const {
+		// Define the comparison logic based on customer priority (age)
+		return CustomerAge() < other.CustomerAge();
+	}
 
 	virtual ~Customer() = default;
 };

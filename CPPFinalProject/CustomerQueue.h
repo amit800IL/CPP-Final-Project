@@ -40,13 +40,12 @@ public:
 
 	void Enqueue(const unique_ptr<Customer>& customer);
 
-	unique_ptr<Node> Dequeue();
+	void GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager);
 
 	void ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager);
 
 	CustomerQueueIterator begin() const;
 	CustomerQueueIterator end() const;
-	void GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager);
 };
 
 

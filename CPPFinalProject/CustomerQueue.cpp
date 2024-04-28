@@ -33,28 +33,6 @@ void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 }
 
 
-unique_ptr<Node> CustomerQueue::Dequeue()
-{
-	if (IsEmpty())
-	{
-		throw out_of_range("Queue is empty");
-	}
-
-	unique_ptr<Node> tempPointer = move(head);
-	head = move(tempPointer->next);
-
-	if (!head)
-	{
-		tail = nullptr;
-	}
-
-	customerQueueCount--;
-
-	cout << "Customer number: " << tempPointer->customer->GetCustomerNumber() << " dequeued from the queue, Current Amount of Customers :" << customerQueueCount << endl;
-
-	return tempPointer;
-}
-
 void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	bool servedRegular = false;
@@ -86,8 +64,8 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 				if (dynamic_cast<RegularCustomer*>(current->customer.get()) != nullptr)
 				{
 					GetCustomerToServe(current, mailActionsManager);
-					servedRegular = true;
 					servedElderly = false;
+					servedRegular = true;
 					break;
 				}
 				current = current->next.get();
@@ -102,6 +80,10 @@ void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCom
 	current->customer->Print(cout);
 
 	mailActionsManager->CallCustomer(*current->customer);
+
+	customerQueueCount--;
+
+	cout << "Customer number: " << current->customer->GetCustomerNumber() << " dequeued from the queue, Current Amount of Customers :" << customerQueueCount << endl;
 
 	if (current == head.get())
 	{
