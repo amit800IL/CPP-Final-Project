@@ -19,10 +19,11 @@ class CustomerQueueIterator;
 
 struct Node
 {
-	Customer& customer;
+	const unique_ptr<Customer>& customer;
+	int priority;
 	unique_ptr<Node> next;
 
-	Node(Customer& customer) : customer(customer), next(nullptr) {}
+	Node(const unique_ptr<Customer>& customer, int priority) : customer(customer), priority(priority), next(nullptr) {}
 };
 
 class CustomerQueue

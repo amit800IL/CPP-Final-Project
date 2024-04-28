@@ -7,20 +7,27 @@ bool CustomerQueue::IsEmpty() const
 
 void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 {
-	unique_ptr<Node> newNode = make_unique<Node>(*customer);
+	int priority = customer->CustomerAge() >= 65 ? 1 : 2;
 
-	if (IsEmpty())
+	unique_ptr<Node> newNode = make_unique<Node>(customer, priority);
+
+	if (head == nullptr || priority < head->priority)
 	{
+		newNode->next = move(head);
 		head = move(newNode);
-		tail = head.get();
 	}
 	else
 	{
-		tail->next = move(newNode);
-		tail = tail->next.get();
-	}
+		Node* current = head.get();
 
-	cout << customer << " enqueued to the queue." << endl;
+		while (current->next != nullptr && priority >= current->next->priority)
+		{
+			current = current->next.get();
+		}
+
+		newNode->next = move(current->next);
+		current->next = move(newNode);
+	}
 }
 
 unique_ptr<Node> CustomerQueue::Dequeue()
@@ -38,7 +45,7 @@ unique_ptr<Node> CustomerQueue::Dequeue()
 		tail = nullptr;
 	}
 
-	cout << "Customer number: " << tempPointer->customer.GetCustomerNumber() << " dequeued from the queue." << endl;
+	cout << "Customer number: " << tempPointer->customer->GetCustomerNumber() << " dequeued from the queue." << endl;
 
 	return tempPointer;
 }
