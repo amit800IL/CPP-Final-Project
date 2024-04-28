@@ -6,6 +6,7 @@
 #include "Customer.h"
 #include "ElderlyCustomer.h"
 #include "RegularCustomer.h"
+#include "MailCustomerCommunication.h"
 #include "CustomerQueueIterator.h"
 
 
@@ -39,6 +40,8 @@ public:
 	void Enqueue(Customer&& customer);
 
 	unique_ptr<Node> Dequeue();
+
+	void ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager);
 
 	CustomerQueueIterator begin() const;
 	CustomerQueueIterator end() const;
