@@ -37,7 +37,7 @@ public:
 
 	bool IsEmpty() const;
 
-	void Enqueue(Customer&& customer);
+	void Enqueue(const unique_ptr<Customer>& customer);
 
 	unique_ptr<Node> Dequeue();
 

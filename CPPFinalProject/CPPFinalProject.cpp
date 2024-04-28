@@ -139,14 +139,14 @@ void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 	unique_ptr<Customer> customer7 = make_unique<ElderlyCustomer>(*birthDate7);
 	unique_ptr<Customer> customer8 = make_unique<ElderlyCustomer>(*birthDate8);
 
-	customerQueue->Enqueue(move(*customer1));
-	customerQueue->Enqueue(move(*customer2));
-	customerQueue->Enqueue(move(*customer3));
-	customerQueue->Enqueue(move(*customer4));
-	customerQueue->Enqueue(move(*customer5));
-	customerQueue->Enqueue(move(*customer6));
-	customerQueue->Enqueue(move(*customer7));
-	customerQueue->Enqueue(move(*customer8));
+	customerQueue->Enqueue(move(customer1));
+	customerQueue->Enqueue(move(customer2));
+	customerQueue->Enqueue(move(customer3));
+	customerQueue->Enqueue(move(customer4));
+	customerQueue->Enqueue(move(customer5));
+	customerQueue->Enqueue(move(customer6));
+	customerQueue->Enqueue(move(customer7));
+	customerQueue->Enqueue(move(customer8));
 
 	customerQueue->ServeCustomer(mailActionsManager);
 

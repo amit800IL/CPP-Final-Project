@@ -5,9 +5,9 @@ bool CustomerQueue::IsEmpty() const
 	return (head == nullptr);
 }
 
-void CustomerQueue::Enqueue(Customer&& customer)
+void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 {
-	unique_ptr<Node> newNode = make_unique<Node>(customer);
+	unique_ptr<Node> newNode = make_unique<Node>(*customer);
 
 	if (IsEmpty())
 	{
