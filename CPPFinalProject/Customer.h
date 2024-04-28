@@ -70,6 +70,11 @@ public:
 
 	//Customer DeserializeCustomer(const std::string& data);
 
+	bool operator<(const Customer& other) const {
+		// Define the comparison logic based on customer priority (age)
+		return CustomerAge() < other.CustomerAge();
+	}
+
 	virtual ~Customer() = default;
 };
 #endif
