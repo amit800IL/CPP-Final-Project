@@ -8,20 +8,9 @@ bool CustomerQueue::IsEmpty() const
 
 void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 {
-	int priority;
+	unique_ptr<Node> newNode = make_unique<Node>(customer);
 
-	unique_ptr<Node> newNode = make_unique<Node>(customer, priority);
-
-	if (dynamic_cast<ElderlyCustomer*>(customer.get()) != nullptr)
-	{
-		priority = 2;
-	}
-	else if (dynamic_cast<RegularCustomer*>(customer.get()) != nullptr)
-	{
-		priority = 1;
-	}
-
-	if (head == nullptr || priority < head->priority)
+	if (head == nullptr)
 	{
 		newNode->next = move(head);
 		head = move(newNode);
@@ -31,7 +20,7 @@ void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 
 		Node* current = head.get();
 
-		while (current->next != nullptr && priority >= current->next->priority)
+		while (current->next != nullptr)
 		{
 			current = current->next.get();
 		}
@@ -73,7 +62,8 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 
 	while (!IsEmpty())
 	{
-		if (servedRegular) {
+		if (servedRegular) 
+		{
 			Node* current = head.get();
 			while (current != nullptr) 
 			{
@@ -107,16 +97,6 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 }
 
 
-CustomerQueueIterator CustomerQueue::begin() const
-{
-	return CustomerQueueIterator(head.get());
-}
-
-CustomerQueueIterator CustomerQueue::end() const
-{
-	return CustomerQueueIterator(nullptr);
-}
-
 void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	cout << *current->customer << endl;
@@ -138,4 +118,14 @@ void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCom
 
 		prev->next = move(current->next);
 	}
+}
+
+CustomerQueueIterator CustomerQueue::begin() const
+{
+	return CustomerQueueIterator(head.get());
+}
+
+CustomerQueueIterator CustomerQueue::end() const
+{
+	return CustomerQueueIterator(nullptr);
 }
