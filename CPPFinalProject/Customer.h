@@ -14,25 +14,25 @@ using namespace std;
 
 struct DateOfBirth
 {
-	unique_ptr<int> day;
-	unique_ptr<int> month;
-	unique_ptr<int> year;
+	int day;
+	int month;
+	int year;
 
-	DateOfBirth(int day, int month, int year) : day(make_unique<int>(day)), month(make_unique<int>(month)), year(make_unique<int>(year)) {}
+	DateOfBirth(int day, int month, int year) : day(day), month(month), year(year) {}
 
 	DateOfBirth(const DateOfBirth& other)
-		:day(make_unique<int>(*other.day)),
-		month(make_unique<int>(*other.month)),
-		year(make_unique<int>(*other.year))
+		:day(other.day),
+		month(other.month),
+		year(other.year)
 	{};
 
 	friend std::ostream& operator<<(ostream& os, const DateOfBirth& date);
 
 	int CalcualteAge() const
 	{
-		int yearClacultion = (*year - 1970) * 365 * 24;
-		int monthCalcultion = (*month - 1) * 30 * 24;
-		int dayCalculation = (*day - 1) * 24;
+		int yearClacultion = (year - 1970) * 365 * 24;
+		int monthCalcultion = (month - 1) * 30 * 24;
+		int dayCalculation = (day - 1) * 24;
 
 		auto now = chrono::system_clock::now();
 
