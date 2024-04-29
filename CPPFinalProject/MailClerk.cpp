@@ -1,8 +1,8 @@
 
 #include "MailClerk.h"
 MailClerk::MailClerk(int id, const vector<MailActions>& actions)
-	: clerkID(id), actionSequence(actions.begin(), actions.end()) {
-	// Initially, all actions are available
+	: clerkID(id), actionSequence(actions.begin(), actions.end())
+{
 	availableActions.insert(actionSequence.begin(), actionSequence.end());
 }
 MailClerk::MailClerk(MailClerk&& mailOfficial) noexcept {}
