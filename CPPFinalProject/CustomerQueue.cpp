@@ -52,12 +52,11 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 					servedRegular = false;
 					break;
 				}
-
 				current = current->next.get();
 			}
 		}
 
-		if (servedElderly || (!servedRegular && !servedElderly))
+		else if (servedElderly || (!servedRegular && !servedElderly))
 		{
 			Node* current = head.get();
 			while (current != nullptr && current->customer != nullptr)
@@ -67,14 +66,16 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 					GetCustomerToServe(current, mailActionsManager);
 					servedElderly = false;
 					servedRegular = true;
-					break;
+					break;  
 				}
-
 				current = current->next.get();
 			}
 		}
 	}
+
 }
+
+
 
 
 void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager)

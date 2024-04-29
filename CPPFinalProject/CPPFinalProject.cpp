@@ -119,6 +119,7 @@ void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 	for (int i = 0; i < queueSize; i++)
 	{
 		unique_ptr<Customer> customer = CreateCustomer();
+
 		if (customer != nullptr)
 		{
 			customers.push_back(move(customer));
@@ -130,7 +131,6 @@ void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 		customerQueue->Enqueue(move(customer));
 	}
 
-	// Serve customers from the queue
 	customerQueue->ServeCustomer(mailActionsManager);
 }
 
