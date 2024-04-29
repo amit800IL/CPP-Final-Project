@@ -6,7 +6,6 @@ MailCustomerCommunication::MailCustomerCommunication(const vector<shared_ptr<Mai
 void MailCustomerCommunication::CallCustomer(const Customer& customer)
 {
 	bool isCustomerServed = false;
-	bool isAnyClerkAvailable = false;
 
 	while (!isCustomerServed)
 	{
@@ -30,9 +29,7 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 			if (action != MailActions::None)
 			{
 				clerk->PerformAction(chosenAction);
-				clerk->SetBusy();
 				isCustomerServed = true;
-				isAnyClerkAvailable = true;
 				break;
 
 			}
@@ -42,14 +39,6 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 				cout << "Invalid action for this clerk. Please choose again." << endl;
 			}
 
-		}
-
-		if (!isAnyClerkAvailable)
-		{
-			for (const shared_ptr<MailClerk>& clerk : clerks)
-			{
-				clerk->SetAvailable();
-			}
 		}
 	}
 }

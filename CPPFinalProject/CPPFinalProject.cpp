@@ -23,10 +23,10 @@ int main()
 {
 	vector<shared_ptr<MailClerk>> clerks;
 
-	unordered_set<MailActions> clerk1Actions = { MailActions::RecivePackage, MailActions::MakePayment,  MailActions::DeliverPackage, MailActions::PurchaseProduct };
-	unordered_set<MailActions> clerk2Actions = { MailActions::RecivePackage, MailActions::MakePayment , MailActions::PurchaseProduct };
-	unordered_set<MailActions> clerk3Actions = { MailActions::PurchaseProduct, MailActions::MakePayment };
-	unordered_set<MailActions> clerk4Actions = { MailActions::RecivePackage, MailActions::DeliverPackage };
+	vector<MailActions> clerk1Actions = { MailActions::RecivePackage, MailActions::MakePayment,  MailActions::DeliverPackage, MailActions::PurchaseProduct };
+	vector<MailActions> clerk2Actions = { MailActions::RecivePackage, MailActions::MakePayment , MailActions::PurchaseProduct };
+	vector<MailActions> clerk3Actions = { MailActions::PurchaseProduct, MailActions::MakePayment };
+	vector<MailActions> clerk4Actions = { MailActions::RecivePackage, MailActions::DeliverPackage };
 
 	shared_ptr<MailClerk> mailClerk1 = make_shared<MailClerk>(1, clerk1Actions);
 	shared_ptr<MailClerk> mailClerk2 = make_shared<MailClerk>(2, clerk2Actions);
