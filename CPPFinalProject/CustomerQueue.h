@@ -29,7 +29,6 @@ class CustomerQueue
 {
 private:
 	unique_ptr<Node> head;
-	unique_ptr<Customer> lastServedCustomer;
 	Node* tail;
 	int customerQueueCount = 0;
 

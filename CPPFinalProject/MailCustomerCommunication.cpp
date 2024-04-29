@@ -1,6 +1,6 @@
 #include "MailCustomerCommunication.h"
 
-MailCustomerCommunication::MailCustomerCommunication(const std::vector<std::shared_ptr<MailClerk>>& clerks)
+MailCustomerCommunication::MailCustomerCommunication(const vector<shared_ptr<MailClerk>>& clerks)
 	: clerks(clerks) {}
 
 void MailCustomerCommunication::CallCustomer(const Customer& customer)
