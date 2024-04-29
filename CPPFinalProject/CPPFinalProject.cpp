@@ -1,16 +1,10 @@
 
 #include "Customer.h";
 #include "CustomerQueue.h"
-#include "CustomerQueueIterator.h"
+#include "STLCustomerQueue.h"
 #include "MailClerk.h"
 #include "MailCustomerCommunication.h"
-#include "STLCustomerQueue.h"
-#include <cstdlib>
-#include <fstream>
-#include <iostream>
-#include <iterator>
-#include <queue>
-#include <sstream>
+
 using namespace std;
 
 void PickAndUseSystem(char input, shared_ptr<MailCustomerCommunication> mailActionsManager);
@@ -146,7 +140,6 @@ unique_ptr<Customer> CreateCustomer()
 	if (birthDate->CalcualteAge() >= 65)
 	{
 		return make_unique<ElderlyCustomer>(*birthDate);
-
 	}
 	else
 	{
