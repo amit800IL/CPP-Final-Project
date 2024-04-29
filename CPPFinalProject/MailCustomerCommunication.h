@@ -21,8 +21,8 @@ private:
 	vector<shared_ptr<MailClerk>> clerks;
 public:
 	MailCustomerCommunication(const vector<shared_ptr<MailClerk>>& clerks);
-	MailActions GetAvailableAction(const MailClerk& clerk) const;
-	shared_ptr<MailClerk> FindAvailableClerk(MailActions& action) const;
+	MailActions GetAvailableAction(const shared_ptr<MailClerk>& clerk) const;
+	shared_ptr<MailClerk> FindAvailableClerk(const MailActions& action) const;
 	void CallCustomer(const Customer& customer);
 	MailActions MakingAction() const;
 

@@ -25,7 +25,7 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 
 		if (clerk != nullptr)
 		{
-			MailActions action = GetAvailableAction(*clerk);
+			MailActions action = GetAvailableAction(clerk);
 
 			if (action != MailActions::None)
 			{
@@ -34,6 +34,7 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 				isCustomerServed = true;
 				isAnyClerkAvailable = true;
 				break;
+
 			}
 
 			else
@@ -81,12 +82,12 @@ MailActions MailCustomerCommunication::MakingAction() const
 }
 
 
-MailActions MailCustomerCommunication::GetAvailableAction(const MailClerk& clerk) const
+MailActions MailCustomerCommunication::GetAvailableAction(const shared_ptr<MailClerk>& clerk) const
 {
 	for (MailActions action : {MailActions::RecivePackage, MailActions::DeliverPackage,
 		MailActions::MakePayment, MailActions::PurchaseProduct})
 	{
-		if (clerk.CanHandleAction(action))
+		if (clerk->CanHandleAction(action))
 		{
 			return action;
 		}
@@ -94,7 +95,7 @@ MailActions MailCustomerCommunication::GetAvailableAction(const MailClerk& clerk
 	return MailActions::None;
 }
 
-shared_ptr<MailClerk> MailCustomerCommunication::FindAvailableClerk(MailActions& action) const
+shared_ptr<MailClerk> MailCustomerCommunication::FindAvailableClerk(const MailActions& action) const
 {
 	for (const shared_ptr<MailClerk>& clerk : clerks)
 	{
