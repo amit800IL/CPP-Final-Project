@@ -88,32 +88,12 @@ void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	unique_ptr<STLCustomerQueue> stlCustomerQueue = make_unique<STLCustomerQueue>();
 
-	unique_ptr<DateOfBirth> birthDate1 = make_unique<DateOfBirth>(3, 1, 2000);
-	unique_ptr<DateOfBirth> birthDate2 = make_unique<DateOfBirth>(10, 9, 2010);
-	unique_ptr<DateOfBirth> birthDate3 = make_unique<DateOfBirth>(11, 10, 2007);
-	unique_ptr<DateOfBirth> birthDate4 = make_unique<DateOfBirth>(11, 12, 1998);
-	unique_ptr<DateOfBirth> birthDate5 = make_unique<DateOfBirth>(5, 6, 1950);
-	unique_ptr<DateOfBirth> birthDate6 = make_unique<DateOfBirth>(17, 3, 1950);
-	unique_ptr<DateOfBirth> birthDate7 = make_unique<DateOfBirth>(17, 3, 1940);
-	unique_ptr<DateOfBirth> birthDate8 = make_unique<DateOfBirth>(17, 3, 2010);
+	unique_ptr<Customer> customer = CreateCustomer();
 
-	unique_ptr<Customer> customer1 = make_unique<RegularCustomer>(*birthDate1);
-	unique_ptr<Customer> customer2 = make_unique<RegularCustomer>(*birthDate2);
-	unique_ptr<Customer> customer3 = make_unique<RegularCustomer>(*birthDate3);
-	unique_ptr<Customer> customer4 = make_unique<RegularCustomer>(*birthDate4);
-	unique_ptr<Customer> customer5 = make_unique<ElderlyCustomer>(*birthDate5);
-	unique_ptr<Customer> customer6 = make_unique<ElderlyCustomer>(*birthDate6);
-	unique_ptr<Customer> customer7 = make_unique<ElderlyCustomer>(*birthDate7);
-	unique_ptr<Customer> customer8 = make_unique<ElderlyCustomer>(*birthDate8);
-
-	stlCustomerQueue->PlaceCustomerInQueue(move(customer1));
-	stlCustomerQueue->PlaceCustomerInQueue(move(customer2));
-	stlCustomerQueue->PlaceCustomerInQueue(move(customer3));
-	stlCustomerQueue->PlaceCustomerInQueue(move(customer4));
-	stlCustomerQueue->PlaceCustomerInQueue(move(customer5));
-	stlCustomerQueue->PlaceCustomerInQueue(move(customer6));
-	stlCustomerQueue->PlaceCustomerInQueue(move(customer7));
-	stlCustomerQueue->PlaceCustomerInQueue(move(customer8));
+	if (customer != nullptr)
+	{
+		stlCustomerQueue->PlaceCustomerInQueue(move(customer));
+	}
 
 	stlCustomerQueue->GetCustomersFromQueue(mailActionsManager);
 }
