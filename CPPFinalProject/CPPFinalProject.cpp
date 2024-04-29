@@ -1,9 +1,10 @@
 
 #include "Customer.h";
 #include "CustomerQueue.h"
-#include "STLCustomerQueue.h"
 #include "MailClerk.h"
 #include "MailCustomerCommunication.h"
+#include "STLCustomerQueue.h"
+#include <sstream>
 
 using namespace std;
 
@@ -136,13 +137,12 @@ unique_ptr<Customer> CreateCustomer()
 	int day, month, year;
 
 	cout << "Enter Customer Birthdate (DD/MM/YYYY): ";
-	getline(cin, input); // Read the entire line of input
+	getline(cin, input);
 
-	// Parse the input string to extract day, month, and year
 	stringstream ss(input);
-	char delimiter;
+	char slash;
 
-	if (ss >> day >> delimiter >> month >> delimiter >> year)
+	if (ss >> day >> slash >> month >> slash >> year)
 	{
 		unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(day, month, year);
 
@@ -155,11 +155,9 @@ unique_ptr<Customer> CreateCustomer()
 			return make_unique<RegularCustomer>(*birthDate);
 		}
 	}
-	else
-	{
-		cout << "Invalid date format. Please enter in the format DD/MM/YYYY." << endl;
-		return nullptr;
-	}
+
+	cout << "Invalid date format. Please enter in the format DD/MM/YYYY." << endl;
+	return nullptr;
 }
 
 

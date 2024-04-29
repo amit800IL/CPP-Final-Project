@@ -6,8 +6,6 @@
 #include "ElderlyCustomer.h"
 #include "MailCustomerCommunication.h"
 #include "RegularCustomer.h"
-#include <algorithm>
-#include <functional>
 #include <memory>
 #include <queue>
 
