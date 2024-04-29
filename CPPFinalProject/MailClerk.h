@@ -38,5 +38,7 @@ public:
 
 	void SetAvailable();
 	void SetBusy();
+
+	~MailClerk() override = default;
 };
 
