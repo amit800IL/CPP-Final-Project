@@ -37,12 +37,6 @@ public:
 
 	void Print(ostream& os) const override;
 
-	//void SetAvailable();
-
-	//void SetBusy(MailActions action); // Update handledActions when busy
-
-	//void ClearHandledAction(MailActions action); // Clear a handled action
-
 	~MailClerk() override = default;
 };
 

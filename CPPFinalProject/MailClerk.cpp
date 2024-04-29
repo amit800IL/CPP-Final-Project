@@ -37,8 +37,8 @@ void MailClerk::PerformAction(MailActions action)
 
 		availableActions.erase(action);
 
-		// If no available actions left, reset available actions
-		if (availableActions.empty()) {
+		if (availableActions.empty())
+		{
 			availableActions.insert(actionSequence.begin(), actionSequence.end());
 		}
 	}
@@ -53,24 +53,4 @@ void MailClerk::Print(ostream& os) const
 {
 	os << "Clerk number " << clerkID << " Is at your service " << endl;
 }
-
-//void MailClerk::SetAvailable()
-//{
-//	
-//}
-//
-//void MailClerk::SetBusy(MailActions action)
-//{
-//	handledActions.insert(action);
-//	isClerkBusy = true;
-//}
-//
-//void MailClerk::ClearHandledAction(MailActions action)
-//{
-//	handledActions.erase(action);
-//
-//	if (handledActions.empty())
-//	{
-//		isClerkBusy = false;
-//	}
 
