@@ -88,9 +88,20 @@ void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	unique_ptr<STLCustomerQueue> stlCustomerQueue = make_unique<STLCustomerQueue>();
 
-	unique_ptr<Customer> customer = CreateCustomer();
+	int queueSize = 3;
+	vector<unique_ptr<Customer>> customers;
 
-	if (customer != nullptr)
+	for (int i = 0; i < queueSize; i++)
+	{
+		unique_ptr<Customer> customer = CreateCustomer();
+
+		if (customer != nullptr)
+		{
+			customers.push_back(move(customer));
+		}
+	}
+
+	for (unique_ptr<Customer>& customer : customers)
 	{
 		stlCustomerQueue->PlaceCustomerInQueue(move(customer));
 	}
@@ -100,7 +111,7 @@ void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 
 void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
-	shared_ptr<CustomerQueue> customerQueue = make_shared<CustomerQueue>();
+	unique_ptr<CustomerQueue> customerQueue = make_unique<CustomerQueue>();
 
 	int queueSize = 3;
 	vector<unique_ptr<Customer>> customers;
@@ -114,7 +125,7 @@ void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 		}
 	}
 
-	for (auto& customer : customers)
+	for (unique_ptr<Customer>& customer : customers)
 	{
 		customerQueue->Enqueue(move(customer));
 	}
