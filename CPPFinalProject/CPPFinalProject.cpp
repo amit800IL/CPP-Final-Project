@@ -52,6 +52,8 @@ void PickAndUseSystem(char input, shared_ptr<MailCustomerCommunication> mailActi
 	{
 		cin >> input;
 
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 		if (input == '1')
 		{
 			cout << "Customers inserted" << endl;
@@ -130,24 +132,34 @@ void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 
 unique_ptr<Customer> CreateCustomer()
 {
+	string input;
 	int day, month, year;
 
-	cout << "Enter Customer Birthdate (DD MM YYYY): ";
-	cin >> day >> month >> year;
+	cout << "Enter Customer Birthdate (DD/MM/YYYY): ";
+	getline(cin, input); // Read the entire line of input
 
-	unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(day, month, year);
+	// Parse the input string to extract day, month, and year
+	stringstream ss(input);
+	char delimiter;
 
-	if (birthDate->CalcualteAge() >= 65)
+	if (ss >> day >> delimiter >> month >> delimiter >> year)
 	{
-		return make_unique<ElderlyCustomer>(*birthDate);
+		unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(day, month, year);
+
+		if (birthDate->CalcualteAge() >= 65)
+		{
+			return make_unique<ElderlyCustomer>(*birthDate);
+		}
+		else
+		{
+			return make_unique<RegularCustomer>(*birthDate);
+		}
 	}
 	else
 	{
-		return make_unique<RegularCustomer>(*birthDate);
+		cout << "Invalid date format. Please enter in the format DD/MM/YYYY." << endl;
+		return nullptr;
 	}
-
-	cout << "No customer inserted" << endl;
-	return nullptr;
 }
 
 

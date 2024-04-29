@@ -2748,3 +2748,11 @@ Date of Birth: 3/4/2004 , Age is: 20, Customer Number : 2
 Date of Birth: 11/12/1998 , Age is: 25, Customer Number : 1
 Date of Birth: 4/2/1920 , Age is: 104, Customer Number : 3
 Date of Birth: 3/4/2004 , Age is: 20, Customer Number : 2
+Date of Birth: 11/12/1998 , Age is: 25, Customer Number : 1
+Date of Birth: 3/4/1940 , Age is: 84, Customer Number : 2
+Date of Birth: 11/12/1980 , Age is: 43, Customer Number : 1
+Date of Birth: 4/3/1920 , Age is: 104, Customer Number : 2
+Date of Birth: 2/9/2004 , Age is: 19, Customer Number : 3
+Date of Birth: 2/9/2004 , Age is: 19, Customer Number : 3
+Date of Birth: 2/9/2004 , Age is: 19, Customer Number : 3
+Date of Birth: 2/9/2004 , Age is: 19, Customer Number : 3
