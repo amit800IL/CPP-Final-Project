@@ -43,6 +43,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 		if (servedRegular)
 		{
 			Node* current = head.get();
+
 			while (current != nullptr && current->customer != nullptr)
 			{
 				if (dynamic_cast<ElderlyCustomer*>(current->customer.get()) != nullptr)
@@ -59,6 +60,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 		else if (servedElderly || (!servedRegular && !servedElderly))
 		{
 			Node* current = head.get();
+
 			while (current != nullptr && current->customer != nullptr)
 			{
 				if (dynamic_cast<RegularCustomer*>(current->customer.get()) != nullptr)
@@ -74,8 +76,6 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 	}
 
 }
-
-
 
 
 void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager)
