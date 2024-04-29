@@ -34,11 +34,11 @@ struct DateOfBirth : public IPrintable
 		int monthCalcultion = (month - 1) * 30 * 24;
 		int dayCalculation = (day - 1) * 24;
 
-		auto now = chrono::system_clock::now();
+		chrono::system_clock::time_point now = chrono::system_clock::now();
 
-		auto birth = chrono::system_clock::from_time_t(0) + chrono::hours(yearClacultion + monthCalcultion + dayCalculation);
+		chrono::system_clock::time_point birth = chrono::system_clock::from_time_t(0) + chrono::hours(yearClacultion + monthCalcultion + dayCalculation);
 
-		auto ageInSeconds = chrono::duration_cast<chrono::seconds>(now - birth).count();
+		long long ageInSeconds = chrono::duration_cast<chrono::seconds>(now - birth).count();
 
 		return static_cast<int>(ageInSeconds / (24 * 60 * 60 * 365.25));
 	}
@@ -70,10 +70,10 @@ public:
 
 	void Print(ostream& os) const override;
 
-	bool operator<(const Customer& other) const {
-		// Define the comparison logic based on customer priority (age)
-		return CustomerAge() < other.CustomerAge();
-	}
+	//bool operator<(const Customer& other) const {
+	//	// Define the comparison logic based on customer priority (age)
+	//	return CustomerAge() < other.CustomerAge();
+	//}
 
 	virtual ~Customer() = default;
 };
