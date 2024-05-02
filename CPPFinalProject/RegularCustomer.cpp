@@ -4,8 +4,3 @@ RegularCustomer::RegularCustomer(const DateOfBirth& dateOfBirth, MailActions cho
 	: Customer(dateOfBirth, choosedAction) {}
 
 RegularCustomer::RegularCustomer(RegularCustomer&& customer) noexcept : Customer(move(customer)) {}
-
-int RegularCustomer::CustomerAge() const
-{
-	return Customer::CustomerAge();
-}

@@ -57,6 +57,8 @@ MailActions MailCustomerCommunication::ChooseAction()
 
 	cin >> input;
 
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	switch (input)
 	{
 	case '1':

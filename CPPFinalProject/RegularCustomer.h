@@ -10,8 +10,6 @@ public:
 
 	RegularCustomer(RegularCustomer&& customer) noexcept;
 
-	virtual int CustomerAge() const override;
-
 	~RegularCustomer() override = default;
 };
 

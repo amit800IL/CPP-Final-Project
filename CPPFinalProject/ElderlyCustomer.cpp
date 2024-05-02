@@ -4,8 +4,3 @@ ElderlyCustomer::ElderlyCustomer(const DateOfBirth& dateOfBirth, MailActions cho
 	: Customer(dateOfBirth, choosedAction) {}
 
 ElderlyCustomer::ElderlyCustomer(ElderlyCustomer&& customer) noexcept : Customer(move(customer)) {}
-
-int ElderlyCustomer::CustomerAge() const
-{
-	return Customer::CustomerAge();
-}

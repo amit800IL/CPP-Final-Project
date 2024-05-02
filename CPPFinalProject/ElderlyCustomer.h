@@ -12,8 +12,6 @@ public:
 
 	ElderlyCustomer(ElderlyCustomer&& customer) noexcept;
 
-	int CustomerAge() const override;
-
 	~ElderlyCustomer() override = default;
 };
 

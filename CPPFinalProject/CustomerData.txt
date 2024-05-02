@@ -2781,3 +2781,17 @@ Date of Birth: 11/12/1998 , Age is: 25, Customer Number : 1
 Date of Birth: 11/12/1920 , Age is: 103, Customer Number : 2
 Date of Birth: 11/12/1998 , Age is: 25, Customer Number : 1
 Date of Birth: 11/12/2021 , Age is: 2, Customer Number : 2
+Date of Birth: 11/12/1998 , Age is: 25, Customer Number : 1
+Date of Birth: 3/4/2021 , Age is: 3, Customer Number : 2
+Date of Birth: 11/12/2003 , Age is: 20, Customer Number : 1
+Date of Birth: 2/1/1920 , Age is: 104, Customer Number : 2
+Date of Birth: 3/2/2004 , Age is: 20, Customer Number : 3
+Date of Birth: 11/12/1998 , Age is: 25, Customer Number : 1
+Date of Birth: 3/1/1920 , Age is: 104, Customer Number : 3
+Date of Birth: 3/1/2010 , Age is: 14, Customer Number : 2
+Date of Birth: 11/12/2003 , Age is: 20, Customer Number : 1
+Date of Birth: 3/2/1920 , Age is: 104, Customer Number : 3
+Date of Birth: 3/4/2004 , Age is: 20, Customer Number : 2
+Date of Birth: 11/12/2003 , Age is: 20, Customer Number : 1
+Date of Birth: 2/3/1920 , Age is: 104, Customer Number : 3
+Date of Birth: 3/4/2002 , Age is: 22, Customer Number : 2
