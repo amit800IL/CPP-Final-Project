@@ -12,6 +12,14 @@
 
 using namespace std;
 
+enum class MailActions 
+{
+	None,
+	ReceivePackage,
+	DeliverPackage,
+	MakePayment,
+	PurchaseProduct
+};
 
 struct DateOfBirth : public IPrintable
 {
@@ -54,19 +62,21 @@ class Customer : public IPrintable
 
 protected:
 	unique_ptr<DateOfBirth> dateOfBirth;
-	int customerNumber;
-
+	int customerNumber = 0;
+	MailActions choosedAction;
 	static int lastAssignedCustomerNumber;
 
 public:
 
-	Customer(const DateOfBirth& dateOfBirth);
+	Customer(const DateOfBirth& dateOfBirth, MailActions preferredAction);
 
 	Customer(Customer&& customer) noexcept;
 
 	int GetCustomerNumber() const;
 
 	virtual int CustomerAge() const;
+
+	virtual MailActions GetCustomerAction() const;
 
 	void Print(ostream& os) const override;
 

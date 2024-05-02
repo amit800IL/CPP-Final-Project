@@ -6,7 +6,7 @@
 class RegularCustomer: public Customer
 {
 public:
-	RegularCustomer(const DateOfBirth& dateOfBirth);
+	RegularCustomer(const DateOfBirth& dateOfBirth, MailActions choosedAction);
 
 	RegularCustomer(RegularCustomer&& customer) noexcept;
 

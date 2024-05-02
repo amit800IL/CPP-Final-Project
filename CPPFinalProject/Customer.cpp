@@ -2,9 +2,11 @@
 
 int Customer::lastAssignedCustomerNumber = 0;
 
-Customer::Customer(const DateOfBirth& dateOfBirth)
+Customer::Customer(const DateOfBirth& dateOfBirth, MailActions choosedAction)
 {
 	this->dateOfBirth = make_unique<DateOfBirth>(dateOfBirth);
+
+	this->choosedAction = choosedAction;
 
 	customerNumber = ++lastAssignedCustomerNumber;
 }
@@ -25,6 +27,11 @@ int Customer::CustomerAge() const
 void Customer::Print(ostream& os) const
 {
    dateOfBirth->Print(os) , os << " , Age is: " << CustomerAge() << ", Customer Number : " << customerNumber << endl;
+}
+
+MailActions Customer::GetCustomerAction() const
+{
+	return choosedAction;
 }
 
 

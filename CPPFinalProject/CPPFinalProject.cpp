@@ -12,16 +12,15 @@ void PickAndUseSystem(char input, shared_ptr<MailCustomerCommunication> mailActi
 void UseSytem(char input, shared_ptr<MailCustomerCommunication> mailActionsManager);
 void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager);
 void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager);
-unique_ptr<Customer> CreateCustomer();
 
 int main()
 {
 	vector<shared_ptr<MailClerk>> clerks;
 
-	vector<MailActions> clerk1Actions = { MailActions::RecivePackage, MailActions::MakePayment,  MailActions::DeliverPackage, MailActions::PurchaseProduct };
-	vector<MailActions> clerk2Actions = { MailActions::RecivePackage, MailActions::MakePayment , MailActions::PurchaseProduct };
+	vector<MailActions> clerk1Actions = { MailActions::ReceivePackage, MailActions::MakePayment,  MailActions::DeliverPackage, MailActions::PurchaseProduct };
+	vector<MailActions> clerk2Actions = { MailActions::ReceivePackage, MailActions::MakePayment , MailActions::PurchaseProduct };
 	vector<MailActions> clerk3Actions = { MailActions::PurchaseProduct, MailActions::MakePayment };
-	vector<MailActions> clerk4Actions = { MailActions::RecivePackage, MailActions::DeliverPackage };
+	vector<MailActions> clerk4Actions = { MailActions::ReceivePackage, MailActions::DeliverPackage };
 
 	shared_ptr<MailClerk> mailClerk1 = make_shared<MailClerk>(1, clerk1Actions);
 	shared_ptr<MailClerk> mailClerk2 = make_shared<MailClerk>(2, clerk2Actions);
@@ -90,7 +89,7 @@ void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 
 	for (int i = 0; i < queueSize; i++)
 	{
-		unique_ptr<Customer> customer = CreateCustomer();
+		unique_ptr<Customer> customer = mailActionsManager->CreateCustomer();
 
 		if (customer != nullptr)
 		{
@@ -115,7 +114,7 @@ void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 
 	for (int i = 0; i < queueSize; i++)
 	{
-		unique_ptr<Customer> customer = CreateCustomer();
+		unique_ptr<Customer> customer = mailActionsManager->CreateCustomer();
 
 		if (customer != nullptr)
 		{
@@ -131,33 +130,5 @@ void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 	customerQueue->ServeCustomer(mailActionsManager);
 }
 
-unique_ptr<Customer> CreateCustomer()
-{
-	string input;
-	int day, month, year;
-
-	cout << "Enter Customer Birthdate (DD/MM/YYYY): ";
-	getline(cin, input);
-
-	stringstream ss(input);
-	char slash;
-
-	if (ss >> day >> slash >> month >> slash >> year)
-	{
-		unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(day, month, year);
-
-		if (birthDate->CalcualteAge() >= 65)
-		{
-			return make_unique<ElderlyCustomer>(*birthDate);
-		}
-		else
-		{
-			return make_unique<RegularCustomer>(*birthDate);
-		}
-	}
-
-	cout << "Invalid date format. Please enter in the format DD/MM/YYYY." << endl;
-	return nullptr;
-}
 
 

@@ -8,6 +8,9 @@
 #include <unordered_map>
 #include "Customer.h"
 #include "MailClerk.h"
+#include "Customer.h"
+#include "ElderlyCustomer.h"
+#include "RegularCustomer.h"
 
 using namespace std;
 
@@ -23,8 +26,9 @@ public:
 	MailCustomerCommunication(const vector<shared_ptr<MailClerk>>& clerks);
 	MailActions GetAvailableAction(const shared_ptr<MailClerk>& clerk) const;
 	shared_ptr<MailClerk> FindAvailableClerk(const MailActions& action) const;
+	unique_ptr<Customer> CreateCustomer();
 	void CallCustomer(const Customer& customer);
-	MailActions MakingAction() const;
+	MailActions ChooseAction();
 
 	~MailCustomerCommunication() = default;
 };

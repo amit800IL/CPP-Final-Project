@@ -8,15 +8,6 @@
 
 using namespace std;
 
-enum class MailActions
-{
-	None,
-	RecivePackage,
-	DeliverPackage,
-	MakePayment,
-	PurchaseProduct,
-};
-
 class MailClerk : public IPrintable
 {
 private:

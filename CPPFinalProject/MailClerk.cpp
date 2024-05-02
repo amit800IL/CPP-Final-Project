@@ -18,7 +18,7 @@ void MailClerk::PerformAction(MailActions action)
 	{
 		switch (action)
 		{
-		case MailActions::RecivePackage:
+		case MailActions::ReceivePackage:
 			cout << "Here is your Package" << endl;
 			break;
 		case MailActions::DeliverPackage:

@@ -8,7 +8,7 @@
 class ElderlyCustomer: public Customer
 {
 public:
-	ElderlyCustomer(const DateOfBirth& dateOfBirth);
+	ElderlyCustomer(const DateOfBirth& dateOfBirth, MailActions choosedAction);
 
 	ElderlyCustomer(ElderlyCustomer&& customer) noexcept;
 

@@ -1,3 +1,4 @@
+
 #include "MailCustomerCommunication.h"
 
 MailCustomerCommunication::MailCustomerCommunication(const vector<shared_ptr<MailClerk>>& clerks)
@@ -9,13 +10,13 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 
 	while (!isCustomerServed)
 	{
-		MailActions chosenAction = MakingAction();
+		MailActions chosenAction = customer.GetCustomerAction();
 
 		shared_ptr<MailClerk> clerk = FindAvailableClerk(chosenAction);
 
 		ofstream customerFile("CustomerData.txt", ios::app);
 
-		if (customerFile.is_open()) 
+		if (customerFile.is_open())
 		{
 			customer.Print(customerFile);
 
@@ -43,7 +44,7 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 	}
 }
 
-MailActions MailCustomerCommunication::MakingAction() const
+MailActions MailCustomerCommunication::ChooseAction()
 {
 	char input = '0';
 
@@ -59,7 +60,7 @@ MailActions MailCustomerCommunication::MakingAction() const
 	switch (input)
 	{
 	case '1':
-		return MailActions::RecivePackage;
+		return MailActions::ReceivePackage;
 	case '2':
 		return MailActions::DeliverPackage;
 	case '3':
@@ -67,13 +68,12 @@ MailActions MailCustomerCommunication::MakingAction() const
 	case '4':
 		return MailActions::PurchaseProduct;
 	}
-
 }
 
 
 MailActions MailCustomerCommunication::GetAvailableAction(const shared_ptr<MailClerk>& clerk) const
 {
-	for (MailActions action : {MailActions::RecivePackage, MailActions::DeliverPackage,
+	for (MailActions action : {MailActions::ReceivePackage, MailActions::DeliverPackage,
 		MailActions::MakePayment, MailActions::PurchaseProduct})
 	{
 		if (clerk->CanHandleAction(action))
@@ -96,5 +96,34 @@ shared_ptr<MailClerk> MailCustomerCommunication::FindAvailableClerk(const MailAc
 	}
 
 	cout << "Not available clerk found for that action" << endl;
+	return nullptr;
+}
+
+unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
+{
+	string input;
+	int day, month, year;
+
+	cout << "Enter Customer Birthdate (DD/MM/YYYY): ";
+	getline(cin, input);
+
+	stringstream ss(input);
+	char slash;
+	if (ss >> day >> slash >> month >> slash >> year)
+	{
+		MailActions chosenAction = ChooseAction();
+
+		unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(day, month, year);
+
+		if (birthDate->CalcualteAge() >= 65) 
+		{
+			return make_unique<ElderlyCustomer>(*birthDate, chosenAction);
+		}
+		else {
+			return make_unique<RegularCustomer>(*birthDate, chosenAction);
+		}
+	}
+
+	cerr << "Invalid date format. Please enter in the format DD/MM/YYYY." << endl;
 	return nullptr;
 }
