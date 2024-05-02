@@ -65,6 +65,7 @@ protected:
 	int customerNumber = 0;
 	MailActions choosedAction;
 	static int lastAssignedCustomerNumber;
+	int priorityScore = 0;
 
 public:
 
@@ -77,6 +78,10 @@ public:
 	virtual int CustomerAge() const;
 
 	virtual MailActions GetCustomerAction() const;
+
+	int GenerateCustomerNumber();
+
+	int GetPriorityScore();
 
 	void Print(ostream& os) const override;
 

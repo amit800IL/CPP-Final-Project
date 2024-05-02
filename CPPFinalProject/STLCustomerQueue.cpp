@@ -2,7 +2,7 @@
 void STLCustomerQueue::PlaceCustomerInQueue(unique_ptr<Customer> customer) {
 	if (dynamic_cast<ElderlyCustomer*>(customer.get()) != nullptr)
 	{
-		elderlyQueue.push(std::move(customer));
+ 		elderlyQueue.push(std::move(customer));
 	}
 	else if (dynamic_cast<RegularCustomer*>(customer.get()) != nullptr)
 	{
@@ -55,6 +55,22 @@ const Customer& STLCustomerQueue::GetNextCustomer() const
 	}
 
 	throw std::logic_error("No customer available");
+}
+
+int CompareActions(MailActions actions)
+{
+	switch (actions) {
+	case MailActions::ReceivePackage:
+		return 1; // Example priority for receiving packages
+	case MailActions::DeliverPackage:
+		return 2; // Priority for delivering packages
+	case MailActions::MakePayment:
+		return 3; // Priority for making payments
+	case MailActions::PurchaseProduct:
+		return 4; // Priority for purchasing products
+	default:
+		return 5; // Default priority
+	}
 }
 
 //string STLCustomerQueue::SerializeQueueData(shared_ptr<MailCustomerCommunication> mailActionsManager) const
