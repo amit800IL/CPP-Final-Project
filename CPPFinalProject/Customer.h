@@ -14,7 +14,7 @@ using namespace std;
 
 enum class MailActions 
 {
-	None,
+	Cancel,
 	ReceivePackage,
 	DeliverPackage,
 	MakePayment,

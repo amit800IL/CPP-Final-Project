@@ -19,16 +19,16 @@ void MailClerk::PerformAction(MailActions action)
 		switch (action)
 		{
 		case MailActions::ReceivePackage:
-			cout << "Here is your Package" << endl;
+			cout << "Action " << static_cast<int>(MailActions::ReceivePackage) << endl;
 			break;
 		case MailActions::DeliverPackage:
-			cout << "Package has been delivered" << endl;
+			cout << "Action " << static_cast<int>(MailActions::DeliverPackage) << endl;
 			break;
 		case MailActions::MakePayment:
-			cout << "Payment made succesfully" << endl;
+			cout << "Action " << static_cast<int>(MailActions::MakePayment) << endl;
 			break;
 		case MailActions::PurchaseProduct:
-			cout << "Product has been purchased" << endl;
+			cout << "Action " << static_cast<int>(MailActions::PurchaseProduct) << endl;
 			break;
 		default:
 			std::cout << "Invalid action" << std::endl;

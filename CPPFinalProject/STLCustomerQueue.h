@@ -12,35 +12,31 @@
 using namespace std;
 #pragma once
 
-
-enum class MailActions;
-
+int CompareActions(MailActions actions);
 
 struct CustomerComparator
 {
 	bool operator()(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
 	{
-		int priorityScoreA = a->GetPriorityScore();
-		int priorityScoreB = b->GetPriorityScore();
+		bool aIsElderly = dynamic_cast<ElderlyCustomer*>(a.get()) != nullptr;
+		bool bIsElderly = dynamic_cast<ElderlyCustomer*>(b.get()) != nullptr;
 
-		if (priorityScoreA != priorityScoreB) 
+
+		if (a == b)
 		{
-			return priorityScoreA < priorityScoreB;
+			return CompareActions(a->GetCustomerAction()) > CompareActions(b->GetCustomerAction());
 		}
-		else
-		{
-			return a->CustomerAge() > b->CustomerAge();
-		}
+
+		return a->CustomerAge() > b->CustomerAge();
 	}
 };
-
 
 class STLCustomerQueue
 {
 
 private:
-	priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator> regularQueue;
 	priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator> elderlyQueue;
+	priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator> regularQueue;
 public:
 	void PlaceCustomerInQueue(unique_ptr<Customer> customer);
 	void GetCustomersFromQueue(shared_ptr<MailCustomerCommunication> mailActionsManager);
@@ -48,7 +44,6 @@ public:
 	const unique_ptr<Customer>& ServeNextCustomer(priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator>& queue, shared_ptr<MailCustomerCommunication> mailActionsManager);
 	const Customer& GetNextCustomer() const;
 };
-
 
 
 

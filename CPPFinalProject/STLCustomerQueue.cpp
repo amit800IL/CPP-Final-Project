@@ -2,7 +2,7 @@
 void STLCustomerQueue::PlaceCustomerInQueue(unique_ptr<Customer> customer) {
 	if (dynamic_cast<ElderlyCustomer*>(customer.get()) != nullptr)
 	{
- 		elderlyQueue.push(std::move(customer));
+		elderlyQueue.push(std::move(customer));
 	}
 	else if (dynamic_cast<RegularCustomer*>(customer.get()) != nullptr)
 	{
@@ -11,22 +11,14 @@ void STLCustomerQueue::PlaceCustomerInQueue(unique_ptr<Customer> customer) {
 }
 
 void STLCustomerQueue::GetCustomersFromQueue(shared_ptr<MailCustomerCommunication> mailActionsManager) {
-	bool servedRegularLast = false; 
-
 	while (!regularQueue.empty() || !elderlyQueue.empty())
 	{
-		if (!regularQueue.empty() && (!servedRegularLast || elderlyQueue.empty()))
-		{
-
+		if (!regularQueue.empty()) {
 			ServeNextCustomer(regularQueue, mailActionsManager);
-			servedRegularLast = true;
 		}
-
 		if (!elderlyQueue.empty())
 		{
-			// Serve the next elderly customer
 			ServeNextCustomer(elderlyQueue, mailActionsManager);
-			servedRegularLast = false;
 		}
 	}
 }
@@ -45,18 +37,17 @@ const unique_ptr<Customer>& STLCustomerQueue::ServeNextCustomer(std::priority_qu
 	string line;
 
 	const unique_ptr<Customer>& nextCustomer = queue.top();
-	if (dynamic_cast<ElderlyCustomer*>(nextCustomer.get()))
-	{
-		nextCustomer->GenerateCustomerNumber(nextCustomer->CustomerAge());
-	}
-	else if (dynamic_cast<RegularCustomer*>(nextCustomer.get()))
-	{
-		nextCustomer->GenerateCustomerNumber(0);
-	}
+
 	nextCustomer->Print(cout);
-	mailActionsManager->CallCustomer(*nextCustomer);
 
-
+	if (nextCustomer->GetCustomerAction() != MailActions::Cancel)
+	{
+		mailActionsManager->CallCustomer(*nextCustomer);
+	}
+	else
+	{
+		cout << " ----- Cancaled -----" << endl;
+	}
 	queue.pop();
 	return nextCustomer;
 }
@@ -77,7 +68,8 @@ const Customer& STLCustomerQueue::GetNextCustomer() const
 
 int CompareActions(MailActions actions)
 {
-	switch (actions) {
+	switch (actions)
+	{
 	case MailActions::ReceivePackage:
 		return 1; // Example priority for receiving packages
 	case MailActions::DeliverPackage:
@@ -86,11 +78,8 @@ int CompareActions(MailActions actions)
 		return 3; // Priority for making payments
 	case MailActions::PurchaseProduct:
 		return 4; // Priority for purchasing products
-	default:
-		return 5; // Default priority
 	}
 }
-
 //string STLCustomerQueue::SerializeQueueData(shared_ptr<MailCustomerCommunication> mailActionsManager) const
 //{
 //	std::stringstream ss;

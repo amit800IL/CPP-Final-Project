@@ -8,11 +8,13 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 {
 	bool isCustomerServed = false;
 
+	MailActions chosenAction = customer.GetCustomerAction();
+	shared_ptr<MailClerk> clerk = FindAvailableClerk(chosenAction);
+
 	while (!isCustomerServed)
 	{
-		MailActions chosenAction = customer.GetCustomerAction();
-
-		shared_ptr<MailClerk> clerk = FindAvailableClerk(chosenAction);
+		if (chosenAction == MailActions::Cancel)
+			break;
 
 		ofstream customerFile("CustomerData.txt", ios::app);
 
@@ -27,19 +29,17 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 		{
 			MailActions action = GetAvailableAction(clerk);
 
-			if (action != MailActions::None)
+			if (action != MailActions::Cancel)
 			{
 				clerk->PerformAction(chosenAction);
 				isCustomerServed = true;
 				break;
 
 			}
-
-			else
-			{
-				cout << "Invalid action for this clerk. Please choose again." << endl;
-			}
-
+		}
+		else
+		{
+			break;
 		}
 	}
 }
@@ -54,6 +54,7 @@ MailActions MailCustomerCommunication::ChooseAction()
 	cout << "2. Deliver a package" << endl;
 	cout << "3. Make a payment" << endl;
 	cout << "4. Purchase a product" << endl;
+	cout << "5. Give up your place in the queue" << endl;
 
 	cin >> input;
 
@@ -69,6 +70,8 @@ MailActions MailCustomerCommunication::ChooseAction()
 		return MailActions::MakePayment;
 	case '4':
 		return MailActions::PurchaseProduct;
+	case '5':
+		return MailActions::Cancel;
 	}
 }
 
@@ -83,7 +86,7 @@ MailActions MailCustomerCommunication::GetAvailableAction(const shared_ptr<MailC
 			return action;
 		}
 	}
-	return MailActions::None;
+	return MailActions::Cancel;
 }
 
 shared_ptr<MailClerk> MailCustomerCommunication::FindAvailableClerk(const MailActions& action) const
@@ -97,7 +100,14 @@ shared_ptr<MailClerk> MailCustomerCommunication::FindAvailableClerk(const MailAc
 		}
 	}
 
-	cout << "Not available clerk found for that action" << endl;
+	if (action != MailActions::Cancel)
+	{
+		cout << "Not available clerk found for that action" << endl;
+	}
+	else
+	{
+		cout << "Place in queue cleared" << endl;
+	}
 	return nullptr;
 }
 
@@ -117,7 +127,7 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 
 		unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(day, month, year);
 
-		if (birthDate->CalcualteAge() >= 65) 
+		if (birthDate->CalcualteAge() >= 65)
 		{
 		   unique_ptr<Customer> customer = make_unique<ElderlyCustomer>(*birthDate, chosenAction);
 
