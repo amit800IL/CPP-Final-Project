@@ -7,8 +7,6 @@ Customer::Customer(const DateOfBirth& dateOfBirth, MailActions choosedAction)
 	this->dateOfBirth = make_unique<DateOfBirth>(dateOfBirth);
 
 	this->choosedAction = choosedAction;
-
-	GenerateCustomerNumber();
 }
 
 Customer::Customer(Customer&& customer) noexcept : dateOfBirth(move(customer.dateOfBirth)) {}
@@ -24,10 +22,10 @@ int Customer::CustomerAge() const
 	return dateOfBirth->CalcualteAge();
 }
 
-int Customer::GenerateCustomerNumber()
+int Customer::GenerateCustomerNumber(int agePriority)
 {
 	int actionPriority = static_cast<int>(choosedAction);
-	int agePriority = CustomerAge();
+	agePriority = CustomerAge();
 
 	switch (choosedAction)
 	{
