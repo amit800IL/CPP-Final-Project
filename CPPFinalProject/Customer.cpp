@@ -27,20 +27,21 @@ int Customer::CustomerAge() const
 int Customer::GenerateCustomerNumber()
 {
 	int actionPriority = static_cast<int>(choosedAction);
+	int agePriority = CustomerAge();
 
 	switch (choosedAction)
 	{
 	case MailActions::ReceivePackage:
-		priorityScore = (actionPriority * 10);
+		priorityScore = (actionPriority * 10) + agePriority;
 		break;
 	case MailActions::DeliverPackage:
-		priorityScore = (actionPriority * 5);
+		priorityScore = (actionPriority * 5) + agePriority;
 		break;
 	case MailActions::MakePayment:
-		priorityScore = (actionPriority * 3);
+		priorityScore = (actionPriority * 3) + agePriority;
 		break;
 	case MailActions::PurchaseProduct:
-		priorityScore = (actionPriority * 2);
+		priorityScore = (actionPriority * 2) + agePriority;
 		break;
 	default:
 		break;

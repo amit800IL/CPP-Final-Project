@@ -10,8 +10,6 @@ public:
 
 	RegularCustomer(RegularCustomer&& customer) noexcept;
 
-	int GenerateCustomerNumber() override;
-
 	~RegularCustomer() override = default;
 };
 

@@ -12,8 +12,6 @@ public:
 
 	ElderlyCustomer(ElderlyCustomer&& customer) noexcept;
 
-	int GenerateCustomerNumber() override;
-
 	~ElderlyCustomer() override = default;
 };
 
