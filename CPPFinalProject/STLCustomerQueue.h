@@ -12,12 +12,19 @@
 using namespace std;
 #pragma once
 
+int CompareActions(MailActions actions);
+
 struct CustomerComparator
 {
 	bool operator()(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
 	{
 		bool aIsElderly = dynamic_cast<ElderlyCustomer*>(a.get()) != nullptr;
 		bool bIsElderly = dynamic_cast<ElderlyCustomer*>(b.get()) != nullptr;
+
+		if (a == b)
+		{
+			return CompareActions(a->GetCustomerAction()) > CompareActions(b->GetCustomerAction());
+		}
 
 		return a->GetCustomerNumber() > b->GetCustomerNumber();
 	}

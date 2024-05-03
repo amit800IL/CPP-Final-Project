@@ -66,6 +66,20 @@ const Customer& STLCustomerQueue::GetNextCustomer() const
 	throw std::logic_error("No customer available");
 }
 
+int CompareActions(MailActions actions)
+{
+	switch (actions)
+	{
+	case MailActions::ReceivePackage:
+		return 1; // Example priority for receiving packages
+	case MailActions::DeliverPackage:
+		return 2; // Priority for delivering packages
+	case MailActions::MakePayment:
+		return 3; // Priority for making payments
+	case MailActions::PurchaseProduct:
+		return 4; // Priority for purchasing products
+	}
+}
 //string STLCustomerQueue::SerializeQueueData(shared_ptr<MailCustomerCommunication> mailActionsManager) const
 //{
 //	std::stringstream ss;
