@@ -37,8 +37,17 @@ const unique_ptr<Customer>& STLCustomerQueue::ServeNextCustomer(std::priority_qu
 	string line;
 
 	const unique_ptr<Customer>& nextCustomer = queue.top();
+
 	nextCustomer->Print(cout);
-	mailActionsManager->CallCustomer(*nextCustomer);
+
+	if (nextCustomer->GetCustomerAction() != MailActions::Cancel)
+	{
+		mailActionsManager->CallCustomer(*nextCustomer);
+	}
+	else
+	{
+		cout << " ----- Cancaled -----" << endl;
+	}
 	queue.pop();
 	return nextCustomer;
 }
