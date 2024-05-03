@@ -120,14 +120,12 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 		if (birthDate->CalcualteAge() >= 65) 
 		{
 		   unique_ptr<Customer> customer = make_unique<ElderlyCustomer>(*birthDate, chosenAction);
-		   customer->GenerateCustomerNumber(customer->CustomerAge());
 
 		   return customer;
 		}
 		else 
 		{
 			unique_ptr<Customer> customer = make_unique<RegularCustomer>(*birthDate, chosenAction);
-			customer->GenerateCustomerNumber(0);
 
 			return customer;
 		}

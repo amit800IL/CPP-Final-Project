@@ -11,14 +11,22 @@ void STLCustomerQueue::PlaceCustomerInQueue(unique_ptr<Customer> customer) {
 }
 
 void STLCustomerQueue::GetCustomersFromQueue(shared_ptr<MailCustomerCommunication> mailActionsManager) {
+	bool servedRegularLast = false; 
+
 	while (!regularQueue.empty() || !elderlyQueue.empty())
 	{
-		if (!regularQueue.empty()) {
+		if (!regularQueue.empty() && (!servedRegularLast || elderlyQueue.empty()))
+		{
+
 			ServeNextCustomer(regularQueue, mailActionsManager);
+			servedRegularLast = true;
 		}
+
 		if (!elderlyQueue.empty())
 		{
+			// Serve the next elderly customer
 			ServeNextCustomer(elderlyQueue, mailActionsManager);
+			servedRegularLast = false;
 		}
 	}
 }
@@ -37,8 +45,18 @@ const unique_ptr<Customer>& STLCustomerQueue::ServeNextCustomer(std::priority_qu
 	string line;
 
 	const unique_ptr<Customer>& nextCustomer = queue.top();
+	if (dynamic_cast<ElderlyCustomer*>(nextCustomer.get()))
+	{
+		nextCustomer->GenerateCustomerNumber(nextCustomer->CustomerAge());
+	}
+	else if (dynamic_cast<RegularCustomer*>(nextCustomer.get()))
+	{
+		nextCustomer->GenerateCustomerNumber(0);
+	}
 	nextCustomer->Print(cout);
 	mailActionsManager->CallCustomer(*nextCustomer);
+
+
 	queue.pop();
 	return nextCustomer;
 }

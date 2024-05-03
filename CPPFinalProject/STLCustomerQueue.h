@@ -15,7 +15,6 @@ using namespace std;
 
 enum class MailActions;
 
-int CompareActions(MailActions actions);
 
 struct CustomerComparator
 {
