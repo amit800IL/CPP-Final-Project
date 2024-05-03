@@ -27,15 +27,9 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 
 		if (clerk != nullptr)
 		{
-			MailActions action = GetAvailableAction(clerk);
-
-			if (action != MailActions::Cancel)
-			{
-				clerk->PerformAction(chosenAction);
-				isCustomerServed = true;
-				break;
-
-			}
+			clerk->PerformAction(chosenAction);
+			isCustomerServed = true;
+			break;
 		}
 		else
 		{
@@ -75,19 +69,6 @@ MailActions MailCustomerCommunication::ChooseAction()
 	}
 }
 
-
-MailActions MailCustomerCommunication::GetAvailableAction(const shared_ptr<MailClerk>& clerk) const
-{
-	for (MailActions action : {MailActions::ReceivePackage, MailActions::DeliverPackage,
-		MailActions::MakePayment, MailActions::PurchaseProduct})
-	{
-		if (clerk->CanHandleAction(action))
-		{
-			return action;
-		}
-	}
-	return MailActions::Cancel;
-}
 
 shared_ptr<MailClerk> MailCustomerCommunication::FindAvailableClerk(const MailActions& action) const
 {
@@ -129,11 +110,11 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 
 		if (birthDate->CalcualteAge() >= 65)
 		{
-		   unique_ptr<Customer> customer = make_unique<ElderlyCustomer>(*birthDate, chosenAction);
+			unique_ptr<Customer> customer = make_unique<ElderlyCustomer>(*birthDate, chosenAction);
 
-		   return customer;
+			return customer;
 		}
-		else 
+		else
 		{
 			unique_ptr<Customer> customer = make_unique<RegularCustomer>(*birthDate, chosenAction);
 

@@ -71,13 +71,13 @@ int CompareActions(MailActions actions)
 	switch (actions)
 	{
 	case MailActions::ReceivePackage:
-		return 1; // Example priority for receiving packages
+		return 1;
 	case MailActions::DeliverPackage:
-		return 2; // Priority for delivering packages
+		return 2;
 	case MailActions::MakePayment:
-		return 3; // Priority for making payments
+		return 3;
 	case MailActions::PurchaseProduct:
-		return 4; // Priority for purchasing products
+		return 4;
 	}
 }
 //string STLCustomerQueue::SerializeQueueData(shared_ptr<MailCustomerCommunication> mailActionsManager) const
