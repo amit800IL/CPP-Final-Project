@@ -21,12 +21,13 @@ struct CustomerComparator
 		bool aIsElderly = dynamic_cast<ElderlyCustomer*>(a.get()) != nullptr;
 		bool bIsElderly = dynamic_cast<ElderlyCustomer*>(b.get()) != nullptr;
 
+
 		if (a == b)
 		{
 			return CompareActions(a->GetCustomerAction()) > CompareActions(b->GetCustomerAction());
 		}
 
-		return a->GetCustomerNumber() > b->GetCustomerNumber();
+		return a->CustomerAge() > b->CustomerAge();
 	}
 };
 
@@ -34,8 +35,8 @@ class STLCustomerQueue
 {
 
 private:
-	priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator> regularQueue;
 	priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator> elderlyQueue;
+	priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator> regularQueue;
 public:
 	void PlaceCustomerInQueue(unique_ptr<Customer> customer);
 	void GetCustomersFromQueue(shared_ptr<MailCustomerCommunication> mailActionsManager);
