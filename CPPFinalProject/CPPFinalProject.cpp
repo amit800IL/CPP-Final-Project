@@ -84,7 +84,7 @@ void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	unique_ptr<STLCustomerQueue> stlCustomerQueue = make_unique<STLCustomerQueue>();
 
-	int queueSize = 3;
+	int queueSize = 5;
 	vector<unique_ptr<Customer>> customers;
 
 	for (int i = 0; i < queueSize; i++)

@@ -21,16 +21,15 @@ struct CustomerComparator
 {
 	bool operator()(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
 	{
-		// Calculate priority scores for customers
 		int priorityScoreA = a->GetPriorityScore();
 		int priorityScoreB = b->GetPriorityScore();
 
-		// Compare based on priority scores
-		if (priorityScoreA != priorityScoreB) {
+		if (priorityScoreA != priorityScoreB) 
+		{
 			return priorityScoreA < priorityScoreB;
 		}
-		else {
-			// If priority scores are the same, compare based on age (older has higher priority)
+		else
+		{
 			return a->CustomerAge() > b->CustomerAge();
 		}
 	}

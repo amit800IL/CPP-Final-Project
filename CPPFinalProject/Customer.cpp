@@ -28,7 +28,24 @@ int Customer::GenerateCustomerNumber()
 {
 	int actionPriority = static_cast<int>(choosedAction);
 	int agePriority = CustomerAge();
-	priorityScore = actionPriority * 10 + agePriority;
+
+	switch (choosedAction)
+	{
+	case MailActions::ReceivePackage:
+		priorityScore = (actionPriority * 10) + agePriority;
+		break;
+	case MailActions::DeliverPackage:
+		priorityScore = (actionPriority * 5) + agePriority;
+		break;
+	case MailActions::MakePayment:
+		priorityScore = (actionPriority * 3) + agePriority;
+		break;
+	case MailActions::PurchaseProduct:
+		priorityScore = (actionPriority * 2) + agePriority;
+		break;
+	default:
+		break;
+	}
 
 	return priorityScore;
 }
@@ -40,7 +57,7 @@ int Customer::GetPriorityScore()
 
 void Customer::Print(ostream& os) const
 {
-   dateOfBirth->Print(os) , os << " , Age is: " << CustomerAge() << ", Customer Number : " << priorityScore << endl;
+	dateOfBirth->Print(os), os << " , Age is: " << CustomerAge() << ", Customer Number : " << priorityScore << "A" << endl;
 }
 
 MailActions Customer::GetCustomerAction() const
