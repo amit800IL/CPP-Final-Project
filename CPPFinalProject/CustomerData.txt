@@ -1,8 +1,0 @@
-Date of Birth: 3/4/1930 , Age is: 94, Customer Number : 0A
-Date of Birth: 2/3/2003 , Age is: 21, Customer Number : 0A
-Date of Birth: 2/3/1920 , Age is: 104, Customer Number : 0A
-Date of Birth: 11/12/1998 , Age is: 25, Customer Number : 0A
-Date of Birth: 2/3/1920 , Age is: 104, Customer Number : 0A
-Date of Birth: 2/3/2003 , Age is: 21, Customer Number : 0A
-Date of Birth: 2/3/1904 , Age is: 120, Customer Number : 0A
-Date of Birth: 11/12/1998 , Age is: 25, Customer Number : 0A
