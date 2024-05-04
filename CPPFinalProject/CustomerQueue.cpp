@@ -131,12 +131,4 @@ void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCom
 		prev->next = move(current->next);
 	}
 }
-CustomerQueueIterator CustomerQueue::begin() const
-{
-	return CustomerQueueIterator(head.get());
-}
 
-CustomerQueueIterator CustomerQueue::end() const
-{
-	return CustomerQueueIterator(nullptr);
-}

@@ -7,15 +7,12 @@
 #include "ElderlyCustomer.h"
 #include "RegularCustomer.h"
 #include "MailCustomerCommunication.h"
-#include "CustomerQueueIterator.h"
 
 
 #ifndef CUSTOMERQUEUE_H
 #define CUSTOMERQUEUE_H
 
 using namespace std;
-
-class CustomerQueueIterator;
 
 struct Node
 {
@@ -46,9 +43,6 @@ public:
 	int GetCustomerPriority(const unique_ptr<Customer>& customer) const;
 
 	int findActionIndex(const vector<MailActions>& sequence, MailActions action) const;
-
-	CustomerQueueIterator begin() const;
-	CustomerQueueIterator end() const;
 };
 
 
