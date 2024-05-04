@@ -25,7 +25,7 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 			customerFile.close();
 		}
 
-		if (clerk != nullptr)
+		if (clerk != nullptr) 
 		{
 			clerk->PerformAction(chosenAction);
 			isCustomerServed = true;
@@ -102,31 +102,42 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 
 	stringstream ss(input);
 	char slash;
-	if (ss >> day >> slash >> month >> slash >> year) {
-		MailActions chosenAction = ChooseAction(); // Assume ChooseAction() is a method to select an action
-
+	if (ss >> day >> slash >> month >> slash >> year) 
+	{
+		MailActions chosenAction = ChooseAction();
 		unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(day, month, year);
 
-		if (birthDate->CalcualteAge() >= 65) {
-			// Find an available clerk for elderly customers
-			for (const auto& clerk : clerks) {
+		if (birthDate->CalcualteAge() >= 65)
+		{
+			for (const shared_ptr<MailClerk>& clerk : clerks) {
 				if (clerk->CanHandleAction(chosenAction)) {
-					unique_ptr<Customer> customer = make_unique<ElderlyCustomer>(*birthDate, chosenAction, clerk);
+					unique_ptr<Customer> customer = make_unique<ElderlyCustomer>(*birthDate, chosenAction);
+					customer->AssignClerk(clerk);
 					return customer;
 				}
 			}
 		}
-		else {
-			// Find an available clerk for regular customers
-			for (const auto& clerk : clerks) {
-				if (clerk->CanHandleAction(chosenAction)) {
-					unique_ptr<Customer> customer = make_unique<RegularCustomer>(*birthDate, chosenAction, clerk);
+
+		else 
+		{
+			for (const shared_ptr<MailClerk>& clerk : clerks)
+			{
+				if (clerk->CanHandleAction(chosenAction))
+				{
+					unique_ptr<Customer> customer = make_unique<RegularCustomer>(*birthDate, chosenAction);
+					customer->AssignClerk(clerk);
 					return customer;
 				}
 			}
 		}
+
 	}
 
 	cerr << "Invalid date format or no suitable clerk found for the chosen action." << endl;
 	return nullptr;
+}
+
+vector<shared_ptr<MailClerk>> MailCustomerCommunication::GetClerksList()
+{
+	return clerks;
 }

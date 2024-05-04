@@ -54,3 +54,23 @@ void MailClerk::Print(ostream& os) const
 	os << "Clerk number " << clerkID << " Is at your service " << endl;
 }
 
+MailActions MailClerk::GetClerkAction(MailActions& action)
+{
+	switch (action)
+	{
+	case MailActions::ReceivePackage:
+		return actionSequence[0];
+		break;
+	case MailActions::DeliverPackage:
+		return actionSequence[1];
+		break;
+	case MailActions::MakePayment:
+		return actionSequence[2];
+		break;
+	case MailActions::PurchaseProduct:
+		return actionSequence[3];
+		break;
+	default:
+		break;
+	}
+}

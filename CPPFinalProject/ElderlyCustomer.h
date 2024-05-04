@@ -4,6 +4,7 @@
 
 #include "Customer.h"
 
+class MailClerk;
 
 class ElderlyCustomer: public Customer
 {

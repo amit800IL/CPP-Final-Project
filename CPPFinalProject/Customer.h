@@ -12,6 +12,8 @@
 
 using namespace std;
 
+class MailClerk;
+
 enum class MailActions 
 {
 	Cancel,
@@ -62,6 +64,7 @@ class Customer : public IPrintable
 
 protected:
 	unique_ptr<DateOfBirth> dateOfBirth;
+	shared_ptr<MailClerk> assignedClerk;
 	int customerNumber = 0;
 	MailActions choosedAction;
 	static int lastAssignedCustomerNumber;
@@ -82,6 +85,10 @@ public:
 	int GenerateCustomerNumber();
 
 	int GetPriorityScore();
+
+	virtual void AssignClerk(shared_ptr<MailClerk> clerk);
+
+	virtual const shared_ptr<MailClerk>& GetAssignedClerk() const;
 
 	void Print(ostream& os) const override;
 

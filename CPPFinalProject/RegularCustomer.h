@@ -3,6 +3,8 @@
 
 #include "Customer.h"
 
+class MailClerk;
+
 class RegularCustomer: public Customer
 {
 public:

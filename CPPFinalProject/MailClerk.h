@@ -26,6 +26,8 @@ public:
 
 	bool IsAvailable();
 
+	MailActions GetClerkAction(MailActions& action);
+
 	void Print(ostream& os) const override;
 
 	~MailClerk() override = default;

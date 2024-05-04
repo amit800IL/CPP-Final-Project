@@ -55,6 +55,16 @@ int Customer::GetPriorityScore()
 	return priorityScore;
 }
 
+void Customer::AssignClerk(shared_ptr<MailClerk> clerk)
+{
+	this->assignedClerk = clerk;
+}
+
+const shared_ptr<MailClerk>& Customer::GetAssignedClerk() const
+{
+	return assignedClerk;
+}
+
 void Customer::Print(ostream& os) const
 {
 	dateOfBirth->Print(os), os << " , Age is: " << CustomerAge() << ", Customer Number : " << priorityScore << endl;
