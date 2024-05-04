@@ -79,7 +79,7 @@ public:
 
 	virtual MailActions GetCustomerAction() const;
 
-	int GenerateCustomerNumber(int age);
+	int GenerateCustomerNumber();
 
 	int GetPriorityScore();
 

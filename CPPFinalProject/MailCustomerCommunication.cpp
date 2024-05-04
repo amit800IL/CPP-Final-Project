@@ -102,26 +102,31 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 
 	stringstream ss(input);
 	char slash;
-	if (ss >> day >> slash >> month >> slash >> year)
-	{
-		MailActions chosenAction = ChooseAction();
+	if (ss >> day >> slash >> month >> slash >> year) {
+		MailActions chosenAction = ChooseAction(); // Assume ChooseAction() is a method to select an action
 
 		unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(day, month, year);
 
-		if (birthDate->CalcualteAge() >= 65)
-		{
-			unique_ptr<Customer> customer = make_unique<ElderlyCustomer>(*birthDate, chosenAction);
-
-			return customer;
+		if (birthDate->CalcualteAge() >= 65) {
+			// Find an available clerk for elderly customers
+			for (const auto& clerk : clerks) {
+				if (clerk->CanHandleAction(chosenAction)) {
+					unique_ptr<Customer> customer = make_unique<ElderlyCustomer>(*birthDate, chosenAction, clerk);
+					return customer;
+				}
+			}
 		}
-		else
-		{
-			unique_ptr<Customer> customer = make_unique<RegularCustomer>(*birthDate, chosenAction);
-
-			return customer;
+		else {
+			// Find an available clerk for regular customers
+			for (const auto& clerk : clerks) {
+				if (clerk->CanHandleAction(chosenAction)) {
+					unique_ptr<Customer> customer = make_unique<RegularCustomer>(*birthDate, chosenAction, clerk);
+					return customer;
+				}
+			}
 		}
 	}
 
-	cerr << "Invalid date format. Please enter in the format DD/MM/YYYY." << endl;
+	cerr << "Invalid date format or no suitable clerk found for the chosen action." << endl;
 	return nullptr;
 }

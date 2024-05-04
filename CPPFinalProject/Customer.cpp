@@ -7,6 +7,8 @@ Customer::Customer(const DateOfBirth& dateOfBirth, MailActions choosedAction)
 	this->dateOfBirth = make_unique<DateOfBirth>(dateOfBirth);
 
 	this->choosedAction = choosedAction;
+
+	GenerateCustomerNumber();
 }
 
 Customer::Customer(Customer&& customer) noexcept : dateOfBirth(move(customer.dateOfBirth)) {}
@@ -22,10 +24,10 @@ int Customer::CustomerAge() const
 	return dateOfBirth->CalcualteAge();
 }
 
-int Customer::GenerateCustomerNumber(int agePriority)
+int Customer::GenerateCustomerNumber()
 {
 	int actionPriority = static_cast<int>(choosedAction);
-	agePriority = CustomerAge();
+	int agePriority = CustomerAge();
 
 	switch (choosedAction)
 	{
@@ -55,7 +57,7 @@ int Customer::GetPriorityScore()
 
 void Customer::Print(ostream& os) const
 {
-	dateOfBirth->Print(os), os << " , Age is: " << CustomerAge() << ", Customer Number : " << priorityScore << "A" << endl;
+	dateOfBirth->Print(os), os << " , Age is: " << CustomerAge() << ", Customer Number : " << priorityScore << endl;
 }
 
 MailActions Customer::GetCustomerAction() const
