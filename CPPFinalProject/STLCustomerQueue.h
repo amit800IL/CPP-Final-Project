@@ -16,6 +16,15 @@ int CompareActions(MailActions actions);
 
 struct CustomerComparator
 {
+	int findActionIndex(const vector<MailActions>& sequence, MailActions action) const
+	{
+		vector<MailActions>::const_iterator it = find(sequence.begin(), sequence.end(), action);
+		if (it != sequence.end()) {
+			return distance(sequence.begin(), it);
+		}
+		return -1;
+	}
+
 	bool operator()(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
 	{
 		shared_ptr<MailClerk> clerkA = a->GetAssignedClerk();
@@ -24,27 +33,16 @@ struct CustomerComparator
 		const vector<MailActions>& actionSequenceA = clerkA->GetActionSequence();
 		const vector<MailActions>& actionSequenceB = clerkB->GetActionSequence();
 
-		auto findActionIndex = [&](const vector<MailActions>& sequence, MailActions action)
-			{
-				auto it = find(sequence.begin(), sequence.end(), action);
-				if (it != sequence.end()) {
-					return distance(sequence.begin(), it);
-				}
-			};
+		int indexA = findActionIndex(actionSequenceA, a->GetCustomerAction());
+		int indexB = findActionIndex(actionSequenceB, b->GetCustomerAction());
 
-		MailActions chosenActionA = a->GetCustomerAction();
-		MailActions chosenActionB = b->GetCustomerAction();
-
-		int indexA = findActionIndex(actionSequenceA, chosenActionA);
-		int indexB = findActionIndex(actionSequenceB, chosenActionB);
-
-		if (indexA != -1 && indexB != -1) {
+		if (indexA != -1 && indexB != -1)
+		{
 			return indexA > indexB;
 		}
 
 		return a->CustomerAge() > b->CustomerAge();
 	}
-
 
 };
 
