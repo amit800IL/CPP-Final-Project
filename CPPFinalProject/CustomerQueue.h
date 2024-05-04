@@ -43,6 +43,10 @@ public:
 
 	void ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager);
 
+	int GetCustomerPriority(const unique_ptr<Customer>& customer) const;
+
+	int findActionIndex(const vector<MailActions>& sequence, MailActions action) const;
+
 	CustomerQueueIterator begin() const;
 	CustomerQueueIterator end() const;
 };

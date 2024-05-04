@@ -35,58 +35,87 @@ void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 
 void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
-	bool servedRegular = false;
-	bool servedElderly = false;
+
+	bool lastServedRegular = false;
 
 	while (!IsEmpty())
 	{
-		if (servedRegular)
-		{
-			Node* current = head.get();
+		Node* current = head.get();
 
-			while (current != nullptr && current->customer != nullptr)
+		int highestPriority = INT_MAX; 
+		Node* highestPriorityCustomer = nullptr;
+
+		while (current != nullptr)
+		{
+			int currentPriority = GetCustomerPriority(current->customer);
+
+			if (lastServedRegular && dynamic_cast<ElderlyCustomer*>(current->customer.get()) != nullptr)
 			{
-				if (dynamic_cast<ElderlyCustomer*>(current->customer.get()) != nullptr)
-				{
-					GetCustomerToServe(current, mailActionsManager);
-					servedElderly = true;
-					servedRegular = false;
-					break;
-				}
-				current = current->next.get();
+				currentPriority -= 100;
 			}
+
+			if (currentPriority < highestPriority)
+			{
+				highestPriority = currentPriority;
+				highestPriorityCustomer = current;
+			}
+
+			current = current->next.get();
 		}
 
-		else if (servedElderly || (!servedRegular && !servedElderly))
+		if (highestPriorityCustomer != nullptr)
 		{
-			Node* current = head.get();
-
-			while (current != nullptr && current->customer != nullptr)
+			if (dynamic_cast<RegularCustomer*>(highestPriorityCustomer->customer.get()) != nullptr)
 			{
-				if (dynamic_cast<RegularCustomer*>(current->customer.get()) != nullptr)
-				{
-					GetCustomerToServe(current, mailActionsManager);
-					servedElderly = false;
-					servedRegular = true;
-					break;  
-				}
-				current = current->next.get();
+				lastServedRegular = true;
 			}
+			else
+			{
+				lastServedRegular = false;
+			}
+
+			GetCustomerToServe(highestPriorityCustomer, mailActionsManager);
+		}
+	}
+}
+
+int CustomerQueue::GetCustomerPriority(const unique_ptr<Customer>& customer) const
+{
+	shared_ptr<MailClerk> clerk = customer->GetAssignedClerk();
+
+	if (clerk != nullptr) 
+	{
+		const vector<MailActions>& actionSequence = clerk->GetActionSequence();
+		MailActions chosenAction = customer->GetCustomerAction();
+
+		int actionPriority = findActionIndex(actionSequence, chosenAction);
+
+		if (actionPriority != -1) 
+		{
+			return actionPriority;
 		}
 	}
 
+	return customer->CustomerAge();
 }
 
+int CustomerQueue::findActionIndex(const vector<MailActions>& sequence, MailActions action) const
+{
+	auto it = find(sequence.begin(), sequence.end(), action);
+	if (it != sequence.end()) {
+		return distance(sequence.begin(), it);
+	}
+	return -1;
+}
 
 void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	current->customer->Print(cout);
-
 	mailActionsManager->CallCustomer(*current->customer);
-
 	customerQueueCount--;
 
-	cout << "Customer number: " << current->customer->GetCustomerNumber() << " dequeued from the queue, Current Amount of Customers :" << customerQueueCount << endl;
+	cout << "Customer number: " << current->customer->GetCustomerNumber()
+		<< " dequeued from the queue, Current Amount of Customers: " << customerQueueCount << endl;
 
 	if (current == head.get())
 	{
@@ -95,16 +124,13 @@ void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCom
 	else
 	{
 		Node* prev = head.get();
-
 		while (prev->next.get() != current)
 		{
 			prev = prev->next.get();
 		}
-
 		prev->next = move(current->next);
 	}
 }
-
 CustomerQueueIterator CustomerQueue::begin() const
 {
 	return CustomerQueueIterator(head.get());

@@ -81,14 +81,6 @@ shared_ptr<MailClerk> MailCustomerCommunication::FindAvailableClerk(const MailAc
 		}
 	}
 
-	if (action != MailActions::Cancel)
-	{
-		cout << "Not available clerk found for that action" << endl;
-	}
-	else
-	{
-		cout << "Place in queue cleared" << endl;
-	}
 	return nullptr;
 }
 
