@@ -11,15 +11,10 @@ void STLCustomerQueue::PlaceCustomerInQueue(unique_ptr<Customer> customer) {
 }
 
 void STLCustomerQueue::GetCustomersFromQueue(shared_ptr<MailCustomerCommunication> mailActionsManager) {
-	while (!regularQueue.empty() || !elderlyQueue.empty())
+	while (!IsEmpty())
 	{
-		if (!regularQueue.empty()) {
-			ServeNextCustomer(regularQueue, mailActionsManager);
-		}
-		if (!elderlyQueue.empty())
-		{
-			ServeNextCustomer(elderlyQueue, mailActionsManager);
-		}
+		ServeNextCustomer(regularQueue, mailActionsManager);
+		ServeNextCustomer(elderlyQueue, mailActionsManager);
 	}
 }
 

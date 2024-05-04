@@ -26,8 +26,10 @@ struct CustomerComparator
 		{
 			return CompareActions(a->GetCustomerAction()) > CompareActions(b->GetCustomerAction());
 		}
-
-		return a->CustomerAge() > b->CustomerAge();
+		else
+		{
+			return a->CustomerAge() > b->CustomerAge();
+		}
 	}
 };
 
