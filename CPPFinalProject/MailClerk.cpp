@@ -74,3 +74,8 @@ MailActions MailClerk::GetClerkAction(MailActions& action)
 		break;
 	}
 }
+
+vector<MailActions> MailClerk::GetActionSequence()
+{
+	return actionSequence;
+}

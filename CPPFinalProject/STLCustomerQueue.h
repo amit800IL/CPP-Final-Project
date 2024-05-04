@@ -16,26 +16,38 @@ int CompareActions(MailActions actions);
 
 struct CustomerComparator
 {
-    bool operator()(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
-    {
-        bool aIsElderly = dynamic_cast<ElderlyCustomer*>(a.get()) != nullptr;
-        bool bIsElderly = dynamic_cast<ElderlyCustomer*>(b.get()) != nullptr;
+	bool operator()(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
+	{
+		shared_ptr<MailClerk> clerkA = a->GetAssignedClerk();
+		shared_ptr<MailClerk> clerkB = b->GetAssignedClerk();
 
-        // Get the action priorities for each customer
-        int aActionPriority = CompareActions(a->GetCustomerAction());
-        int bActionPriority = CompareActions(b->GetCustomerAction());
+		const vector<MailActions>& actionSequenceA = clerkA->GetActionSequence();
+		const vector<MailActions>& actionSequenceB = clerkB->GetActionSequence();
 
-        if (aActionPriority == bActionPriority) 
-        {
-            return a->CustomerAge() > b->CustomerAge();
-        }
-        else
-        {
-            return aActionPriority > bActionPriority;
-        }
-    }
+		auto findActionIndex = [&](const vector<MailActions>& sequence, MailActions action)
+			{
+				auto it = find(sequence.begin(), sequence.end(), action);
+				if (it != sequence.end()) {
+					return distance(sequence.begin(), it);
+				}
+			};
+
+		MailActions chosenActionA = a->GetCustomerAction();
+		MailActions chosenActionB = b->GetCustomerAction();
+
+		int indexA = findActionIndex(actionSequenceA, chosenActionA);
+		int indexB = findActionIndex(actionSequenceB, chosenActionB);
+
+		if (indexA != -1 && indexB != -1) {
+			return indexA > indexB;
+		}
+
+		return a->CustomerAge() > b->CustomerAge();
+	}
+
+
 };
- 
+
 class STLCustomerQueue
 {
 

@@ -28,6 +28,8 @@ public:
 
 	MailActions GetClerkAction(MailActions& action);
 
+	vector<MailActions> GetActionSequence();
+
 	void Print(ostream& os) const override;
 
 	~MailClerk() override = default;
