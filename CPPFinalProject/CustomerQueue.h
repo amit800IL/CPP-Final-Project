@@ -38,11 +38,16 @@ public:
 
 	void GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager);
 
+	bool IsRegularCustomer(Node* customerNode) const;
+
+	bool IsElderlyCustomer(Node* customerNode) const;
+
+	int findActionIndex(const vector<MailActions>& sequence, MailActions action) const;
+
 	void ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager);
 
 	int GetCustomerPriority(const unique_ptr<Customer>& customer) const;
-
-	int findActionIndex(const vector<MailActions>& sequence, MailActions action) const;
+	bool CustomerPriorityCompare(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const;
 };
 
 
