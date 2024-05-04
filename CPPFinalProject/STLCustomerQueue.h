@@ -12,14 +12,13 @@
 using namespace std;
 #pragma once
 
-int CompareActions(MailActions actions);
-
 struct CustomerComparator
 {
 	int findActionIndex(const vector<MailActions>& sequence, MailActions action) const
 	{
 		vector<MailActions>::const_iterator it = find(sequence.begin(), sequence.end(), action);
-		if (it != sequence.end()) {
+		if (it != sequence.end())
+		{
 			return distance(sequence.begin(), it);
 		}
 		return -1;

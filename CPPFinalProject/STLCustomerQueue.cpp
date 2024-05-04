@@ -1,10 +1,12 @@
 #include "STLCustomerQueue.h"
-void STLCustomerQueue::PlaceCustomerInQueue(unique_ptr<Customer> customer) {
+void STLCustomerQueue::PlaceCustomerInQueue(unique_ptr<Customer> customer)
+{
     customerQueue.push(std::move(customer));
 }
 
 void STLCustomerQueue::GetCustomersFromQueue(shared_ptr<MailCustomerCommunication> mailActionsManager) {
-    while (!customerQueue.empty()) {
+    while (!customerQueue.empty()) 
+    {
         ServeNextCustomer(mailActionsManager);
     }
 }
@@ -14,7 +16,8 @@ bool STLCustomerQueue::IsEmpty() const {
 }
 
 const Customer& STLCustomerQueue::GetNextCustomer() const {
-    if (!customerQueue.empty()) {
+    if (!customerQueue.empty())
+    {
         return *customerQueue.top();
     }
     throw std::logic_error("No customer available");
@@ -23,34 +26,20 @@ const Customer& STLCustomerQueue::GetNextCustomer() const {
 void STLCustomerQueue::ServeNextCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager) {
     const unique_ptr<Customer>& nextCustomer = customerQueue.top();
 
-    // Print customer details
-    nextCustomer->Print(std::cout);
+    nextCustomer->Print(cout);
 
-    // Call customer through mail actions manager
-    if (nextCustomer->GetCustomerAction() != MailActions::Cancel) {
+    if (nextCustomer->GetCustomerAction() != MailActions::Cancel)
+    {
         mailActionsManager->CallCustomer(*nextCustomer);
-    } else {
-        std::cout << " ----- Canceled -----" << std::endl;
+    }
+    else 
+    {
+        cout << " ----- Canceled -----" << std::endl;
     }
 
-    // Remove served customer from the queue
     customerQueue.pop();
 }
 
-int CompareActions(MailActions actions) {
-    switch (actions) {
-        case MailActions::ReceivePackage:
-            return 1;
-        case MailActions::DeliverPackage:
-            return 2;
-        case MailActions::MakePayment:
-            return 3;
-        case MailActions::PurchaseProduct:
-            return 4;
-        default:
-            return 5; // Default priority
-    }
-}
 //string STLCustomerQueue::SerializeQueueData(shared_ptr<MailCustomerCommunication> mailActionsManager) const
 //{
 //	std::stringstream ss;

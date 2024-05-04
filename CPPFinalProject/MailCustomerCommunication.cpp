@@ -25,7 +25,7 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 			customerFile.close();
 		}
 
-		if (clerk != nullptr) 
+		if (clerk != nullptr)
 		{
 			clerk->PerformAction(chosenAction);
 			isCustomerServed = true;
@@ -102,31 +102,36 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 
 	stringstream ss(input);
 	char slash;
-	if (ss >> day >> slash >> month >> slash >> year) 
+	if (ss >> day >> slash >> month >> slash >> year)
 	{
 		MailActions chosenAction = ChooseAction();
 		unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(day, month, year);
 
-		if (birthDate->CalcualteAge() >= 65)
+		if (birthDate != nullptr)
 		{
-			for (const shared_ptr<MailClerk>& clerk : clerks) {
-				if (clerk->CanHandleAction(chosenAction)) {
-					unique_ptr<Customer> customer = make_unique<ElderlyCustomer>(*birthDate, chosenAction);
-					customer->AssignClerk(clerk);
-					return customer;
+			if (birthDate->CalcualteAge() >= 65)
+			{
+				for (const shared_ptr<MailClerk>& clerk : clerks)
+				{
+					if (clerk != nullptr && clerk->CanHandleAction(chosenAction))
+					{
+						unique_ptr<Customer> customer = make_unique<ElderlyCustomer>(*birthDate, chosenAction);
+						customer->AssignClerk(clerk);
+						return customer;
+					}
 				}
 			}
-		}
 
-		else 
-		{
-			for (const shared_ptr<MailClerk>& clerk : clerks)
+			else
 			{
-				if (clerk->CanHandleAction(chosenAction))
+				for (const shared_ptr<MailClerk>& clerk : clerks)
 				{
-					unique_ptr<Customer> customer = make_unique<RegularCustomer>(*birthDate, chosenAction);
-					customer->AssignClerk(clerk);
-					return customer;
+					if (clerk != nullptr && clerk->CanHandleAction(chosenAction))
+					{
+						unique_ptr<Customer> customer = make_unique<RegularCustomer>(*birthDate, chosenAction);
+						customer->AssignClerk(clerk);
+						return customer;
+					}
 				}
 			}
 		}
