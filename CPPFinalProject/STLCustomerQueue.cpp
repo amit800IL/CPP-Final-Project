@@ -1,79 +1,55 @@
 #include "STLCustomerQueue.h"
 void STLCustomerQueue::PlaceCustomerInQueue(unique_ptr<Customer> customer) {
-	if (dynamic_cast<ElderlyCustomer*>(customer.get()) != nullptr)
-	{
-		elderlyQueue.push(std::move(customer));
-	}
-	else if (dynamic_cast<RegularCustomer*>(customer.get()) != nullptr)
-	{
-		regularQueue.push(std::move(customer));
-	}
+    customerQueue.push(std::move(customer));
 }
 
 void STLCustomerQueue::GetCustomersFromQueue(shared_ptr<MailCustomerCommunication> mailActionsManager) {
-	while (!IsEmpty())
-	{
-		ServeNextCustomer(regularQueue, mailActionsManager);
-		ServeNextCustomer(elderlyQueue, mailActionsManager);
-	}
+    while (!customerQueue.empty()) {
+        ServeNextCustomer(mailActionsManager);
+    }
 }
 
-bool STLCustomerQueue::IsEmpty() const
-{
-	return regularQueue.empty() && elderlyQueue.empty();
+bool STLCustomerQueue::IsEmpty() const {
+    return customerQueue.empty();
 }
 
-
-const unique_ptr<Customer>& STLCustomerQueue::ServeNextCustomer(std::priority_queue<unique_ptr<Customer>, vector<unique_ptr<Customer>>, CustomerComparator>& queue, shared_ptr<MailCustomerCommunication> mailActionsManager)
-{
-
-	fstream customerData("CustomerData.txt");
-
-	string line;
-
-	const unique_ptr<Customer>& nextCustomer = queue.top();
-
-	nextCustomer->Print(cout);
-
-	if (nextCustomer->GetCustomerAction() != MailActions::Cancel)
-	{
-		mailActionsManager->CallCustomer(*nextCustomer);
-	}
-	else
-	{
-		cout << " ----- Cancaled -----" << endl;
-	}
-	queue.pop();
-	return nextCustomer;
+const Customer& STLCustomerQueue::GetNextCustomer() const {
+    if (!customerQueue.empty()) {
+        return *customerQueue.top();
+    }
+    throw std::logic_error("No customer available");
 }
 
-const Customer& STLCustomerQueue::GetNextCustomer() const
-{
-	if (!regularQueue.empty())
-	{
-		return *regularQueue.top();
-	}
-	else if (!elderlyQueue.empty())
-	{
-		return *elderlyQueue.top();
-	}
+void STLCustomerQueue::ServeNextCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager) {
+    const unique_ptr<Customer>& nextCustomer = customerQueue.top();
 
-	throw std::logic_error("No customer available");
+    // Print customer details
+    nextCustomer->Print(std::cout);
+
+    // Call customer through mail actions manager
+    if (nextCustomer->GetCustomerAction() != MailActions::Cancel) {
+        mailActionsManager->CallCustomer(*nextCustomer);
+    } else {
+        std::cout << " ----- Canceled -----" << std::endl;
+    }
+
+    // Remove served customer from the queue
+    customerQueue.pop();
 }
 
-int CompareActions(MailActions actions)
-{
-	switch (actions)
-	{
-	case MailActions::ReceivePackage:
-		return 1;
-	case MailActions::DeliverPackage:
-		return 2;
-	case MailActions::MakePayment:
-		return 3;
-	case MailActions::PurchaseProduct:
-		return 4;
-	}
+int CompareActions(MailActions actions) {
+    switch (actions) {
+        case MailActions::ReceivePackage:
+            return 1;
+        case MailActions::DeliverPackage:
+            return 2;
+        case MailActions::MakePayment:
+            return 3;
+        case MailActions::PurchaseProduct:
+            return 4;
+        default:
+            return 5; // Default priority
+    }
 }
 //string STLCustomerQueue::SerializeQueueData(shared_ptr<MailCustomerCommunication> mailActionsManager) const
 //{
