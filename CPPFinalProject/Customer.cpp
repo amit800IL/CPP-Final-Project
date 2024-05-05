@@ -2,11 +2,13 @@
 
 int Customer::lastAssignedCustomerNumber = 0;
 
-Customer::Customer(const DateOfBirth& dateOfBirth, MailActions choosedAction)
+Customer::Customer(const DateOfBirth& dateOfBirth, MailActions choosedAction, const shared_ptr<MailClerk>& assignedClerk)
 {
 	this->dateOfBirth = make_unique<DateOfBirth>(dateOfBirth);
 
 	this->choosedAction = choosedAction;
+
+	this->assignedClerk = assignedClerk;
 
 	GenerateCustomerNumber();
 }
@@ -53,11 +55,6 @@ int Customer::GenerateCustomerNumber()
 int Customer::GetPriorityScore()
 {
 	return priorityScore;
-}
-
-void Customer::AssignClerk(shared_ptr<MailClerk> clerk)
-{
-	this->assignedClerk = clerk;
 }
 
 const shared_ptr<MailClerk>& Customer::GetAssignedClerk() const

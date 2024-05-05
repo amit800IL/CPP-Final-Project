@@ -107,9 +107,7 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 				{
 					if (clerk != nullptr && clerk->CanHandleAction(chosenAction))
 					{
-						unique_ptr<Customer> customer = make_unique<ElderlyCustomer>(*birthDate, chosenAction);
-						customer->AssignClerk(clerk);
-						return customer;
+						return make_unique<ElderlyCustomer>(*birthDate, chosenAction, clerk);
 					}
 				}
 			}
@@ -120,9 +118,7 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 				{
 					if (clerk != nullptr && clerk->CanHandleAction(chosenAction))
 					{
-						unique_ptr<Customer> customer = make_unique<RegularCustomer>(*birthDate, chosenAction);
-						customer->AssignClerk(clerk);
-						return customer;
+						return make_unique<RegularCustomer>(*birthDate, chosenAction, clerk);
 					}
 				}
 			}

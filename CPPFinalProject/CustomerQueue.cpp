@@ -8,7 +8,7 @@ bool CustomerQueue::IsEmpty() const
 
 void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 {
-    auto newNode = make_unique<Node>(customer);
+	unique_ptr<Node> newNode = make_unique<Node>(customer);
 
     if (!head)
     {

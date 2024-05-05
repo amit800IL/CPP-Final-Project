@@ -14,33 +14,44 @@ using namespace std;
 
 struct CustomerComparator
 {
+
 	int findActionIndex(const vector<MailActions>& sequence, MailActions action) const
 	{
-		vector<MailActions>::const_iterator it = find(sequence.begin(), sequence.end(), action);
-		if (it != sequence.end())
-		{
-			return distance(sequence.begin(), it);
+		auto it = find(sequence.begin(), sequence.end(), action);
+		return (it != sequence.end()) ? distance(sequence.begin(), it) : -1;
+	}
+
+	bool CustomerPriorityCompare(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
+	{
+		if (!a || !b) {
+			return false; // Treat nullptr as lower priority
 		}
-		return -1;
+
+		// Get assigned clerks for both customers
+		shared_ptr<MailClerk> clerkA = a->GetAssignedClerk();
+		shared_ptr<MailClerk> clerkB = b->GetAssignedClerk();
+
+		if (clerkA && clerkB)
+		{
+			const vector<MailActions>& actionSequenceA = clerkA->GetActionSequence();
+			const vector<MailActions>& actionSequenceB = clerkB->GetActionSequence();
+
+			int indexA = findActionIndex(actionSequenceA, a->GetCustomerAction());
+			int indexB = findActionIndex(actionSequenceB, b->GetCustomerAction());
+
+			if (indexA != -1 && indexB != -1)
+			{
+				return indexA > indexB;
+			}
+		}
+
+		return a->CustomerAge() > b->CustomerAge();
+		// Check if the last served customer was regular
 	}
 
 	bool operator()(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
 	{
-		shared_ptr<MailClerk> clerkA = a->GetAssignedClerk();
-		shared_ptr<MailClerk> clerkB = b->GetAssignedClerk();
-
-		const vector<MailActions>& actionSequenceA = clerkA->GetActionSequence();
-		const vector<MailActions>& actionSequenceB = clerkB->GetActionSequence();
-
-		int indexA = findActionIndex(actionSequenceA, a->GetCustomerAction());
-		int indexB = findActionIndex(actionSequenceB, b->GetCustomerAction());
-
-		if (indexA != -1 && indexB != -1)
-		{
-			return indexA > indexB;
-		}
-
-		return a->CustomerAge() > b->CustomerAge();
+		return CustomerPriorityCompare(a, b);
 	}
 
 };

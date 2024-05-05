@@ -72,7 +72,7 @@ protected:
 
 public:
 
-	Customer(const DateOfBirth& dateOfBirth, MailActions preferredAction);
+	Customer(const DateOfBirth& dateOfBirth, MailActions preferredAction, const shared_ptr<MailClerk>& assignedClerk);
 
 	Customer(Customer&& customer) noexcept;
 
@@ -85,8 +85,6 @@ public:
 	int GenerateCustomerNumber();
 
 	int GetPriorityScore();
-
-	virtual void AssignClerk(shared_ptr<MailClerk> clerk);
 
 	virtual const shared_ptr<MailClerk>& GetAssignedClerk() const;
 

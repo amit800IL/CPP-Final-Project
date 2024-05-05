@@ -9,7 +9,7 @@ class MailClerk;
 class ElderlyCustomer: public Customer
 {
 public:
-	ElderlyCustomer(const DateOfBirth& dateOfBirth, MailActions choosedAction);
+	ElderlyCustomer(const DateOfBirth& dateOfBirth, MailActions choosedAction, const shared_ptr<MailClerk>& assignedClerk);
 
 	ElderlyCustomer(ElderlyCustomer&& customer) noexcept;
 

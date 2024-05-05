@@ -8,7 +8,7 @@ class MailClerk;
 class RegularCustomer: public Customer
 {
 public:
-	RegularCustomer(const DateOfBirth& dateOfBirth, MailActions choosedAction);
+	RegularCustomer(const DateOfBirth& dateOfBirth, MailActions choosedAction, const shared_ptr<MailClerk>& assignedClerk);
 
 	RegularCustomer(RegularCustomer&& customer) noexcept;
 
