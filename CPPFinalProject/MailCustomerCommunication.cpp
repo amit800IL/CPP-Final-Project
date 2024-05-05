@@ -81,6 +81,8 @@ shared_ptr<MailClerk> MailCustomerCommunication::FindAvailableClerk(const MailAc
 		}
 	}
 
+	cout << "No availabile clerk found for your requested action" << endl;
+
 	return nullptr;
 }
 

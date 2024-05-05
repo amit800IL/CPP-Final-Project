@@ -39,18 +39,9 @@ void STLCustomerQueue::ServeNextCustomer(shared_ptr<MailCustomerCommunication> m
 		{
 			if (line.find(std::to_string(nextCustomer->GetPriorityScore())) != std::string::npos) {
 
-				cout << "Customer found: ";
+				cout << " Customer found, skipping to next customer, custome details : ";
 				nextCustomer->Print(cout);
 
-				if (nextCustomer->GetCustomerAction() != MailActions::Cancel)
-				{
-
-					std::cout << "Customer already served" << std::endl;
-				}
-				else
-				{
-					std::cout << "Customer action canceled" << std::endl;
-				}
 
 				customerQueue.pop();
 				customerFound = true;
@@ -63,6 +54,12 @@ void STLCustomerQueue::ServeNextCustomer(shared_ptr<MailCustomerCommunication> m
 		if (!customerFound)
 		{
 			cout << "Customer not found in the data file:";
+
+			if (nextCustomer->GetCustomerAction() == MailActions::Cancel)
+			{
+				std::cout << "Customer action canceled" << std::endl;
+			}
+
 			nextCustomer->Print(cout);
 			mailActionsManager->CallCustomer(*nextCustomer);
 			customerQueue.pop();
