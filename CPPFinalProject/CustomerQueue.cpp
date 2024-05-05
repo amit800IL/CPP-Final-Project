@@ -13,15 +13,18 @@ void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 	if (!head)
 	{
 		head = move(newNode);
+		tail = head.get();
 	}
 	else
 	{
-		Node* current = head.get();
-		while (current->next)
+		tail = head.get();
+
+		while (tail->next)
 		{
-			current = current->next.get();
+			tail = tail->next.get();
 		}
-		current->next = move(newNode);
+
+		tail->next = move(newNode);
 	}
 
 	customerQueueCount++;
@@ -35,12 +38,11 @@ void CustomerQueue::Dequeue()
 		return;
 	}
 
+
 	head = move(head->next);
 
-	customerQueueCount--;
-
 	cout << "Customer number: " << head->customer->GetPriorityScore()
-		<< " dequeued from the queue, Current Amount of Customers: " << customerQueueCount << endl;
+		<< " dequeued from the queue, Current Amount of Customers: " << customerQueueCount - 1 << endl;
 }
 
 
@@ -58,55 +60,55 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 		bool customerFound = false;
 		string line;
 
-		if (!customerData.is_open())
-			return;
+		/*	if (!customerData.is_open())
+				return;
 
-		while (getline(customerData, line))
-		{
-			if (current != nullptr && line.find(to_string(current->customer->GetPriorityScore())) != std::string::npos)
+			while (getline(customerData, line))
 			{
-				cout << "Customer number: " << current->customer->GetPriorityScore() << ", found ,skipping to next customer " << endl;
-				customerFound = true;
-				break;
+				if (current != nullptr && line.find(to_string(current->customer->GetPriorityScore())) != std::string::npos)
+				{
+					cout << "Customer number: " << current->customer->GetPriorityScore() << ", found ,skipping to next customer " << endl;
+					customerFound = true;
+					break;
+				}
 			}
-		}
 
-		customerData.close();
+			customerData.close();*/
 
 		while (current)
 		{
-			if (!customerFound)
+			/*if (customerFound)
 			{
-				cout << "Customer not found, serving...." << endl;
-
-				int currentPriority = GetCustomerPriority(current->customer);
-
-				if (IsElderlyCustomer(current) && lastServedRegular)
-				{
-					currentPriority -= 100;
-				}
-
-				if (currentPriority < highestPriority)
-				{
-					highestPriority = currentPriority;
-					highestPriorityCustomer = current;
-				}
-
-				current = current->next.get();
-
-				if (highestPriorityCustomer)
-				{
-					lastServedRegular = IsRegularCustomer(highestPriorityCustomer);
-					GetCustomerToServe(highestPriorityCustomer, mailActionsManager);
-					Dequeue();
-				}
-			}
-			else
-			{
-				Dequeue();
 				break;
+			}*/
+
+			/*if (!customerFound)
+			{*/
+			cout << "Customer not found, serving...." << endl;
+
+			int currentPriority = GetCustomerPriority(current->customer);
+
+			if (IsElderlyCustomer(current) && lastServedRegular)
+			{
+				currentPriority -= 100;
 			}
 
+			if (currentPriority < highestPriority)
+			{
+				highestPriority = currentPriority;
+				highestPriorityCustomer = current;
+			}
+
+			current = current->next.get();
+
+			//}
+
+		}
+
+		if (highestPriorityCustomer)
+		{
+			lastServedRegular = IsRegularCustomer(highestPriorityCustomer);
+			GetCustomerToServe(highestPriorityCustomer, mailActionsManager);
 		}
 	}
 
