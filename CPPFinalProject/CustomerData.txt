@@ -1,1 +1,5 @@
-
+Date of Birth: 3/4/2001 , Age is: 23, Customer Number : 33
+Date of Birth: 3/4/1930 , Age is: 94, Customer Number : 104
+Date of Birth: 2/3/1920 , Age is: 104, Customer Number : 112
+Date of Birth: 3/4/2005 , Age is: 19, Customer Number : 28
+Date of Birth: 2/4/2001 , Age is: 23, Customer Number : 31

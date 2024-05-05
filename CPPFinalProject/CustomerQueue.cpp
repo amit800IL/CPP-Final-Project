@@ -13,18 +13,15 @@ void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 	if (!head)
 	{
 		head = move(newNode);
-		tail = head.get();
 	}
 	else
 	{
-		tail = head.get();
-
-		while (tail->next)
+		Node* current = head.get();
+		while (current->next)
 		{
-			tail = tail->next.get();
+			current = current->next.get();
 		}
-
-		tail->next = move(newNode);
+		current->next = move(newNode);
 	}
 
 	customerQueueCount++;
@@ -50,41 +47,44 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 {
 	bool lastServedRegular = false;
 
-	fstream customerData("CustomerData.txt");
-
 	while (!IsEmpty())
 	{
 		Node* current = head.get();
 		Node* highestPriorityCustomer = nullptr;
 		int highestPriority = INT_MAX;
-		bool customerFound = false;
-		string line;
 
-		/*	if (!customerData.is_open())
-				return;
+		// Open the customer data file inside the loop to reset the stream
+		ifstream customerData("CustomerData.txt");
+
+		if (!customerData.is_open())
+		{
+			cout << "Failed to open customer data file." << endl;
+			return;
+		}
+
+		while (current)
+		{
+			// Check if the current customer is already processed from file data
+			string line;
+			bool customerFound = false;
 
 			while (getline(customerData, line))
 			{
-				if (current != nullptr && line.find(to_string(current->customer->GetPriorityScore())) != std::string::npos)
+				if (line.find(to_string(current->customer->GetPriorityScore())) != string::npos)
 				{
-					cout << "Customer number: " << current->customer->GetPriorityScore() << ", found ,skipping to next customer " << endl;
+					cout << "Customer number: " << current->customer->GetPriorityScore()
+						<< " found in data file, skipping to next customer." << endl;
 					customerFound = true;
 					break;
 				}
 			}
 
-			customerData.close();*/
-
-		while (current)
-		{
-			/*if (customerFound)
+			// If customer is found in data file, move to the next customer
+			if (customerFound)
 			{
-				break;
-			}*/
-
-			/*if (!customerFound)
-			{*/
-			cout << "Customer not found, serving...." << endl;
+				current = current->next.get();
+				continue;
+			}
 
 			int currentPriority = GetCustomerPriority(current->customer);
 
@@ -100,15 +100,19 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 			}
 
 			current = current->next.get();
-
-			//}
-
 		}
+
+		customerData.close(); // Close the file after processing
 
 		if (highestPriorityCustomer)
 		{
 			lastServedRegular = IsRegularCustomer(highestPriorityCustomer);
 			GetCustomerToServe(highestPriorityCustomer, mailActionsManager);
+		}
+		else
+		{
+			// If no customer is found to serve, break out of the loop
+			break;
 		}
 	}
 
