@@ -43,7 +43,7 @@ MailActions MailCustomerCommunication::ChooseAction()
 	char input = '0';
 
 	cout << "Choose an action:" << endl;
-
+	 
 	cout << "1. Receive a package" << endl;
 	cout << "2. Deliver a package" << endl;
 	cout << "3. Make a payment" << endl;
