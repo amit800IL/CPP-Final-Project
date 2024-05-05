@@ -18,19 +18,19 @@ int main()
 	vector<shared_ptr<MailClerk>> clerks;
 
 	vector<MailActions> clerk1Actions = { MailActions::ReceivePackage, MailActions::MakePayment,  MailActions::DeliverPackage, MailActions::PurchaseProduct };
-	vector<MailActions> clerk2Actions = { MailActions::ReceivePackage, MailActions::MakePayment , MailActions::PurchaseProduct };
-	vector<MailActions> clerk3Actions = { MailActions::PurchaseProduct, MailActions::MakePayment };
-	vector<MailActions> clerk4Actions = { MailActions::ReceivePackage, MailActions::DeliverPackage };
+	//vector<MailActions> clerk2Actions = { MailActions::ReceivePackage, MailActions::MakePayment , MailActions::PurchaseProduct };
+	//vector<MailActions> clerk3Actions = { MailActions::PurchaseProduct, MailActions::MakePayment };
+	//vector<MailActions> clerk4Actions = { MailActions::ReceivePackage, MailActions::DeliverPackage };
 
 	shared_ptr<MailClerk> mailClerk1 = make_shared<MailClerk>(1, clerk1Actions);
-	shared_ptr<MailClerk> mailClerk2 = make_shared<MailClerk>(2, clerk2Actions);
-	shared_ptr<MailClerk> mailClerk3 = make_shared<MailClerk>(3, clerk3Actions);
-	shared_ptr<MailClerk> mailClerk4 = make_shared<MailClerk>(4, clerk4Actions);
+	//shared_ptr<MailClerk> mailClerk2 = make_shared<MailClerk>(2, clerk2Actions);
+	//shared_ptr<MailClerk> mailClerk3 = make_shared<MailClerk>(3, clerk3Actions);
+	//shared_ptr<MailClerk> mailClerk4 = make_shared<MailClerk>(4, clerk4Actions);
 
 	clerks.push_back(mailClerk1);
-	clerks.push_back(mailClerk2);
-	clerks.push_back(mailClerk3);
-	clerks.push_back(mailClerk4);
+	//clerks.push_back(mailClerk2);
+	//clerks.push_back(mailClerk3);
+	//clerks.push_back(mailClerk4);
 
 	shared_ptr<MailCustomerCommunication> mailActionsManager = make_shared<MailCustomerCommunication>(clerks);
 

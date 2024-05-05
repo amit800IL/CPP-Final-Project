@@ -24,50 +24,48 @@ const Customer& STLCustomerQueue::GetNextCustomer() const {
 }
 
 void STLCustomerQueue::ServeNextCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager) {
-	if (customerQueue.empty()) {
-		throw std::logic_error("No customer available");
-	}
 
 	const unique_ptr<Customer>& nextCustomer = customerQueue.top();
 
-	std::ifstream customerData("CustomerData.txt");
-	if (!customerData.is_open()) {
-		throw std::runtime_error("Failed to open customer data file");
-	}
+	std::fstream customerData("CustomerData.txt");
+
 
 	std::string line;
 	bool customerFound = false;
 
-	while (getline(customerData, line)) 
+	if (customerData.is_open())
 	{
-		if (line.find(std::to_string(nextCustomer->GetPriorityScore())) != std::string::npos) {
+		while (getline(customerData, line))
+		{
+			if (line.find(std::to_string(nextCustomer->GetPriorityScore())) != std::string::npos) {
 
-			cout << "Customer found: ";
-			nextCustomer->Print(cout);
+				cout << "Customer found: ";
+				nextCustomer->Print(cout);
 
-			if (nextCustomer->GetCustomerAction() != MailActions::Cancel) 
-			{
+				if (nextCustomer->GetCustomerAction() != MailActions::Cancel)
+				{
 
-				std::cout << "Customer already served" << std::endl;
+					std::cout << "Customer already served" << std::endl;
+				}
+				else
+				{
+					std::cout << "Customer action canceled" << std::endl;
+				}
+
+				customerQueue.pop();
+				customerFound = true;
+				break;
 			}
-			else 
-			{
-				std::cout << "Customer action canceled" << std::endl;
-			}
 
-			customerQueue.pop();
-			customerFound = true;
-			break;
+			customerData.close();
 		}
-	}
 
-	customerData.close();
-
-	if (!customerFound) 
-	{
-		cout << "Customer not found in the data file:";
-		nextCustomer->Print(cout);
-		mailActionsManager->CallCustomer(*nextCustomer);
-		customerQueue.pop();
+		if (!customerFound)
+		{
+			cout << "Customer not found in the data file:";
+			nextCustomer->Print(cout);
+			mailActionsManager->CallCustomer(*nextCustomer);
+			customerQueue.pop();
+		}
 	}
 }

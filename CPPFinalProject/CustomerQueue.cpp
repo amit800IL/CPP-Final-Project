@@ -10,63 +10,114 @@ void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 {
 	unique_ptr<Node> newNode = make_unique<Node>(customer);
 
-    if (!head)
-    {
-        head = move(newNode);
-    }
-    else
-    {
-        Node* current = head.get();
-        while (current->next)
-        {
-            current = current->next.get();
-        }
-        current->next = move(newNode);
-    }
+	if (!head)
+	{
+		head = move(newNode);
+	}
+	else
+	{
+		Node* current = head.get();
+		while (current->next)
+		{
+			current = current->next.get();
+		}
+		current->next = move(newNode);
+	}
 
-    customerQueueCount++;
+	customerQueueCount++;
 }
+
+void CustomerQueue::Dequeue()
+{
+	if (IsEmpty())
+	{
+		cout << "Queue is empty. Cannot dequeue." << endl;
+		return;
+	}
+
+	head = move(head->next);
+
+	customerQueueCount--;
+
+	cout << "Customer number: " << head->customer->GetPriorityScore()
+		<< " dequeued from the queue, Current Amount of Customers: " << customerQueueCount << endl;
+}
+
 
 void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
-    bool lastServedRegular = false;
+	bool lastServedRegular = false;
 
-    while (!IsEmpty())
-    {
-        Node* highestPriorityCustomer = nullptr;
-        int highestPriority = INT_MAX;
+	fstream customerData("CustomerData.txt");
 
-        Node* current = head.get();
-        while (current)
-        {
-            int currentPriority = GetCustomerPriority(current->customer);
+	while (!IsEmpty())
+	{
+		Node* current = head.get();
+		Node* highestPriorityCustomer = nullptr;
+		int highestPriority = INT_MAX;
+		bool customerFound = false;
+		string line;
 
-            if (lastServedRegular && IsElderlyCustomer(current))
-            {
-                currentPriority -= 100;
-            }
+		if (!customerData.is_open())
+			return;
 
-            if (currentPriority < highestPriority)
-            {
-                highestPriority = currentPriority;
-                highestPriorityCustomer = current;
-            }
+		while (getline(customerData, line))
+		{
+			if (current != nullptr && line.find(to_string(current->customer->GetPriorityScore())) != std::string::npos)
+			{
+				cout << "Customer number: " << current->customer->GetPriorityScore() << ", found ,skipping to next customer " << endl;
+				customerFound = true;
+				break;
+			}
+		}
 
-            current = current->next.get();
-        }
+		customerData.close();
 
-        if (highestPriorityCustomer)
-        {
-            lastServedRegular = IsRegularCustomer(highestPriorityCustomer);
-            GetCustomerToServe(highestPriorityCustomer, mailActionsManager);
-        }
-    }
+		while (current)
+		{
+			if (!customerFound)
+			{
+				cout << "Customer not found, serving...." << endl;
+
+				int currentPriority = GetCustomerPriority(current->customer);
+
+				if (IsElderlyCustomer(current) && lastServedRegular)
+				{
+					currentPriority -= 100;
+				}
+
+				if (currentPriority < highestPriority)
+				{
+					highestPriority = currentPriority;
+					highestPriorityCustomer = current;
+				}
+
+				current = current->next.get();
+
+				if (highestPriorityCustomer)
+				{
+					lastServedRegular = IsRegularCustomer(highestPriorityCustomer);
+					GetCustomerToServe(highestPriorityCustomer, mailActionsManager);
+					Dequeue();
+				}
+			}
+			else
+			{
+				Dequeue();
+				break;
+			}
+
+		}
+	}
+
 }
+
+
 
 int CustomerQueue::GetCustomerPriority(const unique_ptr<Customer>& customer) const
 {
-    // Use the custom comparison function for priority logic
-    return CustomerPriorityCompare(customer, nullptr); // Compare against nullptr for simplicity
+	// Use the custom comparison function for priority logic
+	return CustomerPriorityCompare(customer, nullptr); // Compare against nullptr for simplicity
 }
 
 bool CustomerQueue::CustomerPriorityCompare(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
@@ -101,10 +152,6 @@ void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCom
 {
 	current->customer->Print(cout);
 	mailActionsManager->CallCustomer(*current->customer);
-
-	customerQueueCount--;
-	cout << "Customer number: " << current->customer->GetCustomerNumber()
-		<< " dequeued from the queue, Current Amount of Customers: " << customerQueueCount << endl;
 
 	if (current == head.get())
 	{

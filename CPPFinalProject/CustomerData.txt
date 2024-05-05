@@ -1,6 +1,1 @@
-Date of Birth: 3/4/1902 , Age is: 122, Customer Number : 130
-Date of Birth: 11/12/1998 , Age is: 25, Customer Number : 35
-Date of Birth: 2/3/2003 , Age is: 21, Customer Number : 31
-Date of Birth: 3/4/1901 , Age is: 123, Customer Number : 131
-Date of Birth: 2/3/2003 , Age is: 21, Customer Number : 31
-Date of Birth: 11/12/2004 , Age is: 19, Customer Number : 29
+Date of Birth: 11/12/1003 , Age is: 1019, Customer Number : 1029

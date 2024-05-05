@@ -36,6 +36,8 @@ public:
 
 	void Enqueue(const unique_ptr<Customer>& customer);
 
+	void Dequeue();
+
 	void GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager);
 
 	bool IsRegularCustomer(Node* customerNode) const;
