@@ -34,8 +34,10 @@ void PostOffice::PickAndUseSystem(char input, shared_ptr<MailCustomerCommunicati
 	cout << "1.Use basic line managment system(STL)" << endl;
 	cout << "2.Use custom line managment system(custom STL)" << endl;
 	cout << "3.Delete customer serving record data" << endl;
+	cout << " " << endl;
+	cout << "Press E to exit the system" << endl;
 
-	while (input != '1' && input != '2')
+	while (input != '1' && input != '2' && input != 'E' && input != 'e')
 	{
 		cin >> input;
 
@@ -43,6 +45,10 @@ void PostOffice::PickAndUseSystem(char input, shared_ptr<MailCustomerCommunicati
 
 		switch (input)
 		{
+		case 'E':
+		case 'e':
+			cout << "Exited the system, but why though?";
+;			break;
 		case '1':
 			cout << "Amazing choice, i created the other one so this one is probably safer" << endl;
 			break;
