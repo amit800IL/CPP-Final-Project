@@ -10,7 +10,7 @@ void STLCustomerQueue::Enqueue(unique_ptr<Customer> customer)
 	customerQueue.push_back(move(customer));
 }
 
-void STLCustomerQueue::Dequeue(size_t index)
+void STLCustomerQueue::Dequeue(int index)
 {
 	if (index < customerQueue.size())
 	{
@@ -18,15 +18,15 @@ void STLCustomerQueue::Dequeue(size_t index)
 	}
 }
 
-void STLCustomerQueue::ServeCustomer(std::shared_ptr<MailCustomerCommunication> mailActionsManager)
+void STLCustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	bool lastServedRegular = false;
 
 	while (!IsEmpty())
 	{
-		size_t highestPriorityIndex = FindHighestPriorityCustomerIndex(lastServedRegular);
+		int highestPriorityIndex = FindHighestPriorityCustomerIndex(lastServedRegular);
 
-		if (highestPriorityIndex != std::numeric_limits<size_t>::max())
+		if (highestPriorityIndex != numeric_limits<size_t>::max())
 		{
 			const unique_ptr<Customer>& highestPriorityCustomer = customerQueue[highestPriorityIndex];
 			lastServedRegular = IsRegularCustomer(highestPriorityCustomer);
@@ -40,14 +40,14 @@ void STLCustomerQueue::ServeCustomer(std::shared_ptr<MailCustomerCommunication> 
 	}
 }
 
-size_t STLCustomerQueue::FindHighestPriorityCustomerIndex(bool lastServedRegular) const
+int STLCustomerQueue::FindHighestPriorityCustomerIndex(bool lastServedRegular) const
 {
-	size_t highestPriorityIndex = std::numeric_limits<size_t>::max();
+	int highestPriorityIndex = INT_MAX;
 	int highestPriority = INT_MIN;
 
-	for (size_t i = 0; i < customerQueue.size(); ++i)
+	for (int i = 0; i < customerQueue.size(); ++i)
 	{
-		auto& customer = customerQueue[i];
+		const unique_ptr<Customer>& customer = customerQueue[i];
 
 		if (!IsCustomerInDataFile(customer->GetCustomerID()))
 		{
@@ -77,7 +77,7 @@ int STLCustomerQueue::CalculateCustomerPriority(bool lastServedRegular, const un
 
 	if (clerk != nullptr)
 	{
-		const std::vector<MailActions>& actionSequence = customer->GetAssignedClerk()->GetActionSequence();
+		const vector<MailActions>& actionSequence = customer->GetAssignedClerk()->GetActionSequence();
 		MailActions customerAction = customer->GetCustomerAction();
 		priority = clerk->GivePriorityBasedOnAction(customerAction);
 	}
@@ -85,26 +85,26 @@ int STLCustomerQueue::CalculateCustomerPriority(bool lastServedRegular, const un
 	return priority;
 }
 
-void STLCustomerQueue::ProcessCustomer(const std::unique_ptr<Customer>& customer, std::shared_ptr<MailCustomerCommunication> mailActionsManager)
+void STLCustomerQueue::ProcessCustomer(const unique_ptr<Customer>& customer, shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	if (customer)
 	{
-		customer->Print(std::cout);
+		customer->Print(cout);
 		mailActionsManager->CallCustomer(*customer);
 	}
 }
 
 bool STLCustomerQueue::IsCustomerInDataFile(int customerID) const
 {
-	std::ifstream customerData("CustomerData.txt");
+	fstream customerData("CustomerData.txt");
 	bool customerFound = false;
-	std::string line;
+	string line;
 
-	while (std::getline(customerData, line))
+	while (getline(customerData, line))
 	{
-		if (line.find(std::to_string(customerID)) != std::string::npos)
+		if (line.find(to_string(customerID)) != string::npos)
 		{
-			std::cout << "Customer number: " << customerID << " found in data file, skipping to next customer." << std::endl;
+			cout << "Customer number: " << customerID << " found in data file, skipping to next customer." << endl;
 			customerFound = true;
 			break;
 		}
@@ -122,14 +122,4 @@ bool STLCustomerQueue::IsRegularCustomer(const unique_ptr<Customer>& customer) c
 bool STLCustomerQueue::IsElderlyCustomer(const unique_ptr<Customer>& customer) const
 {
 	return dynamic_cast<ElderlyCustomer*>(customer.get()) != nullptr;
-}
-
-int STLCustomerQueue::findActionIndex(const std::vector<MailActions>& sequence, MailActions action) const
-{
-	auto it = std::find(sequence.begin(), sequence.end(), action);
-	if (it != sequence.end())
-	{
-		return std::distance(sequence.begin(), it);
-	}
-	return -1;
 }

@@ -31,7 +31,7 @@ void MailClerk::PerformAction(MailActions action)
 			cout << "Action " << static_cast<int>(MailActions::PurchaseProduct) << endl;
 			break;
 		default:
-			std::cout << "Invalid action" << std::endl;
+			cout << "Invalid action" << endl;
 			break;
 		}
 
