@@ -12,51 +12,56 @@
 using namespace std;
 #pragma once
 
+
 struct CustomerComparator
 {
+    int findActionIndex(const std::vector<MailActions>& sequence, MailActions action) const
+    {
+        auto it = std::find(sequence.begin(), sequence.end(), action);
+        return (it != sequence.end()) ? std::distance(sequence.begin(), it) : -1;
+    }
 
-	int findActionIndex(const vector<MailActions>& sequence, MailActions action) const
-	{
-		auto it = find(sequence.begin(), sequence.end(), action);
-		return (it != sequence.end()) ? distance(sequence.begin(), it) : -1;
-	}
+    bool IsElderlyCustomer(const std::unique_ptr<Customer>& customer) const
+    {
+        return dynamic_cast<ElderlyCustomer*>(customer.get()) != nullptr;
+    }
 
-	bool CustomerPriorityCompare(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
-	{
-		if (!a || !b)
-		{
-			return false;
-		}
+    bool IsRegularCustomer(const std::unique_ptr<Customer>& customer) const
+    {
+        return dynamic_cast<RegularCustomer*>(customer.get()) != nullptr;
+    }
 
-		std::shared_ptr<MailClerk> clerkA = a->GetAssignedClerk();
-		std::shared_ptr<MailClerk> clerkB = b->GetAssignedClerk();
+    int CalculateCustomerPriority(const std::unique_ptr<Customer>& customer) const
+    {
+        bool lastServedRegular = IsRegularCustomer(customer);
 
-		if (!clerkA || !clerkB) {
-			return false;
-		}
+        int priority = INT_MIN;
 
-		const std::vector<MailActions>& actionSequenceA = clerkA->GetActionSequence();
-		const std::vector<MailActions>& actionSequenceB = clerkB->GetActionSequence();
+        if (lastServedRegular && IsElderlyCustomer(customer))
+        {
+            priority += 100; // Additional priority for regular customers
+        }
 
-		MailActions actionA = a->GetCustomerAction();
-		MailActions actionB = b->GetCustomerAction();
+        if (customer->GetAssignedClerk())
+        {
+            const std::vector<MailActions>& actionSequence = customer->GetAssignedClerk()->GetActionSequence();
+            int index = findActionIndex(actionSequence, customer->GetCustomerAction());
+            if (index != -1)
+            {
+                priority = actionSequence.size() - index;
+            }
+        }
 
-		int indexA = findActionIndex(actionSequenceA, actionA);
-		int indexB = findActionIndex(actionSequenceB, actionB);
+        return priority;
+    }
 
-		if (indexA != -1 && indexB != -1)
-		{
-			return indexA > indexB;
-		}
+    bool operator()(const std::unique_ptr<Customer>& a, const std::unique_ptr<Customer>& b) const
+    {
+        int priorityA = CalculateCustomerPriority(a);
+        int priorityB = CalculateCustomerPriority(b);
 
-		//return isElderlyA && !isRegularB; 
-	}
-
-	bool operator()(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
-	{
-		return CustomerPriorityCompare(a, b);
-	}
-
+        return priorityA < priorityB;
+    }
 };
 
 class STLCustomerQueue

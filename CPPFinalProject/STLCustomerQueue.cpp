@@ -1,4 +1,5 @@
 #include "STLCustomerQueue.h"
+
 void STLCustomerQueue::PlaceCustomerInQueue(unique_ptr<Customer> customer)
 {
 	customerQueue.push(std::move(customer));
@@ -62,6 +63,7 @@ void STLCustomerQueue::ServeNextCustomer(shared_ptr<MailCustomerCommunication> m
 
 			nextCustomer->Print(cout);
 			mailActionsManager->CallCustomer(*nextCustomer);
+
 			customerQueue.pop();
 		}
 	}

@@ -36,7 +36,7 @@ public:
 
 	void Enqueue(const unique_ptr<Customer>& customer);
 
-	void Dequeue();
+	void Dequeue(Node* current);
 
 	void GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager);
 
@@ -48,8 +48,13 @@ public:
 
 	void ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager);
 
-	int GetCustomerPriority(const unique_ptr<Customer>& customer) const;
-	bool CustomerPriorityCompare(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const;
+	int CalculateCustomerPriority(bool lastServedRegular, Node* node) const;
+	void ProcessCustomer(Node* customerNode, shared_ptr<MailCustomerCommunication> mailActionsManager);
+
+	bool IsCustomerInDataFile(int customerID) const;
+
+	int GetCustomerPriority(bool lastServedRegular, const unique_ptr<Customer>& customer1, const unique_ptr<Customer>& customer2) const;
+	bool CustomerPriorityCompare(bool lastServedRegular, const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const;
 };
 
 

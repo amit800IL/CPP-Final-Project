@@ -17,149 +17,15 @@ void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 	}
 	else
 	{
-		tail = head.get();
-		while (tail->next)
-		{
-			tail = tail->next.get();
-		}
 		tail->next = move(newNode);
+		tail = tail->next.get();
 	}
 
 	customerQueueCount++;
 }
 
-void CustomerQueue::Dequeue()
+void CustomerQueue::Dequeue(Node* current)
 {
-	if (IsEmpty())
-	{
-		cout << "Queue is empty. Cannot dequeue." << endl;
-		return;
-	}
-
-
-	head = move(head->next);
-
-	if (head == nullptr)
-	{
-		tail = nullptr;
-	}
-
-	cout << "Customer number: " << head->customer->GetCustomerID()
-		<< " dequeued from the queue, Current Amount of Customers: " << customerQueueCount - 1 << endl;
-}
-
-
-void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager)
-{
-
-	while (!IsEmpty())
-	{
-		bool lastServedRegular = false;
-		Node* current = head.get();
-		Node* highestPriorityCustomer = nullptr;
-		int highestPriority = INT_MAX;
-
-		ifstream customerData("CustomerData.txt");
-
-		if (!customerData.is_open())
-		{
-			cout << "Failed to open customer data file." << endl;
-			return;
-		}
-
-		while (current)
-		{
-			string line;
-			bool customerFound = false;
-
-			while (getline(customerData, line))
-			{
-				if (line.find(to_string(current->customer->GetCustomerID())) != string::npos)
-				{
-					cout << "Customer number: " << current->customer->GetCustomerID()
-						<< " found in data file, skipping to next customer." << endl;
-					customerFound = true;
-					break;
-				}
-			}
-
-			if (customerFound)
-			{
-				current = current->next.get();
-				continue;
-			}
-
-			customerData.close();
-
-			int currentPriority = GetCustomerPriority(current->customer);
-
-			if (IsElderlyCustomer(current) || lastServedRegular)
-			{
-				currentPriority -= 100;
-			}
-
-			if (currentPriority < highestPriority)
-			{
-				highestPriority = currentPriority;
-				highestPriorityCustomer = current;
-			}
-
-			current = current->next.get();
-		}
-
-
-		if (highestPriorityCustomer)
-		{
-			lastServedRegular = IsRegularCustomer(highestPriorityCustomer);
-			GetCustomerToServe(highestPriorityCustomer, mailActionsManager);
-		}
-		else
-		{
-			break;
-		}
-	}
-
-}
-
-
-
-int CustomerQueue::GetCustomerPriority(const unique_ptr<Customer>& customer) const
-{
-	// Use the custom comparison function for priority logic
-	return CustomerPriorityCompare(customer, nullptr); // Compare against nullptr for simplicity
-}
-
-bool CustomerQueue::CustomerPriorityCompare(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
-{
-	if (!a || !b)
-		return false;
-
-	shared_ptr<MailClerk> clerkA = a->GetAssignedClerk();
-	shared_ptr<MailClerk> clerkB = b->GetAssignedClerk();
-
-	if (clerkA && clerkB)
-	{
-		const vector<MailActions>& actionSequenceA = clerkA->GetActionSequence();
-		const vector<MailActions>& actionSequenceB = clerkB->GetActionSequence();
-
-		int indexA = findActionIndex(actionSequenceA, a->GetCustomerAction());
-		int indexB = findActionIndex(actionSequenceB, b->GetCustomerAction());
-
-		if (indexA != -1 && indexB != -1)
-		{
-			return indexA > indexB;
-		}
-	}
-
-	return a->CustomerAge() > b->CustomerAge();
-}
-
-
-void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager)
-{
-	current->customer->Print(cout);
-	mailActionsManager->CallCustomer(*current->customer);
-
 	if (current == head.get())
 	{
 		head = move(head->next);
@@ -186,16 +52,118 @@ void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCom
 			}
 		}
 	}
+
+	customerQueueCount--;
+}
+
+
+void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager)
+{
+	bool lastServedRegular = false;
+
+	while (!IsEmpty())
+	{
+		Node* current = head.get();
+		Node* highestPriorityCustomer = nullptr;
+		int highestPriority = INT_MIN;
+
+		while (current)
+		{
+			if (!IsCustomerInDataFile(current->customer->GetCustomerID()))
+			{
+				int currentPriority = CalculateCustomerPriority(lastServedRegular, current);
+
+				if (currentPriority > highestPriority)
+				{
+					highestPriority = currentPriority;
+					highestPriorityCustomer = current;
+				}
+			}
+
+			current = current->next.get();
+		}
+
+		if (highestPriorityCustomer)
+		{
+			lastServedRegular = IsRegularCustomer(highestPriorityCustomer);
+			ProcessCustomer(highestPriorityCustomer, mailActionsManager);
+		}
+		else
+		{
+			break; 
+		}
+	}
+}
+
+int CustomerQueue::CalculateCustomerPriority(bool lastServedRegular, Node* node) const
+{
+	int priority = 0;
+
+	if (lastServedRegular && IsElderlyCustomer(node))
+	{
+		priority += 100;
+	}
+
+	if (node->customer->GetAssignedClerk())
+	{
+		const vector<MailActions>& actionSequence = node->customer->GetAssignedClerk()->GetActionSequence();
+		int index = findActionIndex(actionSequence, node->customer->GetCustomerAction());
+
+		if (index != -1)
+		{
+			priority += actionSequence.size() - index; 
+		}
+	}
+
+	return priority;
+}
+
+void CustomerQueue::ProcessCustomer(Node* customerNode, shared_ptr<MailCustomerCommunication> mailActionsManager)
+{
+	if (customerNode)
+	{
+		customerNode->customer->Print(cout);
+		mailActionsManager->CallCustomer(*customerNode->customer);
+		Dequeue(customerNode);
+	}
+}
+
+bool CustomerQueue::IsCustomerInDataFile(int customerID) const
+{
+	ifstream customerData("CustomerData.txt");
+	bool customerFound = false;
+	string line;
+
+	while (getline(customerData, line))
+	{
+		if (line.find(to_string(customerID)) != string::npos)
+		{
+			cout << "Customer number: " << customerID << " found in data file, skipping to next customer." << endl;
+			customerFound = true;
+			break;
+		}
+	}
+
+	customerData.close();
+	return customerFound;
 }
 
 bool CustomerQueue::IsRegularCustomer(Node* customerNode) const
 {
-	return dynamic_cast<RegularCustomer*>(customerNode->customer.get()) != nullptr;
+	if (customerNode && customerNode->customer)
+	{
+		return dynamic_cast<RegularCustomer*>(customerNode->customer.get()) != nullptr;
+	}
+	return false;
 }
 
 bool CustomerQueue::IsElderlyCustomer(Node* customerNode) const
 {
-	return dynamic_cast<ElderlyCustomer*>(customerNode->customer.get()) != nullptr;
+	if (customerNode && customerNode->customer)
+	{
+		return dynamic_cast<ElderlyCustomer*>(customerNode->customer.get()) != nullptr;
+	}
+	return false;
 }
 
 int CustomerQueue::findActionIndex(const vector<MailActions>& sequence, MailActions action) const
@@ -207,4 +175,5 @@ int CustomerQueue::findActionIndex(const vector<MailActions>& sequence, MailActi
 	}
 	return -1;
 }
+
 
