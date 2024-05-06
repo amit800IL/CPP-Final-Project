@@ -72,8 +72,6 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 			string line;
 			bool customerFound = false;
 
-			int currentPriority = GetCustomerPriority(current->customer);
-
 			while (getline(customerData, line))
 			{
 				if (line.find(to_string(current->customer->GetCustomerID())) != string::npos)
@@ -91,8 +89,11 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 				continue;
 			}
 
+			customerData.close();
 
-			if (IsElderlyCustomer(current) && lastServedRegular)
+			int currentPriority = GetCustomerPriority(current->customer);
+
+			if (lastServedRegular && IsElderlyCustomer(current))
 			{
 				currentPriority -= 100;
 			}
@@ -106,7 +107,6 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 			current = current->next.get();
 		}
 
-		customerData.close(); 
 
 		if (highestPriorityCustomer)
 		{
