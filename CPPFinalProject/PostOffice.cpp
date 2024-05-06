@@ -33,6 +33,7 @@ void PostOffice::PickAndUseSystem(char input, shared_ptr<MailCustomerCommunicati
 
 	cout << "1.Use basic line managment system(STL)" << endl;
 	cout << "2.Use custom line managment system(custom STL)" << endl;
+	cout << "3.Delete customer serving record data" << endl;
 
 	while (input != '1' && input != '2')
 	{
@@ -42,11 +43,27 @@ void PostOffice::PickAndUseSystem(char input, shared_ptr<MailCustomerCommunicati
 
 		if (input == '1')
 		{
-			cout << "Customers inserted" << endl;
+			cout << "Amazing choice, i created the other one so this one is probably safer" << endl;
 		}
 		else if (input == '2')
 		{
-			cout << "Customers inserted" << endl;
+			cout << "You are really brave, just remember i wrote it, so it might be dangerous to use" << endl;
+		}
+		else if (input == '3')
+		{
+			ofstream customerData("CustomerData.txt");
+
+			string line;
+
+			customerData.open(line);
+
+			if (customerData.is_open())
+			{
+				while (!line.empty())
+				{
+					line.erase();
+				}
+			}
 		}
 	}
 
@@ -70,7 +87,7 @@ void PostOffice::BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManage
 {
 	unique_ptr<STLCustomerQueue> stlCustomerQueue = make_unique<STLCustomerQueue>();
 
-	cout << "Set the queue size : ";
+	cout << "Set the queue size: ";
 
 	int queueSize = 0;
 	cin >> queueSize;
@@ -102,7 +119,7 @@ void PostOffice::CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsMana
 {
 	unique_ptr<CustomerQueue> customerQueue = make_unique<CustomerQueue>();
 
-	cout << "Set the queue size : ";
+	cout << "Set the queue size: ";
 
 	int queueSize = 0;
 	cin >> queueSize;
