@@ -70,7 +70,13 @@ void PostOffice::BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManage
 {
 	unique_ptr<STLCustomerQueue> stlCustomerQueue = make_unique<STLCustomerQueue>();
 
-	int queueSize = 3;
+	cout << "Set the queue size : ";
+
+	int queueSize = 0;
+	cin >> queueSize;
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	vector<unique_ptr<Customer>> customers;
 
 	for (int i = 0; i < queueSize; i++)
@@ -96,7 +102,13 @@ void PostOffice::CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsMana
 {
 	unique_ptr<CustomerQueue> customerQueue = make_unique<CustomerQueue>();
 
-	int queueSize = 3;
+	cout << "Set the queue size : ";
+
+	int queueSize = 0;
+	cin >> queueSize;
+
+	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
 	vector<unique_ptr<Customer>> customers;
 
 	for (int i = 0; i < queueSize; i++)

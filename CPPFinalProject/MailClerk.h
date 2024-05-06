@@ -5,6 +5,8 @@
 #include <iostream>
 #include <memory>
 #include <unordered_set>
+#include <vector> 
+#include <algorithm> 
 
 using namespace std;
 
@@ -12,7 +14,7 @@ class MailClerk : public IPrintable
 {
 private:
 	int clerkID;
-	unordered_set<MailActions> availableActions;
+	vector<MailActions> availableActions;
 	vector<MailActions> actionSequence;
 	bool isClerkBusy = false;
 public:

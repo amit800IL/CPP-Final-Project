@@ -3,13 +3,13 @@
 MailClerk::MailClerk(int id, const vector<MailActions>& actions)
 	: clerkID(id), actionSequence(actions.begin(), actions.end())
 {
-	availableActions.insert(actionSequence.begin(), actionSequence.end());
+	availableActions = actionSequence;
 }
 MailClerk::MailClerk(MailClerk&& mailOfficial) noexcept {}
 
 bool MailClerk::CanHandleAction(MailActions action) const
 {
-	return availableActions.count(action) > 0;
+	return find(availableActions.begin(), availableActions.end(), action) != availableActions.end();
 }
 
 void MailClerk::PerformAction(MailActions action)
@@ -35,11 +35,16 @@ void MailClerk::PerformAction(MailActions action)
 			break;
 		}
 
-		availableActions.erase(action);
+		vector<MailActions>::iterator it = find(availableActions.begin(), availableActions.end(), action);
+
+		if (it != availableActions.end())
+		{
+			availableActions.erase(it);
+		}
 
 		if (availableActions.empty())
 		{
-			availableActions.insert(actionSequence.begin(), actionSequence.end());
+			availableActions = actionSequence;
 		}
 	}
 }
