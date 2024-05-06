@@ -16,7 +16,7 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 		if (chosenAction == MailActions::Cancel)
 			break;
 
-		ofstream customerFile("CustomerData.txt");
+		ofstream customerFile("CustomerData.txt", ios::app);
 
 		if (customerFile.is_open())
 		{

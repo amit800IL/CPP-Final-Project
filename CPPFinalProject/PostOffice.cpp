@@ -54,14 +54,14 @@ void PostOffice::PickAndUseSystem(char input, shared_ptr<MailCustomerCommunicati
 
 			string line;
 
-			customerData.open(line);
-
 			if (customerData.is_open())
 			{
 				while (!line.empty())
 				{
 					line.erase();
 				}
+
+				cout << "Data erased" << endl;
 			}
 			break;
 		}
