@@ -79,8 +79,17 @@ int STLCustomerQueue::CalculateCustomerPriority(bool lastServedRegular, const un
 	{
 		const vector<MailActions>& actionSequence = customer->GetAssignedClerk()->GetActionSequence();
 		MailActions customerAction = customer->GetCustomerAction();
-		priority = clerk->GivePriorityBasedOnAction(customerAction);
+
+		if (IsRegularCustomer(customer))
+		{
+			priority = clerk->GivePriorityBasedOnAction(customerAction);
+		}
+		else if (IsElderlyCustomer(customer))
+		{
+			priority += clerk->GivePriorityBasedOnAction(customerAction);
+		}
 	}
+
 
 	return priority;
 }

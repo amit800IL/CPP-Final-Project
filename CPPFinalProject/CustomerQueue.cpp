@@ -92,7 +92,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 		}
 		else
 		{
-			break; 
+			break;
 		}
 	}
 }
@@ -112,7 +112,15 @@ int CustomerQueue::CalculateCustomerPriority(bool lastServedRegular, Node* node)
 	{
 		const vector<MailActions>& actionSequence = node->customer->GetAssignedClerk()->GetActionSequence();
 		MailActions customerAction = node->customer->GetCustomerAction();
-		priority = clerk->GivePriorityBasedOnAction(customerAction);
+
+		if (IsRegularCustomer(node))
+		{
+			priority = clerk->GivePriorityBasedOnAction(customerAction);
+		}
+		else if (IsElderlyCustomer(node))
+		{
+			priority += clerk->GivePriorityBasedOnAction(customerAction);
+		}
 	}
 
 	return priority;
