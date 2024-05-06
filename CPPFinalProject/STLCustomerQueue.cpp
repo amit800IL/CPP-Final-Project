@@ -73,9 +73,9 @@ int STLCustomerQueue::CalculateCustomerPriority(bool lastServedRegular, const un
 		priority += 100;
 	}
 
-	shared_ptr<MailClerk> clerk = customer->GetAssignedClerk();
+	const shared_ptr<MailClerk>& clerk = customer->GetAssignedClerk();
 
-	if (clerk != nullptr && IsRegularCustomer(customer))
+	if (clerk != nullptr)
 	{
 		const std::vector<MailActions>& actionSequence = customer->GetAssignedClerk()->GetActionSequence();
 		MailActions customerAction = customer->GetCustomerAction();

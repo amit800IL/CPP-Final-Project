@@ -108,7 +108,7 @@ int CustomerQueue::CalculateCustomerPriority(bool lastServedRegular, Node* node)
 
 	shared_ptr<MailClerk> clerk = node->customer->GetAssignedClerk();
 
-	if (clerk != nullptr && IsRegularCustomer(node))
+	if (clerk != nullptr)
 	{
 		const std::vector<MailActions>& actionSequence = node->customer->GetAssignedClerk()->GetActionSequence();
 		MailActions customerAction = node->customer->GetCustomerAction();

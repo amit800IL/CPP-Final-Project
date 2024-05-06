@@ -132,6 +132,7 @@
     <ClCompile Include="CustomerQueue.cpp" />
     <ClCompile Include="ElderlyCustomer.cpp" />
     <ClCompile Include="IPrintable.cpp" />
+    <ClCompile Include="PostOffice.cpp" />
     <ClCompile Include="RegularCustomer.cpp" />
     <ClCompile Include="MailCustomerCommunication.cpp" />
     <ClCompile Include="MailClerk.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="CustomerQueue.h" />
     <ClInclude Include="ElderlyCustomer.h" />
     <ClInclude Include="IPrintable.h" />
+    <ClInclude Include="PostOffice.h" />
     <ClInclude Include="RegularCustomer.h" />
     <ClInclude Include="MailCustomerCommunication.h" />
     <ClInclude Include="MailClerk.h" />
