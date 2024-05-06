@@ -16,7 +16,6 @@ private:
 	int clerkID;
 	vector<MailActions> availableActions;
 	vector<MailActions> actionSequence;
-	bool isClerkBusy = false;
 public:
 	MailClerk(int id, const vector<MailActions>& actions);
 

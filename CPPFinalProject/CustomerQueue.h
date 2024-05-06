@@ -1,12 +1,11 @@
 #pragma once
 
-#include <iostream>
-#include <iterator>
-#include <memory>
 #include "Customer.h"
 #include "ElderlyCustomer.h"
 #include "RegularCustomer.h"
 #include "MailCustomerCommunication.h"
+#include <iostream>
+#include <memory>
 
 
 #ifndef CUSTOMERQUEUE_H

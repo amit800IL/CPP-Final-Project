@@ -31,8 +31,8 @@ void PostOffice::PickAndUseSystem(char input, shared_ptr<MailCustomerCommunicati
 {
 	cout << "Hello, welcome to your line managment system, please choose the system you want to use: " << endl;
 
-	cout << "1.Use basic line managment system(STL)" << endl;
-	cout << "2.Use custom line managment system(custom STL)" << endl;
+	cout << "1.Use basic line managment system(STL based system)" << endl;
+	cout << "2.Use custom line managment system(Custom Queue Node Based System)" << endl;
 	cout << "3.Delete customer serving record data" << endl;
 	cout << " " << endl;
 	cout << "Press E to exit the system" << endl;
