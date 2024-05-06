@@ -51,10 +51,10 @@ void CustomerQueue::Dequeue()
 
 void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
-	bool lastServedRegular = false;
 
 	while (!IsEmpty())
 	{
+		bool lastServedRegular = false;
 		Node* current = head.get();
 		Node* highestPriorityCustomer = nullptr;
 		int highestPriority = INT_MAX;
@@ -93,7 +93,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 
 			int currentPriority = GetCustomerPriority(current->customer);
 
-			if (lastServedRegular && IsElderlyCustomer(current))
+			if (IsElderlyCustomer(current) || lastServedRegular)
 			{
 				currentPriority -= 100;
 			}
@@ -163,6 +163,11 @@ void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCom
 	if (current == head.get())
 	{
 		head = move(head->next);
+
+		if (!head)
+		{
+			tail = nullptr;
+		}
 	}
 	else
 	{
@@ -174,6 +179,11 @@ void CustomerQueue::GetCustomerToServe(Node* current, shared_ptr<MailCustomerCom
 		if (prev)
 		{
 			prev->next = move(current->next);
+
+			if (prev->next == nullptr)
+			{
+				tail = prev;
+			}
 		}
 	}
 }
