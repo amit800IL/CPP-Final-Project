@@ -79,3 +79,4 @@ vector<MailActions> MailClerk::GetActionSequence()
 {
 	return actionSequence;
 }
+ 

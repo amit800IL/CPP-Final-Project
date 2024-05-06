@@ -3,18 +3,19 @@
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
-#include <chrono>
 #include "IPrintable.h"
+#include <chrono>
+#include <fstream>
 #include <iostream>
 #include <memory>
+#include <random>
 #include <sstream>
-#include <fstream>
 
 using namespace std;
 
 class MailClerk;
 
-enum class MailActions 
+enum class MailActions
 {
 	Cancel,
 	ReceivePackage,
@@ -37,6 +38,21 @@ struct DateOfBirth : public IPrintable
 		year(other.year)
 	{};
 
+
+	int GetDay()
+	{
+		return day;
+	}
+
+	int GetMonth()
+	{
+		return month;
+	}
+
+	int GetYear()
+	{
+		return year;
+	}
 
 	int CalcualteAge() const
 	{
@@ -68,7 +84,7 @@ protected:
 	int customerNumber = 0;
 	MailActions choosedAction;
 	static int lastAssignedCustomerNumber;
-	int priorityScore = 0;
+	int uniqueId = 0;
 
 public:
 
@@ -84,7 +100,7 @@ public:
 
 	int GenerateCustomerNumber();
 
-	int GetPriorityScore();
+	int GetCustomerID();
 
 	virtual const shared_ptr<MailClerk>& GetAssignedClerk() const;
 

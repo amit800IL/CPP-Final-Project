@@ -38,7 +38,7 @@ void CustomerQueue::Dequeue()
 
 	head = move(head->next);
 
-	cout << "Customer number: " << head->customer->GetPriorityScore()
+	cout << "Customer number: " << head->customer->GetCustomerID()
 		<< " dequeued from the queue, Current Amount of Customers: " << customerQueueCount - 1 << endl;
 }
 
@@ -70,9 +70,9 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 
 			while (getline(customerData, line))
 			{
-				if (line.find(to_string(current->customer->GetPriorityScore())) != string::npos)
+				if (line.find(to_string(current->customer->GetCustomerID())) != string::npos)
 				{
-					cout << "Customer number: " << current->customer->GetPriorityScore()
+					cout << "Customer number: " << current->customer->GetCustomerID()
 						<< " found in data file, skipping to next customer." << endl;
 					customerFound = true;
 					break;

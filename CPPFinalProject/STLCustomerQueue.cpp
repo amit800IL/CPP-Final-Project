@@ -37,7 +37,7 @@ void STLCustomerQueue::ServeNextCustomer(shared_ptr<MailCustomerCommunication> m
 	{
 		while (getline(customerData, line))
 		{
-			if (line.find(std::to_string(nextCustomer->GetPriorityScore())) != std::string::npos) {
+			if (line.find(std::to_string(nextCustomer->GetCustomerID())) != std::string::npos) {
 
 				cout << " Customer found, skipping to next customer, custome details : ";
 				nextCustomer->Print(cout);

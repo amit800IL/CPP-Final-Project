@@ -31,30 +31,38 @@ int Customer::GenerateCustomerNumber()
 	int actionPriority = static_cast<int>(choosedAction);
 	int agePriority = CustomerAge();
 
+	int birthDay = dateOfBirth->GetDay();
+	int birthMonth = dateOfBirth->GetMonth();
+	int birthYear = dateOfBirth->GetYear();
+
+	uniqueId = (birthYear * 10000) + (birthMonth * 100) + birthDay;
+
+	uniqueId = uniqueId / 10;
+
 	switch (choosedAction)
 	{
 	case MailActions::ReceivePackage:
-		priorityScore = (actionPriority * 10) + agePriority;
+		uniqueId += 100;
 		break;
 	case MailActions::DeliverPackage:
-		priorityScore = (actionPriority * 5) + agePriority;
+		uniqueId += 200;
 		break;
 	case MailActions::MakePayment:
-		priorityScore = (actionPriority * 3) + agePriority;
+		uniqueId += 300;
 		break;
 	case MailActions::PurchaseProduct:
-		priorityScore = (actionPriority * 2) + agePriority;
+		uniqueId += 400;
 		break;
 	default:
 		break;
 	}
 
-	return priorityScore;
+	return uniqueId;
 }
 
-int Customer::GetPriorityScore()
+int Customer::GetCustomerID()
 {
-	return priorityScore;
+	return uniqueId;
 }
 
 const shared_ptr<MailClerk>& Customer::GetAssignedClerk() const
@@ -64,7 +72,7 @@ const shared_ptr<MailClerk>& Customer::GetAssignedClerk() const
 
 void Customer::Print(ostream& os) const
 {
-	dateOfBirth->Print(os), os << " , Age is: " << CustomerAge() << ", Customer Number : " << priorityScore << endl;
+	dateOfBirth->Print(os), os << " , Age is: " << CustomerAge() << ", Customer Number : " << uniqueId << endl;
 }
 
 MailActions Customer::GetCustomerAction() const

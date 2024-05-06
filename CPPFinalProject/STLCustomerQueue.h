@@ -23,54 +23,33 @@ struct CustomerComparator
 
 	bool CustomerPriorityCompare(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
 	{
-        if (!a || !b) 
-        {
-            return false;
-        }
+		if (!a || !b)
+		{
+			return false;
+		}
 
-        std::shared_ptr<MailClerk> clerkA = a->GetAssignedClerk();
-        std::shared_ptr<MailClerk> clerkB = b->GetAssignedClerk();
+		std::shared_ptr<MailClerk> clerkA = a->GetAssignedClerk();
+		std::shared_ptr<MailClerk> clerkB = b->GetAssignedClerk();
 
-        if (!clerkA || !clerkB) {
-            return false; 
-        }
+		if (!clerkA || !clerkB) {
+			return false;
+		}
 
+		const std::vector<MailActions>& actionSequenceA = clerkA->GetActionSequence();
+		const std::vector<MailActions>& actionSequenceB = clerkB->GetActionSequence();
 
-        bool lastServedRegular = false;
-        bool isElderlyA = dynamic_cast<ElderlyCustomer*>(a.get()) != nullptr;
-        bool isElderlyB = dynamic_cast<ElderlyCustomer*>(b.get()) != nullptr;
-        bool isRegularA = dynamic_cast<RegularCustomer*>(a.get()) != nullptr;
-        bool isRegularB = dynamic_cast<RegularCustomer*>(b.get()) != nullptr;
+		MailActions actionA = a->GetCustomerAction();
+		MailActions actionB = b->GetCustomerAction();
 
-        if (isRegularA && isElderlyB)
-        {
-            lastServedRegular = false;
-            return true; 
-        }
-        else if (lastServedRegular || (isRegularB && isElderlyA)) 
-        {
-            lastServedRegular = true;
-            return false;
-        }
+		int indexA = findActionIndex(actionSequenceA, actionA);
+		int indexB = findActionIndex(actionSequenceB, actionB);
 
-        const std::vector<MailActions>& actionSequenceA = clerkA->GetActionSequence();
-        const std::vector<MailActions>& actionSequenceB = clerkB->GetActionSequence();
+		if (indexA != -1 && indexB != -1)
+		{
+			return indexA > indexB;
+		}
 
-        MailActions actionA = a->GetCustomerAction();
-        MailActions actionB = b->GetCustomerAction();
-
-        int indexA = findActionIndex(actionSequenceA, actionA);
-        int indexB = findActionIndex(actionSequenceB, actionB);
-
-        if (indexA != -1 && indexB != -1)
-        {
-            if (indexA != indexB)
-            {
-                return indexA > indexB; 
-            }
-        }
-
-        return isElderlyA && !isRegularB; 
+		//return isElderlyA && !isRegularB; 
 	}
 
 	bool operator()(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
