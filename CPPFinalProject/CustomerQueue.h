@@ -38,7 +38,6 @@ public:
 
 	void Dequeue(Node* current);
 
-	void GetCustomerToServe(Node* current, shared_ptr<MailCustomerCommunication> mailActionsManager);
 
 	bool IsRegularCustomer(Node* customerNode) const;
 
@@ -52,9 +51,6 @@ public:
 	void ProcessCustomer(Node* customerNode, shared_ptr<MailCustomerCommunication> mailActionsManager);
 
 	bool IsCustomerInDataFile(int customerID) const;
-
-	int GetCustomerPriority(bool lastServedRegular, const unique_ptr<Customer>& customer1, const unique_ptr<Customer>& customer2) const;
-	bool CustomerPriorityCompare(bool lastServedRegular, const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const;
 };
 
 
