@@ -38,10 +38,12 @@ void CustomerQueue::Dequeue(Node* current)
 	else
 	{
 		Node* prev = head.get();
+
 		while (prev && prev->next.get() != current)
 		{
 			prev = prev->next.get();
 		}
+
 		if (prev)
 		{
 			prev->next = move(current->next);
@@ -104,15 +106,13 @@ int CustomerQueue::CalculateCustomerPriority(bool lastServedRegular, Node* node)
 		priority += 100;
 	}
 
-	if (node->customer->GetAssignedClerk())
-	{
-		const vector<MailActions>& actionSequence = node->customer->GetAssignedClerk()->GetActionSequence();
-		int index = findActionIndex(actionSequence, node->customer->GetCustomerAction());
+	shared_ptr<MailClerk> clerk = node->customer->GetAssignedClerk();
 
-		if (index != -1)
-		{
-			priority += actionSequence.size() - index; 
-		}
+	if (clerk != nullptr && IsRegularCustomer(node))
+	{
+		const std::vector<MailActions>& actionSequence = node->customer->GetAssignedClerk()->GetActionSequence();
+		MailActions customerAction = node->customer->GetCustomerAction();
+		priority = clerk->GivePriorityBasedOnAction(customerAction);
 	}
 
 	return priority;

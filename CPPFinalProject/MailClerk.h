@@ -26,11 +26,11 @@ public:
 
 	bool IsAvailable();
 
-	MailActions GetClerkAction(MailActions& action);
-
 	vector<MailActions> GetActionSequence();
 
 	void Print(ostream& os) const override;
+
+	int GivePriorityBasedOnAction(MailActions& action);
 
 	~MailClerk() override = default;
 };

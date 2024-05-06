@@ -54,21 +54,23 @@ void MailClerk::Print(ostream& os) const
 	os << "Clerk number " << clerkID << " Is at your service " << endl;
 }
 
-MailActions MailClerk::GetClerkAction(MailActions& action)
+int MailClerk::GivePriorityBasedOnAction(MailActions& action)
 {
+	int Bonus = 0;
+
 	switch (action)
 	{
 	case MailActions::ReceivePackage:
-		return actionSequence[0];
+		return Bonus += 40;
 		break;
 	case MailActions::DeliverPackage:
-		return actionSequence[1];
+		return Bonus += 30;
 		break;
 	case MailActions::MakePayment:
-		return actionSequence[2];
+		return Bonus += 20;
 		break;
 	case MailActions::PurchaseProduct:
-		return actionSequence[3];
+		return Bonus += 10;
 		break;
 	default:
 		break;
@@ -79,4 +81,3 @@ vector<MailActions> MailClerk::GetActionSequence()
 {
 	return actionSequence;
 }
- 
