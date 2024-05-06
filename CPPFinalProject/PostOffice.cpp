@@ -41,16 +41,15 @@ void PostOffice::PickAndUseSystem(char input, shared_ptr<MailCustomerCommunicati
 
 		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-		if (input == '1')
+		switch (input)
 		{
+		case '1':
 			cout << "Amazing choice, i created the other one so this one is probably safer" << endl;
-		}
-		else if (input == '2')
-		{
+			break;
+		case '2':
 			cout << "You are really brave, just remember i wrote it, so it might be dangerous to use" << endl;
-		}
-		else if (input == '3')
-		{
+			break;
+		case '3':
 			ofstream customerData("CustomerData.txt");
 
 			string line;
@@ -64,6 +63,7 @@ void PostOffice::PickAndUseSystem(char input, shared_ptr<MailCustomerCommunicati
 					line.erase();
 				}
 			}
+			break;
 		}
 	}
 
