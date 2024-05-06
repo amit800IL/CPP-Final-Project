@@ -99,11 +99,11 @@ void BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
 
 	for (unique_ptr<Customer>& customer : customers)
 	{
-		stlCustomerQueue->PlaceCustomerInQueue(move(customer));
+		stlCustomerQueue->Enqueue(move(customer));
 	}
 
 
-	stlCustomerQueue->GetCustomersFromQueue(mailActionsManager);
+	stlCustomerQueue->ServeCustomer(mailActionsManager);
 }
 
 void CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
