@@ -13,15 +13,16 @@ void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 	if (!head)
 	{
 		head = move(newNode);
+		tail = head.get();
 	}
 	else
 	{
-		Node* current = head.get();
-		while (current->next)
+		tail = head.get();
+		while (tail->next)
 		{
-			current = current->next.get();
+			tail = tail->next.get();
 		}
-		current->next = move(newNode);
+		tail->next = move(newNode);
 	}
 
 	customerQueueCount++;
@@ -37,6 +38,11 @@ void CustomerQueue::Dequeue()
 
 
 	head = move(head->next);
+
+	if (head == nullptr)
+	{
+		tail = nullptr;
+	}
 
 	cout << "Customer number: " << head->customer->GetCustomerID()
 		<< " dequeued from the queue, Current Amount of Customers: " << customerQueueCount - 1 << endl;
@@ -64,9 +70,10 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 
 		while (current)
 		{
-			// Check if the current customer is already processed from file data
 			string line;
 			bool customerFound = false;
+
+			int currentPriority = GetCustomerPriority(current->customer);
 
 			while (getline(customerData, line))
 			{
@@ -79,14 +86,12 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 				}
 			}
 
-			// If customer is found in data file, move to the next customer
 			if (customerFound)
 			{
 				current = current->next.get();
 				continue;
 			}
 
-			int currentPriority = GetCustomerPriority(current->customer);
 
 			if (IsElderlyCustomer(current) && lastServedRegular)
 			{
@@ -128,10 +133,8 @@ int CustomerQueue::GetCustomerPriority(const unique_ptr<Customer>& customer) con
 
 bool CustomerQueue::CustomerPriorityCompare(const unique_ptr<Customer>& a, const unique_ptr<Customer>& b) const
 {
-	if (!a)
+	if (!a || !b)
 		return false;
-	if (!b)
-		return true;
 
 	shared_ptr<MailClerk> clerkA = a->GetAssignedClerk();
 	shared_ptr<MailClerk> clerkB = b->GetAssignedClerk();
