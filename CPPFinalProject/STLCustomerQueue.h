@@ -15,20 +15,23 @@ using namespace std;
 class STLCustomerQueue
 {
 
-private:
-	vector<unique_ptr<Customer>> customerQueue;
 public:
+
+	void Enqueue(unique_ptr<Customer> customer);
+	void ServeCustomer(std::shared_ptr<MailCustomerCommunication> mailActionsManager);
+
+private:
+
+	vector<unique_ptr<Customer>> customerQueue;
 	bool IsEmpty() const;
-    void Enqueue(unique_ptr<Customer> customer);
-    void Dequeue(size_t index);
-    void ServeCustomer(std::shared_ptr<MailCustomerCommunication> mailActionsManager);
-    size_t FindHighestPriorityCustomerIndex(bool lastServedRegular) const;
-    int CalculateCustomerPriority(bool lastServedRegular, const unique_ptr<Customer>& customer) const;
-    void ProcessCustomer(const std::unique_ptr<Customer>& customer, std::shared_ptr<MailCustomerCommunication> mailActionsManager);
-    bool IsCustomerInDataFile(int customerID) const;
-    bool IsRegularCustomer(const unique_ptr<Customer>& customer) const;
-    bool IsElderlyCustomer(const unique_ptr<Customer>& customer) const;
-    int findActionIndex(const std::vector<MailActions>& sequence, MailActions action) const;
+	void Dequeue(size_t index);
+	size_t FindHighestPriorityCustomerIndex(bool lastServedRegular) const;
+	int CalculateCustomerPriority(bool lastServedRegular, const unique_ptr<Customer>& customer) const;
+	void ProcessCustomer(const std::unique_ptr<Customer>& customer, std::shared_ptr<MailCustomerCommunication> mailActionsManager);
+	bool IsCustomerInDataFile(int customerID) const;
+	bool IsRegularCustomer(const unique_ptr<Customer>& customer) const;
+	bool IsElderlyCustomer(const unique_ptr<Customer>& customer) const;
+	int findActionIndex(const std::vector<MailActions>& sequence, MailActions action) const;
 };
 
 

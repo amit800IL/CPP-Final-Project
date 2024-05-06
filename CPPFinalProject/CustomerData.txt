@@ -1,3 +1,6 @@
 Date of Birth: 11/12/1998 , Age is: 25, Customer Number : 1998221
 Date of Birth: 2/3/1920 , Age is: 104, Customer Number : 1920230
 Date of Birth: 2/3/2004 , Age is: 20, Customer Number : 2004330
+Date of Birth: 3/4/2001 , Age is: 23, Customer Number : 2001140
+Date of Birth: 2/3/2003 , Age is: 21, Customer Number : 2003230
+Date of Birth: 2/3/2004 , Age is: 20, Customer Number : 2004430

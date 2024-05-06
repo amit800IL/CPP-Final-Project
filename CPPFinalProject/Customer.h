@@ -26,9 +26,14 @@ enum class MailActions
 
 struct DateOfBirth : public IPrintable
 {
+
+private:
+
 	int day;
 	int month;
 	int year;
+
+public:
 
 	DateOfBirth(int day, int month, int year) : day(day), month(month), year(year) {}
 
@@ -79,6 +84,7 @@ class Customer : public IPrintable
 {
 
 protected:
+
 	unique_ptr<DateOfBirth> dateOfBirth;
 	shared_ptr<MailClerk> assignedClerk;
 	int customerNumber = 0;

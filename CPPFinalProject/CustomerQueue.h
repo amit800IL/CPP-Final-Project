@@ -24,20 +24,21 @@ struct Node
 
 class CustomerQueue
 {
+public:
+
+	void ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager);
+	void Enqueue(const unique_ptr<Customer>& customer);
+	CustomerQueue() : head(nullptr), tail(nullptr) {}
+
 private:
+
 	unique_ptr<Node> head;
 	Node* tail;
 	int customerQueueCount = 0;
 
-public:
-	CustomerQueue() : head(nullptr), tail(nullptr) {}
-
 	bool IsEmpty() const;
 
-	void Enqueue(const unique_ptr<Customer>& customer);
-
 	void Dequeue(Node* current);
-
 
 	bool IsRegularCustomer(Node* customerNode) const;
 
@@ -45,12 +46,12 @@ public:
 
 	int findActionIndex(const vector<MailActions>& sequence, MailActions action) const;
 
-	void ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager);
-
 	int CalculateCustomerPriority(bool lastServedRegular, Node* node) const;
+
 	void ProcessCustomer(Node* customerNode, shared_ptr<MailCustomerCommunication> mailActionsManager);
 
 	bool IsCustomerInDataFile(int customerID) const;
+
 };
 
 
