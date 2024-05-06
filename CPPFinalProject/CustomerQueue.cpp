@@ -59,7 +59,6 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 		Node* highestPriorityCustomer = nullptr;
 		int highestPriority = INT_MAX;
 
-		// Open the customer data file inside the loop to reset the stream
 		ifstream customerData("CustomerData.txt");
 
 		if (!customerData.is_open())
@@ -107,7 +106,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 			current = current->next.get();
 		}
 
-		customerData.close(); // Close the file after processing
+		customerData.close(); 
 
 		if (highestPriorityCustomer)
 		{
@@ -116,7 +115,6 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 		}
 		else
 		{
-			// If no customer is found to serve, break out of the loop
 			break;
 		}
 	}
