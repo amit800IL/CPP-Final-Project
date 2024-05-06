@@ -26,7 +26,7 @@ void STLCustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailA
 	{
 		int highestPriorityIndex = FindHighestPriorityCustomerIndex(lastServedRegular);
 
-		if (highestPriorityIndex != numeric_limits<size_t>::max())
+		if (highestPriorityIndex != INT_MAX)
 		{
 			const unique_ptr<Customer>& highestPriorityCustomer = customerQueue[highestPriorityIndex];
 			lastServedRegular = IsRegularCustomer(highestPriorityCustomer);

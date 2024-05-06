@@ -106,11 +106,11 @@ int CustomerQueue::CalculateCustomerPriority(bool lastServedRegular, Node* node)
 		priority += 100;
 	}
 
-	shared_ptr<MailClerk> clerk = node->customer->GetAssignedClerk();
+	const shared_ptr<MailClerk>& clerk = node->customer->GetAssignedClerk();
 
 	if (clerk != nullptr)
 	{
-		const std::vector<MailActions>& actionSequence = node->customer->GetAssignedClerk()->GetActionSequence();
+		const vector<MailActions>& actionSequence = node->customer->GetAssignedClerk()->GetActionSequence();
 		MailActions customerAction = node->customer->GetCustomerAction();
 		priority = clerk->GivePriorityBasedOnAction(customerAction);
 	}
@@ -165,15 +165,4 @@ bool CustomerQueue::IsElderlyCustomer(Node* customerNode) const
 	}
 	return false;
 }
-
-int CustomerQueue::findActionIndex(const vector<MailActions>& sequence, MailActions action) const
-{
-	auto it = find(sequence.begin(), sequence.end(), action);
-	if (it != sequence.end())
-	{
-		return distance(sequence.begin(), it);
-	}
-	return -1;
-}
-
 

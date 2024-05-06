@@ -44,8 +44,6 @@ private:
 
 	bool IsElderlyCustomer(Node* customerNode) const;
 
-	int findActionIndex(const vector<MailActions>& sequence, MailActions action) const;
-
 	int CalculateCustomerPriority(bool lastServedRegular, Node* node) const;
 
 	void ProcessCustomer(Node* customerNode, shared_ptr<MailCustomerCommunication> mailActionsManager);
