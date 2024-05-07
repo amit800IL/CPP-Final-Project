@@ -15,7 +15,7 @@ class MailClerk : public IPrintable
 private:
 	int clerkID;
 	vector<MailActions> availableActions;
-	vector<MailActions> actionSequence;
+	vector<MailActions> clerkActions;
 public:
 	MailClerk(int id, const vector<MailActions>& actions);
 
@@ -27,7 +27,7 @@ public:
 
 	bool IsAvailable();
 
-	vector<MailActions> GetActionSequence();
+	vector<MailActions> GetClerkActions();
 
 	void Print(ostream& os) const override;
 

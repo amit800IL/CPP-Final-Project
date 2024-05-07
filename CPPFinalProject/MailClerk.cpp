@@ -1,9 +1,9 @@
 
 #include "MailClerk.h"
 MailClerk::MailClerk(int id, const vector<MailActions>& actions)
-	: clerkID(id), actionSequence(actions.begin(), actions.end())
+	: clerkID(id), clerkActions(actions.begin(), actions.end())
 {
-	availableActions = actionSequence;
+	availableActions = clerkActions;
 }
 MailClerk::MailClerk(MailClerk&& mailOfficial) noexcept {}
 
@@ -44,7 +44,7 @@ void MailClerk::PerformAction(MailActions action)
 
 		if (availableActions.empty())
 		{
-			availableActions = actionSequence;
+			availableActions = clerkActions;
 		}
 	}
 }
@@ -82,7 +82,7 @@ int MailClerk::GivePriorityBasedOnAction(MailActions& action)
 	}
 }
 
-vector<MailActions> MailClerk::GetActionSequence()
+vector<MailActions> MailClerk::GetClerkActions()
 {
-	return actionSequence;
+	return clerkActions;
 }
