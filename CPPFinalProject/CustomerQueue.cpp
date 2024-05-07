@@ -8,16 +8,22 @@ bool CustomerQueue::IsEmpty() const
 
 void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 {
+	//Created a new node instance, and sets the customer pointer in the consturctor
+
 	unique_ptr<Node> newNode = make_unique<Node>(customer);
 
-	if (!head)
+	if (head == nullptr)
 	{
+		//Move head to the adress of new node
 		head = move(newNode);
+		//Sets the tail to be the head
 		tail = head.get();
 	}
 	else
 	{
+		//If head is not null, set the tail next node adress to point to the new instance of new node
 		tail->next = move(newNode);
+		//sets the tail pointer to to be the next node pointer of tail
 		tail = tail->next.get();
 	}
 
@@ -26,30 +32,41 @@ void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 
 void CustomerQueue::Dequeue(Node* current)
 {
+	//Checks if current customer node is the head
+
 	if (current == head.get())
 	{
+		//If it is, it moves the head not to the next node variable of head
+		//By doing so it deletes the node from the queue
 		head = move(head->next);
 
-		if (!head)
+		if (head == nullptr)
 		{
+			//Sets the tail to nullptr after head becomes nullptr, so the node is completly deleted from the queue
 			tail = nullptr;
 		}
 	}
 	else
 	{
+		//If current is not the head, it creates a varaible of head to get the previous node
 		Node* prev = head.get();
 
-		while (prev && prev->next.get() != current)
+		while (prev != nullptr && prev->next.get() != current)
 		{
+			//while previoius is not null and not equal to curent
+			//it takes the node and sets it to be the next in the queue
+
 			prev = prev->next.get();
 		}
 
-		if (prev)
+		if (prev != nullptr)
 		{
+			//if previoius node is not null, it moves the previous next node to the adress of the current node
 			prev->next = move(current->next);
-			 
+
 			if (prev->next == nullptr)
 			{
+				//If the previous next node is null, it assigns this node to tail, effictevly deleting it form the queue
 				tail = prev;
 			}
 		}
@@ -69,7 +86,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 		Node* highestPriorityCustomer = nullptr;
 		int highestPriority = 0;
 
-		while (current)
+		while (current != nullptr)
 		{
 			if (!IsCustomerInDataFile(current->customer->GetCustomerID()))
 			{
@@ -85,7 +102,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 			current = current->next.get();
 		}
 
-		if (highestPriorityCustomer)
+		if (highestPriorityCustomer != nullptr)
 		{
 			lastServedRegular = IsRegularCustomer(highestPriorityCustomer);
 			ProcessCustomer(highestPriorityCustomer, mailActionsManager);
