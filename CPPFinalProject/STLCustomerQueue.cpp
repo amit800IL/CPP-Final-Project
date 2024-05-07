@@ -101,7 +101,7 @@ int STLCustomerQueue::CalculateCustomerPriority(bool lastServedRegular, const un
 
 	if (lastServedRegular && IsElderlyCustomer(customer))
 	{
-		priority += 100;
+		priority += 500;
 	}
 
 	//Gets the assignend clerk of the specific customer

@@ -105,59 +105,82 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 {
 	string name;
 	cout << "Enter Customer Name: ";
-	getline(cin, name);
+	bool validName = false;
 
-	string input;
+	while (!validName)
+	{
+		getline(cin, name);
+
+		//Checks if there is two letters at least, and if all of them are alphabatic charachters
+
+		if (name.size() >= 2 && all_of(name.begin(), name.end(), ::isalpha))
+		{
+			validName = true;
+		}
+		else
+		{
+			cout << "Invalid name. Please enter a valid customer name: ";
+		}
+	}
+
+	string date;
 	int day, month, year;
 
 	cout << "Enter Customer Birthdate (DD/MM/YYYY or DD.MM.YYYY): ";
-	getline(cin, input);
 
-	stringstream stringInput(input);
-	char slash;
-	if (stringInput >> day >> slash >> month >> slash >> year)
+	bool validDate = false;
+
+	while (!validDate)
 	{
-		MailActions chosenAction = ChooseAction();
-		unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(day, month, year);
 
-		if (birthDate != nullptr)
+		getline(cin, date);
+
+		stringstream stringInput(date);
+		char slash;
+
+		if (stringInput >> day >> slash >> month >> slash >> year)
 		{
-			//Checks if customer is elderly
+			MailActions chosenAction = ChooseAction();
+			unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(day, month, year);
 
-			if (birthDate->CalcualteAge() >= 65)
+			if (birthDate != nullptr)
 			{
-				//Goes through the list of clerks, to find a matching clerk for the customer's requested action
-
-				for (const shared_ptr<MailClerk>& clerk : clerks)
+				// Check if customer is elderly
+				if (birthDate->CalcualteAge() >= 65)
 				{
-					if (clerk != nullptr && clerk->CanHandleAction(chosenAction))
+					// Find a matching clerk for the customer's requested action
+					for (const shared_ptr<MailClerk>& clerk : clerks)
 					{
-						//If the clerk exists and can handle an action, it returns the new customer
-
-						return make_unique<ElderlyCustomer>(name, *birthDate, chosenAction, clerk);
+						if (clerk != nullptr && clerk->CanHandleAction(chosenAction))
+						{
+							// Return a new ElderlyCustomer if clerk exists and can handle the action
+							return make_unique<ElderlyCustomer>(name, *birthDate, chosenAction, clerk);
+						}
 					}
 				}
-			}
-
-			//Checks if customer is regular
-
-			else
-			{
-				for (const shared_ptr<MailClerk>& clerk : clerks)
+				else
 				{
-					//Goes through the list of clerks, to find a matching clerk for the customer's requested action
-
-					if (clerk != nullptr && clerk->CanHandleAction(chosenAction))
+					// Customer is regular
+					for (const shared_ptr<MailClerk>& clerk : clerks)
 					{
-						//If the clerk exists and can handle an action, it returns the new customer
-
-						return make_unique<RegularCustomer>(name, *birthDate, chosenAction, clerk);
+						if (clerk != nullptr && clerk->CanHandleAction(chosenAction))
+						{
+							// Return a new RegularCustomer if clerk exists and can handle the action
+							return make_unique<RegularCustomer>(name, *birthDate, chosenAction, clerk);
+						}
 					}
 				}
+
+				validDate = true;
 			}
+
 		}
-
+		else
+		{
+			cout << "Invalid birthdate format. Please enter the birthdate again (DD/MM/YYYY or DD.MM.YYYY): ";
+		}
 	}
+
 
 	return nullptr;
 }
@@ -188,14 +211,14 @@ void MailCustomerCommunication::CalculateServiceDuration()
 	//Sets the service hour to calender time
 
 	time_t timeServedTimeTConverstion = chrono::system_clock::to_time_t(serviceHour);
-	
+
 	//Convers the calender time to local hour and minute
 
 	tm* timeServedLocalTimeConvertion = localtime(&timeServedTimeTConverstion);
 
 	//Displays the data
 
-	cout << "Customer was served at: "  << put_time(timeServedLocalTimeConvertion, "%H:%M") << std::endl;
+	cout << "Customer was served at: " << put_time(timeServedLocalTimeConvertion, "%H:%M") << std::endl;
 
 	cout << "Waiting Time: " << static_cast<int>(waitingTime.count()) << " minutes" << endl;
 

@@ -141,7 +141,7 @@ int CustomCustomerQueue::CalculateCustomerPriority(bool lastServedRegular, Node*
 
 	if (lastServedRegular && IsElderlyCustomer(customerNode))
 	{
-		priority += 100;
+		priority += 500;
 	}
 
 	//Gets the assignend clerk of the specific customer

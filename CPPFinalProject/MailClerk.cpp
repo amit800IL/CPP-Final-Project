@@ -66,16 +66,16 @@ int MailClerk::GivePriorityBasedOnAction(MailActions& action)
 	switch (action)
 	{
 	case MailActions::ReceivePackage:
-		return Bonus += 40;
+		return Bonus += 300;
 		break;
 	case MailActions::DeliverPackage:
-		return Bonus += 30;
+		return Bonus += 150;
 		break;
 	case MailActions::MakePayment:
-		return Bonus += 20;
+		return Bonus += 100;
 		break;
 	case MailActions::PurchaseProduct:
-		return Bonus += 10;
+		return Bonus += 50;
 		break;
 	default:
 		cout << "Invalid action" << endl;
