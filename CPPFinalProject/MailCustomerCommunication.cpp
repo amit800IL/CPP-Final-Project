@@ -43,7 +43,7 @@ MailActions MailCustomerCommunication::ChooseAction()
 	char input = '0';
 
 	cout << "Choose an action:" << endl;
-	 
+
 	cout << "1. Receive a package" << endl;
 	cout << "2. Deliver a package" << endl;
 	cout << "3. Make a payment" << endl;
@@ -135,4 +135,26 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 vector<shared_ptr<MailClerk>> MailCustomerCommunication::GetClerksList()
 {
 	return clerks;
+}
+
+void MailCustomerCommunication::CalculateServiceDuration()
+{
+	timeServed = chrono::system_clock::now();
+
+	this_thread::sleep_for(chrono::seconds(1));
+
+	chrono::time_point<chrono::system_clock> endTime = chrono::system_clock::now();
+
+	waitingTime = endTime - timeServed;
+
+	chrono::duration<double> minutes = waitingTime;
+
+	time_t timeServedTimeTConverstion = chrono::system_clock::to_time_t(timeServed);
+	tm* timeServedLocalTimeConvertion = localtime(&timeServedTimeTConverstion);
+
+	cout << "Customer was served at: " << timeServedLocalTimeConvertion->tm_hour << ":" << timeServedLocalTimeConvertion->tm_min << std::endl;
+
+	cout << "Waiting Time: " << static_cast<int>(minutes.count()) << " minutes" << endl;
+
+	cout << "--------------------------------------------------------" << endl;
 }

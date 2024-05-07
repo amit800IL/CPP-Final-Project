@@ -31,6 +31,7 @@ void STLCustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailA
 			const unique_ptr<Customer>& highestPriorityCustomer = customerQueue[highestPriorityIndex];
 			lastServedRegular = IsRegularCustomer(highestPriorityCustomer);
 			ProcessCustomer(highestPriorityCustomer, mailActionsManager);
+			mailActionsManager->CalculateServiceDuration();
 			Dequeue(highestPriorityIndex);
 		}
 		else

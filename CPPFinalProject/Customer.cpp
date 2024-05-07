@@ -83,4 +83,3 @@ MailActions Customer::GetCustomerAction() const
 
 
 
-
