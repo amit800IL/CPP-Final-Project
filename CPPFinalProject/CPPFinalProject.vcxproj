@@ -129,7 +129,7 @@
   <ItemGroup>
     <ClCompile Include="CPPFinalProject.cpp" />
     <ClCompile Include="Customer.cpp" />
-    <ClCompile Include="CustomerQueue.cpp" />
+    <ClCompile Include="CustomCustomerQueue.cpp" />
     <ClCompile Include="ElderlyCustomer.cpp" />
     <ClCompile Include="IPrintable.cpp" />
     <ClCompile Include="PostOffice.cpp" />
@@ -140,7 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Customer.h" />
-    <ClInclude Include="CustomerQueue.h" />
+    <ClInclude Include="CustomCustomerQueue.h" />
     <ClInclude Include="ElderlyCustomer.h" />
     <ClInclude Include="IPrintable.h" />
     <ClInclude Include="PostOffice.h" />

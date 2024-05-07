@@ -21,13 +21,13 @@ struct Node
 	Node(const unique_ptr<Customer>& customer) : customer(customer), next(nullptr) {}
 };
 
-class CustomerQueue
+class CustomCustomerQueue
 {
 public:
 
 	void ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager);
 	void Enqueue(const unique_ptr<Customer>& customer);
-	CustomerQueue() : head(nullptr), tail(nullptr) {}
+	CustomCustomerQueue() : head(nullptr), tail(nullptr) {}
 
 private:
 

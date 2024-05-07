@@ -1,12 +1,12 @@
-#include "CustomerQueue.h"
+#include "CustomCustomerQueue.h"
 
 
-bool CustomerQueue::IsEmpty() const
+bool CustomCustomerQueue::IsEmpty() const
 {
 	return customerQueueCount <= 0;
 }
 
-void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
+void CustomCustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 {
 	//Created a new node instance, and sets the customer pointer in the consturctor
 
@@ -30,7 +30,7 @@ void CustomerQueue::Enqueue(const unique_ptr<Customer>& customer)
 	customerQueueCount++;
 }
 
-void CustomerQueue::Dequeue(Node* current)
+void CustomCustomerQueue::Dequeue(Node* current)
 {
 	//Checks if current customer node is the head
 
@@ -76,7 +76,7 @@ void CustomerQueue::Dequeue(Node* current)
 }
 
 
-void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager)
+void CustomCustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	bool lastServedRegular = false;
 
@@ -92,12 +92,22 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 			{
 				int currentPriority = CalculateCustomerPriority(lastServedRegular, current);
 
+				//Checkes if the current priority is bigger than the highest priority
+
 				if (currentPriority > highestPriority)
 				{
+					//if yes, it sets the current priority to the valye of highest priority
+
 					highestPriority = currentPriority;
+
+					//Sets the current customer node, to the highest priority customer node
+
 					highestPriorityCustomer = current;
 				}
 			}
+
+
+			//After its done, sets the next node of current
 
 			current = current->next.get();
 		}
@@ -106,6 +116,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 		{
 			lastServedRegular = IsRegularCustomer(highestPriorityCustomer);
 			ProcessCustomer(highestPriorityCustomer, mailActionsManager);
+			mailActionsManager->CalculateServiceDuration();
 		}
 		else
 		{
@@ -114,7 +125,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 	}
 }
 
-int CustomerQueue::CalculateCustomerPriority(bool lastServedRegular, Node* customerNode) const
+int CustomCustomerQueue::CalculateCustomerPriority(bool lastServedRegular, Node* customerNode) const
 {
 	//Priority for each customer starta always at 0, then based on multiple factors the number updates
 
@@ -161,9 +172,9 @@ int CustomerQueue::CalculateCustomerPriority(bool lastServedRegular, Node* custo
 	return priority;
 }
 
-void CustomerQueue::ProcessCustomer(Node* customerNode, shared_ptr<MailCustomerCommunication> mailActionsManager)
+void CustomCustomerQueue::ProcessCustomer(Node* customerNode, shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
-	if (customerNode)
+	if (customerNode != nullptr)
 	{
 		customerNode->customer->Print(cout);
 		mailActionsManager->CallCustomer(*customerNode->customer);
@@ -171,9 +182,9 @@ void CustomerQueue::ProcessCustomer(Node* customerNode, shared_ptr<MailCustomerC
 	}
 }
 
-bool CustomerQueue::IsCustomerInDataFile(int customerID) const
+bool CustomCustomerQueue::IsCustomerInDataFile(int customerID) const
 {
-	ifstream customerData("CustomerData.txt");
+	fstream customerData("CustomerData.txt");
 	bool customerFound = false;
 	string line;
 
@@ -191,7 +202,7 @@ bool CustomerQueue::IsCustomerInDataFile(int customerID) const
 	return customerFound;
 }
 
-bool CustomerQueue::IsRegularCustomer(Node* customerNode) const
+bool CustomCustomerQueue::IsRegularCustomer(Node* customerNode) const
 {
 	if (customerNode && customerNode->customer)
 	{
@@ -200,7 +211,7 @@ bool CustomerQueue::IsRegularCustomer(Node* customerNode) const
 	return false;
 }
 
-bool CustomerQueue::IsElderlyCustomer(Node* customerNode) const
+bool CustomCustomerQueue::IsElderlyCustomer(Node* customerNode) const
 {
 	if (customerNode && customerNode->customer)
 	{

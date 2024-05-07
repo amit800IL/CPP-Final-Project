@@ -96,27 +96,43 @@ int STLCustomerQueue::CalculateCustomerPriority(bool lastServedRegular, const un
 
 	int priority = 0;
 
-	if (lastServedRegular && IsElderlyCustomer(node))
+	//If i last served regualr customer, and the current customer is eldelry, it adds special amount of priroity score
+	//This is meant so the elderly customer will priortized over the factor of action priority
+
+	if (lastServedRegular && IsElderlyCustomer(customer))
 	{
 		priority += 100;
 	}
 
-	const shared_ptr<MailClerk>& clerk = node->customer->GetAssignedClerk();
+	//Gets the assignend clerk of the specific customer
+
+	const shared_ptr<MailClerk>& clerk = customer->GetAssignedClerk();
+
+	//Without it the world will die
 
 	if (clerk != nullptr)
 	{
-		const vector<MailActions>& actionSequence = node->customer->GetAssignedClerk()->GetClerkActions();
-		MailActions customerAction = node->customer->GetCustomerAction();
+		//Gets the possible actions the clerk has, note: not the ones that are available, this is another vector
 
-		if (IsRegularCustomer(node))
+		const vector<MailActions>& actionSequence = customer->GetAssignedClerk()->GetClerkActions();
+
+		//Gets the specific action the customer choose
+
+		MailActions customerAction = customer->GetCustomerAction();
+
+		if (IsRegularCustomer(customer))
 		{
+			//In this case, the priority is being set directly to the value of the priority score for this clerk
 			priority = clerk->GivePriorityBasedOnAction(customerAction);
 		}
-		else if (IsElderlyCustomer(node))
+		else if (IsElderlyCustomer(customer))
 		{
+			//In this case, the prioritu is being added to the vale of priority the elder customer has
+			//This is to make sure the value of elder customer priority will ovveride the customer action priority
 			priority += clerk->GivePriorityBasedOnAction(customerAction);
 		}
 	}
+
 
 	return priority;
 }

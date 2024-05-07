@@ -8,18 +8,29 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 {
 	bool isCustomerServed = false;
 
+	//Gets the customer's chosen action
+
 	MailActions chosenAction = customer.GetCustomerAction();
+
+	//Finds the available clerk for that action
+
 	shared_ptr<MailClerk> clerk = FindAvailableClerk(chosenAction);
 
 	while (!isCustomerServed)
 	{
+		//If the customer choose to cancel it just goes away to atlantis apparently, or something like that
+
 		if (chosenAction == MailActions::Cancel)
 			break;
+
+		//Creates the CusomterData file, or find it if it exists
 
 		ofstream customerFile("CustomerData.txt", ios::app);
 
 		if (customerFile.is_open())
 		{
+			//Writes the customer data into the file
+
 			customer.Print(customerFile);
 
 			customerFile.close();
@@ -27,7 +38,12 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 
 		if (clerk != nullptr)
 		{
+			//If clerk exists, the clerk perfomed the requested action by the customer
+
 			clerk->PerformAction(chosenAction);
+
+			//Sets the bool of isCustomerServed to true, so it will not stay on the loop for that customer and clerk
+
 			isCustomerServed = true;
 			break;
 		}
@@ -103,23 +119,35 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 
 		if (birthDate != nullptr)
 		{
+			//Checks if customer is elderly
+
 			if (birthDate->CalcualteAge() >= 65)
 			{
+				//Goes through the list of clerks, to find a matching clerk for the customer's requested action
+
 				for (const shared_ptr<MailClerk>& clerk : clerks)
 				{
 					if (clerk != nullptr && clerk->CanHandleAction(chosenAction))
 					{
+						//If the clerk exists and can handle an action, it returns the new customer
+
 						return make_unique<ElderlyCustomer>(*birthDate, chosenAction, clerk);
 					}
 				}
 			}
 
+			//Checks if customer is regular
+
 			else
 			{
 				for (const shared_ptr<MailClerk>& clerk : clerks)
 				{
+					//Goes through the list of clerks, to find a matching clerk for the customer's requested action
+
 					if (clerk != nullptr && clerk->CanHandleAction(chosenAction))
 					{
+						//If the clerk exists and can handle an action, it returns the new customer
+
 						return make_unique<RegularCustomer>(*birthDate, chosenAction, clerk);
 					}
 				}
@@ -139,22 +167,35 @@ vector<shared_ptr<MailClerk>> MailCustomerCommunication::GetClerksList()
 
 void MailCustomerCommunication::CalculateServiceDuration()
 {
+	//Sets the time to the current hour and minute
+
 	timeServed = chrono::system_clock::now();
+
+	//Makes the system sleep for one second to create the waiting
 
 	this_thread::sleep_for(chrono::seconds(1));
 
+	//Sets a new local variable, end time, to calculate the waiting time
+
 	chrono::time_point<chrono::system_clock> endTime = chrono::system_clock::now();
+
+	//Calcuates the waiting time by subtracting the end time from the actual time tht customer was served
 
 	waitingTime = endTime - timeServed;
 
-	chrono::duration<double> minutes = waitingTime;
+	//Sets the service hour to calender time
 
 	time_t timeServedTimeTConverstion = chrono::system_clock::to_time_t(timeServed);
+	
+	//Convers the calender time to local hour and minute
+
 	tm* timeServedLocalTimeConvertion = localtime(&timeServedTimeTConverstion);
 
-	cout << "Customer was served at: " << timeServedLocalTimeConvertion->tm_hour << ":" << timeServedLocalTimeConvertion->tm_min << std::endl;
+	//Displays the data
 
-	cout << "Waiting Time: " << static_cast<int>(minutes.count()) << " minutes" << endl;
+	cout << "Customer was served at: "  << put_time(timeServedLocalTimeConvertion, "%H:%M") << std::endl;
+
+	cout << "Waiting Time: " << static_cast<int>(waitingTime.count()) << " minutes" << endl;
 
 	cout << "--------------------------------------------------------" << endl;
 }

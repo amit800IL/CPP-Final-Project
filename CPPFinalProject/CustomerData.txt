@@ -1,0 +1,4 @@
+Date of Birth: 11/12/19981 , Age is: -17945, Customer Number : 19981321
+Date of Birth: 3/4/2004 , Age is: 20, Customer Number : 2004340
+Date of Birth: 11/3/2004 , Age is: 20, Customer Number : 2004131
+Date of Birth: 2/3/2009 , Age is: 15, Customer Number : 2009330

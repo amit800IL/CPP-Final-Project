@@ -80,16 +80,16 @@ void PostOffice::UseSytem(char input, shared_ptr<MailCustomerCommunication> mail
 {
 	if (input == '1')
 	{
-		BaseSTL(mailActionsManager);
+		StlQueue(mailActionsManager);
 	}
 
 	else if (input == '2')
 	{
-		CustomSTL(mailActionsManager);
+		CustomQueue(mailActionsManager);
 	}
 }
 
-void PostOffice::BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
+void PostOffice::StlQueue(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
 	unique_ptr<STLCustomerQueue> stlCustomerQueue = make_unique<STLCustomerQueue>();
 
@@ -121,9 +121,9 @@ void PostOffice::BaseSTL(shared_ptr<MailCustomerCommunication> mailActionsManage
 	stlCustomerQueue->ServeCustomer(mailActionsManager);
 }
 
-void PostOffice::CustomSTL(shared_ptr<MailCustomerCommunication> mailActionsManager)
+void PostOffice::CustomQueue(shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
-	unique_ptr<CustomerQueue> customerQueue = make_unique<CustomerQueue>();
+	unique_ptr<CustomCustomerQueue> customerQueue = make_unique<CustomCustomerQueue>();
 
 	cout << "Set the queue size: ";
 
