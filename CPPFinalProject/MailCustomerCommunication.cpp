@@ -104,10 +104,14 @@ shared_ptr<MailClerk> MailCustomerCommunication::FindAvailableClerk(const MailAc
 
 unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 {
+	string name;
+	cout << "Enter Customer Name: ";
+	getline(cin, name);
+
 	string input;
 	int day, month, year;
 
-	cout << "Enter Customer Birthdate (DD/MM/YYYY): ";
+	cout << "Enter Customer Birthdate (DD/MM/YYYY or DD.MM.YYYY): ";
 	getline(cin, input);
 
 	stringstream ss(input);
@@ -131,7 +135,7 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 					{
 						//If the clerk exists and can handle an action, it returns the new customer
 
-						return make_unique<ElderlyCustomer>(*birthDate, chosenAction, clerk);
+						return make_unique<ElderlyCustomer>(name, *birthDate, chosenAction, clerk);
 					}
 				}
 			}
@@ -148,7 +152,7 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 					{
 						//If the clerk exists and can handle an action, it returns the new customer
 
-						return make_unique<RegularCustomer>(*birthDate, chosenAction, clerk);
+						return make_unique<RegularCustomer>(name, *birthDate, chosenAction, clerk);
 					}
 				}
 			}
@@ -156,7 +160,6 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 
 	}
 
-	cerr << "Invalid date format or no suitable clerk found for the chosen action." << endl;
 	return nullptr;
 }
 
@@ -169,7 +172,7 @@ void MailCustomerCommunication::CalculateServiceDuration()
 {
 	//Sets the time to the current hour and minute
 
-	timeServed = chrono::system_clock::now();
+	serviceHour = chrono::system_clock::now();
 
 	//Makes the system sleep for one second to create the waiting
 
@@ -181,11 +184,11 @@ void MailCustomerCommunication::CalculateServiceDuration()
 
 	//Calcuates the waiting time by subtracting the end time from the actual time tht customer was served
 
-	waitingTime = endTime - timeServed;
+	waitingTime = endTime - serviceHour;
 
 	//Sets the service hour to calender time
 
-	time_t timeServedTimeTConverstion = chrono::system_clock::to_time_t(timeServed);
+	time_t timeServedTimeTConverstion = chrono::system_clock::to_time_t(serviceHour);
 	
 	//Convers the calender time to local hour and minute
 

@@ -48,7 +48,7 @@ void PostOffice::PickAndUseSystem(char input, shared_ptr<MailCustomerCommunicati
 		case 'E':
 		case 'e':
 			cout << "Exited the system, but why though?";
-;			break;
+			break;
 		case '1':
 			cout << "Amazing choice, i created the other one so this one is probably safer" << endl;
 			break;
@@ -106,7 +106,7 @@ void PostOffice::StlQueue(shared_ptr<MailCustomerCommunication> mailActionsManag
 	{
 		unique_ptr<Customer> customer = mailActionsManager->CreateCustomer();
 
-		if (customer != nullptr)
+		if (customer != nullptr && customer->GetCustomerAction() != MailActions::Cancel)
 		{
 			customers.push_back(move(customer));
 		}
@@ -114,7 +114,10 @@ void PostOffice::StlQueue(shared_ptr<MailCustomerCommunication> mailActionsManag
 
 	for (unique_ptr<Customer>& customer : customers)
 	{
-		stlCustomerQueue->Enqueue(move(customer));
+		if (customer != nullptr && customer->GetCustomerAction() != MailActions::Cancel)
+		{
+			stlCustomerQueue->Enqueue(move(customer));
+		}
 	}
 
 
@@ -138,7 +141,7 @@ void PostOffice::CustomQueue(shared_ptr<MailCustomerCommunication> mailActionsMa
 	{
 		unique_ptr<Customer> customer = mailActionsManager->CreateCustomer();
 
-		if (customer != nullptr)
+		if (customer != nullptr && customer->GetCustomerAction() != MailActions::Cancel)
 		{
 			customers.push_back(move(customer));
 		}
@@ -146,7 +149,10 @@ void PostOffice::CustomQueue(shared_ptr<MailCustomerCommunication> mailActionsMa
 
 	for (unique_ptr<Customer>& customer : customers)
 	{
-		customerQueue->Enqueue(move(customer));
+		if (customer != nullptr && customer->GetCustomerAction() != MailActions::Cancel)
+		{
+			customerQueue->Enqueue(move(customer));
+		}
 	}
 
 	customerQueue->ServeCustomer(mailActionsManager);

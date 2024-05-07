@@ -139,7 +139,7 @@ int STLCustomerQueue::CalculateCustomerPriority(bool lastServedRegular, const un
 
 void STLCustomerQueue::ProcessCustomer(const unique_ptr<Customer>& customer, shared_ptr<MailCustomerCommunication> mailActionsManager)
 {
-	if (customer)
+	if (customer != nullptr)
 	{
 		customer->Print(cout);
 		mailActionsManager->CallCustomer(*customer);

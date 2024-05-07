@@ -19,6 +19,7 @@ public:
 
 	void Enqueue(unique_ptr<Customer> customer);
 	void ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager);
+	~STLCustomerQueue() = default;
 
 private:
 

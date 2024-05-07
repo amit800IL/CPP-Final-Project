@@ -1,7 +1,9 @@
 #include "Customer.h"
 
-Customer::Customer(const DateOfBirth& dateOfBirth, MailActions choosedAction, const shared_ptr<MailClerk>& assignedClerk)
+Customer::Customer(string name, const DateOfBirth& dateOfBirth, MailActions choosedAction, const shared_ptr<MailClerk>& assignedClerk)
 {
+	this->name = name;
+
 	this->dateOfBirth = make_unique<DateOfBirth>(dateOfBirth);
 
 	this->choosedAction = choosedAction;
@@ -11,7 +13,7 @@ Customer::Customer(const DateOfBirth& dateOfBirth, MailActions choosedAction, co
 	GenerateCustomerNumber();
 }
 
-Customer::Customer(Customer&& customer) noexcept : dateOfBirth(move(customer.dateOfBirth)) {}
+Customer::Customer(Customer&& customer) noexcept : name(customer.name), dateOfBirth(move(customer.dateOfBirth)), choosedAction(customer.choosedAction), assignedClerk(move(customer.assignedClerk)) {}
 
 
 int Customer::GetCustomerNumber() const
@@ -78,7 +80,7 @@ const shared_ptr<MailClerk>& Customer::GetAssignedClerk() const
 
 void Customer::Print(ostream& os) const
 {
-	dateOfBirth->Print(os), os << " , Age is: " << CustomerAge() << ", Customer Number : " << uniqueId << endl;
+	cout << "Customer name: " << name << ", " ; dateOfBirth->Print(os), os << " , Age: " << CustomerAge() << ", Customer Number: " << uniqueId << endl;
 }
 
 MailActions Customer::GetCustomerAction() const

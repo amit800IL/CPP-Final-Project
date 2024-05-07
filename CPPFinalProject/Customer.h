@@ -78,6 +78,8 @@ public:
 	{
 		os << "Date of Birth: " << day << '/' << month << '/' << year;
 	}
+
+	~DateOfBirth() = default;
 };
 
 class Customer : public IPrintable
@@ -85,6 +87,7 @@ class Customer : public IPrintable
 
 protected:
 
+	string name;
 	unique_ptr<DateOfBirth> dateOfBirth;
 	shared_ptr<MailClerk> assignedClerk;
 	MailActions choosedAction;
@@ -93,7 +96,7 @@ protected:
 
 public:
 
-	Customer(const DateOfBirth& dateOfBirth, MailActions preferredAction, const shared_ptr<MailClerk>& assignedClerk);
+	Customer(string name, const DateOfBirth& dateOfBirth, MailActions preferredAction, const shared_ptr<MailClerk>& assignedClerk);
 
 	Customer(Customer&& customer) noexcept;
 

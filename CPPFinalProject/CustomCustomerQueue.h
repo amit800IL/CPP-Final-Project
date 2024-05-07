@@ -19,6 +19,8 @@ struct Node
 	unique_ptr<Node> next;
 
 	Node(const unique_ptr<Customer>& customer) : customer(customer), next(nullptr) {}
+
+	~Node() = default;
 };
 
 class CustomCustomerQueue
@@ -28,6 +30,7 @@ public:
 	void ServeCustomer(shared_ptr<MailCustomerCommunication> mailActionsManager);
 	void Enqueue(const unique_ptr<Customer>& customer);
 	CustomCustomerQueue() : head(nullptr), tail(nullptr) {}
+	~CustomCustomerQueue() = default;
 
 private:
 
@@ -48,6 +51,7 @@ private:
 	void ProcessCustomer(Node* customerNode, shared_ptr<MailCustomerCommunication> mailActionsManager);
 
 	bool IsCustomerInDataFile(int customerID) const;
+
 
 };
 

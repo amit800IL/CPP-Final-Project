@@ -26,7 +26,7 @@ class MailCustomerCommunication
 
 private:
 	vector<shared_ptr<MailClerk>> clerks;
-	chrono::time_point<chrono::system_clock> timeServed;
+	chrono::time_point<chrono::system_clock> serviceHour;
 	chrono::duration<double> waitingTime;
 public:
 	MailCustomerCommunication(const vector<shared_ptr<MailClerk>>& clerks);
