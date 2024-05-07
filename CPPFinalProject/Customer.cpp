@@ -80,7 +80,7 @@ const shared_ptr<MailClerk>& Customer::GetAssignedClerk() const
 
 void Customer::Print(ostream& os) const
 {
-	cout << "Customer name: " << name << ", " ; dateOfBirth->Print(os), os << " , Age: " << CustomerAge() << ", Customer Number: " << uniqueId << endl;
+	os << "Customer name: " << name << ", " , dateOfBirth->Print(os), os << " , Age: " << CustomerAge() << ", Customer Number: " << uniqueId << endl;
 }
 
 MailActions Customer::GetCustomerAction() const
