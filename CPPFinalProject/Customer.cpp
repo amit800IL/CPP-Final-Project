@@ -1,7 +1,5 @@
 #include "Customer.h"
 
-int Customer::lastAssignedCustomerNumber = 0;
-
 Customer::Customer(const DateOfBirth& dateOfBirth, MailActions choosedAction, const shared_ptr<MailClerk>& assignedClerk)
 {
 	this->dateOfBirth = make_unique<DateOfBirth>(dateOfBirth);
@@ -28,16 +26,21 @@ int Customer::CustomerAge() const
 
 int Customer::GenerateCustomerNumber()
 {
-	int actionPriority = static_cast<int>(choosedAction);
-	int agePriority = CustomerAge();
+	//Gets the birth date of the customer
 
 	int birthDay = dateOfBirth->GetDay();
 	int birthMonth = dateOfBirth->GetMonth();
 	int birthYear = dateOfBirth->GetYear();
 
+	//Calcultes the id based on the birth date values
+
 	uniqueId = (birthYear * 10000) + (birthMonth * 100) + birthDay;
 
+	//Divides by 10 so value will not be too big
+
 	uniqueId = uniqueId / 10;
+
+	//After that, it adds more to the uniqeid value based on the chosen action
 
 	switch (choosedAction)
 	{
@@ -56,6 +59,9 @@ int Customer::GenerateCustomerNumber()
 	default:
 		break;
 	}
+
+	//Returns the uniqe id, the uniqe id purpose is to distinct customer from customer
+	//UniqeId is not part of the queue system, this number exists only so each customer has ID
 
 	return uniqueId;
 }

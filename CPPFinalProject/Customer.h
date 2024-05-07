@@ -87,9 +87,8 @@ protected:
 
 	unique_ptr<DateOfBirth> dateOfBirth;
 	shared_ptr<MailClerk> assignedClerk;
-	int customerNumber = 0;
 	MailActions choosedAction;
-	static int lastAssignedCustomerNumber;
+	int customerNumber = 0;
 	int uniqueId = 0;
 
 public:

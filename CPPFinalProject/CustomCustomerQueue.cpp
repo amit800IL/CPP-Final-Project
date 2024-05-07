@@ -114,8 +114,13 @@ void CustomCustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> ma
 
 		if (highestPriorityCustomer != nullptr)
 		{
+			//if the customer exists, it first sets the lastServedRegular bool to its current state based on the custoemr type
 			lastServedRegular = IsRegularCustomer(highestPriorityCustomer);
+			//Then it serves the customer
 			ProcessCustomer(highestPriorityCustomer, mailActionsManager);
+
+			//Calcultes the waiting and service time
+
 			mailActionsManager->CalculateServiceDuration();
 		}
 		else

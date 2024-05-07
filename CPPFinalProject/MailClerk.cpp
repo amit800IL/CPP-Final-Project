@@ -78,6 +78,7 @@ int MailClerk::GivePriorityBasedOnAction(MailActions& action)
 		return Bonus += 10;
 		break;
 	default:
+		cout << "Invalid action" << endl;
 		break;
 	}
 }
