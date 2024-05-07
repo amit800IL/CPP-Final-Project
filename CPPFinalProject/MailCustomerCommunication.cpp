@@ -45,7 +45,6 @@ void MailCustomerCommunication::CallCustomer(const Customer& customer)
 			//Sets the bool of isCustomerServed to true, so it will not stay on the loop for that customer and clerk
 
 			isCustomerServed = true;
-			break;
 		}
 		else
 		{
@@ -114,9 +113,9 @@ unique_ptr<Customer> MailCustomerCommunication::CreateCustomer()
 	cout << "Enter Customer Birthdate (DD/MM/YYYY or DD.MM.YYYY): ";
 	getline(cin, input);
 
-	stringstream ss(input);
+	stringstream stringInput(input);
 	char slash;
-	if (ss >> day >> slash >> month >> slash >> year)
+	if (stringInput >> day >> slash >> month >> slash >> year)
 	{
 		MailActions chosenAction = ChooseAction();
 		unique_ptr<DateOfBirth> birthDate = make_unique<DateOfBirth>(day, month, year);

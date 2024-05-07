@@ -95,10 +95,24 @@ void PostOffice::StlQueue(shared_ptr<MailCustomerCommunication> mailActionsManag
 
 	cout << "Set the queue size: ";
 
+	string input;
 	int queueSize = 0;
-	cin >> queueSize;
+	bool validInput = false;
 
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	while (!validInput)
+	{
+		getline(cin, input);
+		stringstream stringInput(input);
+
+		if (stringInput >> queueSize && queueSize > 0 && stringInput.eof())
+		{
+			validInput = true;
+		}
+		else
+		{
+			cout << "Invalid input. enter a positive integer: ";
+		}
+	}
 
 	vector<unique_ptr<Customer>> customers;
 
@@ -120,7 +134,6 @@ void PostOffice::StlQueue(shared_ptr<MailCustomerCommunication> mailActionsManag
 		}
 	}
 
-
 	stlCustomerQueue->ServeCustomer(mailActionsManager);
 }
 
@@ -130,10 +143,25 @@ void PostOffice::CustomQueue(shared_ptr<MailCustomerCommunication> mailActionsMa
 
 	cout << "Set the queue size: ";
 
+	string input;
 	int queueSize = 0;
-	cin >> queueSize;
+	bool validInput = false;
 
-	cin.ignore(numeric_limits<streamsize>::max(), '\n');
+	while (!validInput)
+	{
+		getline(cin, input);
+		stringstream stringInput(input);
+
+		if (stringInput >> queueSize && queueSize > 0 && stringInput.eof())
+		{
+			validInput = true;
+		}
+		else
+		{
+			cout << "Invalid input. enter a positive integer: ";
+		}
+	}
+
 
 	vector<unique_ptr<Customer>> customers;
 
@@ -156,4 +184,5 @@ void PostOffice::CustomQueue(shared_ptr<MailCustomerCommunication> mailActionsMa
 	}
 
 	customerQueue->ServeCustomer(mailActionsManager);
+
 }
