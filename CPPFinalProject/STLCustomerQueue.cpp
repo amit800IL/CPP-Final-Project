@@ -58,8 +58,8 @@ void STLCustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailA
 
 int STLCustomerQueue::FindHighestPriorityCustomerIndex(bool lastServedRegular) const
 {
-	int highestPriorityIndex = INT_MAX;
-	int highestPriority = INT_MIN;
+	int highestPriorityIndex = 0;
+	int highestPriority = 0;
 
 	for (int i = 0; i < customerQueue.size(); ++i)
 	{

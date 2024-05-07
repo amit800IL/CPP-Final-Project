@@ -67,7 +67,7 @@ void CustomerQueue::ServeCustomer(shared_ptr<MailCustomerCommunication> mailActi
 	{
 		Node* current = head.get();
 		Node* highestPriorityCustomer = nullptr;
-		int highestPriority = INT_MIN;
+		int highestPriority = 0;
 
 		while (current)
 		{
@@ -110,7 +110,7 @@ int CustomerQueue::CalculateCustomerPriority(bool lastServedRegular, Node* node)
 
 	if (clerk != nullptr)
 	{
-		const vector<MailActions>& actionSequence = node->customer->GetAssignedClerk()->GetActionSequence();
+		const vector<MailActions>& actionSequence = node->customer->GetAssignedClerk()->GetClerkActions();
 		MailActions customerAction = node->customer->GetCustomerAction();
 
 		if (IsRegularCustomer(node))
