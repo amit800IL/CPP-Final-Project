@@ -218,7 +218,7 @@ void MailCustomerCommunication::CalculateServiceDuration()
 
 	//Displays the data
 
-	cout << "Customer was served at: " << put_time(timeServedLocalTimeConvertion, "%H:%M") << std::endl;
+	cout << "Customer was served at: " << put_time(timeServedLocalTimeConvertion, "%H:%M") << endl;
 
 	cout << "Waiting Time: " << static_cast<int>(waitingTime.count()) << " minutes" << endl;
 

@@ -1,3 +1,6 @@
-Customer name: Amit, Date of Birth: 11/12/1998 , Age: 25, Customer Number: 1998221
-Customer name: yaya, Date of Birth: 3/4/1920 , Age: 104, Customer Number: 1920240
-Customer name: yuy, Date of Birth: 3/4/2004 , Age: 20, Customer Number: 2004240
+Customer name: Amit... Date of Birth: 1/1/1998 , Age: 26, Customer Number: 1998110
+Customer name: Loli, Date of Birth: 3/4/2005 , Age: 19, Customer Number: 2005240
+Customer name: YOULI, Date of Birth: 2/5/2003 , Age: 21, Customer Number: 2003450
+Customer name: YOLO, Date of Birth: 2/5/1990 , Age: 34, Customer Number: 1990150
+Customer name: LOLI, Date of Birth: 2/4/1920 , Age: 104, Customer Number: 1920440
+Customer name: Amit, Date of Birth: 2/3/2005 , Age: 19, Customer Number: 2005330
