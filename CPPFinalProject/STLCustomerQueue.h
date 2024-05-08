@@ -2,7 +2,6 @@
 #define STLCUSTOMERQUEUE_H
 
 #include "Customer.h"
-#include "CustomerComperator.h"
 #include "ElderlyCustomer.h"
 #include "MailCustomerCommunication.h"
 #include "RegularCustomer.h"
